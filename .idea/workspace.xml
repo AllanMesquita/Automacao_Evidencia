@@ -4,11 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Azure/logisicsautomation/tblProcessamentoAutomacoes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Azure/logisicsautomation/tblProcessamentoAutomacoes/function.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Azure/logisicsautomation/tblProcessamentoAutomacoes/sample.dat" afterDir="false" />
-    </list>
+    <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +18,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Azure/logisicsautomation" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -173,6 +169,14 @@
       <option name="presentableId" value="Default" />
       <updated>1651096018934</updated>
     </task>
+    <task id="LOCAL-00001" summary="Update">
+      <created>1660310429360</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1660310429360</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +189,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
