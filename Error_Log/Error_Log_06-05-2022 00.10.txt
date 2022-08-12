@@ -1,0 +1,5 @@
+2022-05-06 00:10:58,320 - 'set' object does not support indexing
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 153, in <module>
+    cur.execute(f'INSERT INTO nf_entrada_itens (natureza_operacao) VALUES (%s)', ({serie}))
+TypeError: 'set' object does not support indexing

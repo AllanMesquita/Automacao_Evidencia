@@ -1,0 +1,16 @@
+2022-03-29 19:20:20,253 Error!
+2022-03-29 19:21:35,402 Error!
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\teste.py", line 62, in <module>
+    if vall == "texto":
+NameError: name 'vall' is not defined
+2022-03-29 19:24:25,789 Error!
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\teste.py", line 58, in <module>
+    if vall == "texto":
+NameError: name 'vall' is not defined
+2022-03-29 19:26:05,627  - name 'vall' is not defined
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\teste.py", line 58, in <module>
+    if vall == "texto":
+NameError: name 'vall' is not defined

@@ -1,0 +1,9 @@
+2022-07-26 14:18:56,326 - 'po'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\main_qualidade2.py", line 125, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 103, in rec_validation
+    error.po()
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\class_erros.py", line 57, in po
+    self.dic_erros['po'] += 1
+KeyError: 'po'

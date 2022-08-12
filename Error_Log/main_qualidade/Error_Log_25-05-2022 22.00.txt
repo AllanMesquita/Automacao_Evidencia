@@ -1,0 +1,6 @@
+2022-05-25 22:01:39,692 - (-2147418111, 'Call was rejected by callee.', None, None)
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 144, in <module>
+    aba_tblPA.Range(f'D{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M')
+  File "<COMObject <unknown>>", line 2, in Range
+pywintypes.com_error: (-2147418111, 'Call was rejected by callee.', None, None)

@@ -1,0 +1,8 @@
+2022-05-24 15:43:35,173 - column "id" can only be updated to DEFAULT
+DETAIL:  Column "id" is an identity column defined as GENERATED ALWAYS.
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 236, in <module>
+    cur.execute("UPDATE estoque_v17 SET id = '2' WHERE id = '1'")
+psycopg2.errors.GeneratedAlways: column "id" can only be updated to DEFAULT
+DETAIL:  Column "id" is an identity column defined as GENERATED ALWAYS.
+

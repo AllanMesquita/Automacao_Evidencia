@@ -1,0 +1,7 @@
+2022-08-04 11:42:35,074 - rec_validation() missing 1 required positional argument: 'file_name'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 132, in <module>
+    resultado = fuctions.atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\fuctions.py", line 92, in atualizar
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+TypeError: rec_validation() missing 1 required positional argument: 'file_name'

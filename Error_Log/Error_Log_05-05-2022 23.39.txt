@@ -1,0 +1,10 @@
+2022-05-05 23:39:57,759 - syntax error at or near "MERCAD"
+LINE 1: ...entrada_itens ("natureza_operacao") VALUES (VENDA MERCAD REC...
+                                                             ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 154, in <module>
+    cur.execute(f'INSERT INTO nf_entrada_itens ("natureza_operacao") VALUES ({serie})')
+psycopg2.errors.SyntaxError: syntax error at or near "MERCAD"
+LINE 1: ...entrada_itens ("natureza_operacao") VALUES (VENDA MERCAD REC...
+                                                             ^
+

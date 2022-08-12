@@ -1,0 +1,5 @@
+2022-03-31 10:09:33,180 - name 'aba_planilha' is not defined
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 107, in <module>
+    linha_planilha = len(aba_planilha['A'])
+NameError: name 'aba_planilha' is not defined

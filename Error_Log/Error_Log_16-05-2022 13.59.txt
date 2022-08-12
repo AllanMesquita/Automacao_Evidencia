@@ -1,0 +1,5 @@
+2022-05-16 13:59:09,614 - 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 162, in <module>
+    if select[0][0] == chave:
+TypeError: 'NoneType' object is not subscriptable

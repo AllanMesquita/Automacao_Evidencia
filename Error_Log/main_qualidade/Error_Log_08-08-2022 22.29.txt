@@ -1,0 +1,7 @@
+2022-08-08 22:34:47,952 - name 'SaveError' is not defined
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 220, in <module>
+    resultado = validacao.exp_validacao(aba, qtd_linhas, nome_evidencia[0] + '_' + nome_evidencia[1])
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 550, in exp_validacao
+    save = SaveError(aba, linha, 'Expedição', erro.dic_erros, file_name)
+NameError: name 'SaveError' is not defined

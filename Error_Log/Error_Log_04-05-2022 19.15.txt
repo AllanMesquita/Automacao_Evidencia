@@ -1,0 +1,10 @@
+2022-05-04 19:15:28,912 - column "11111" does not exist
+LINE 1: ...NSERT INTO nf_entrada_itens ("numero.nf_e") VALUES ("11111")
+                                                               ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 153, in <module>
+    cur.execute('INSERT INTO nf_entrada_itens ("numero.nf_e") VALUES ("11111")')
+psycopg2.errors.UndefinedColumn: column "11111" does not exist
+LINE 1: ...NSERT INTO nf_entrada_itens ("numero.nf_e") VALUES ("11111")
+                                                               ^
+

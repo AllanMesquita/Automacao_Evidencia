@@ -1,0 +1,7 @@
+2022-05-24 23:02:26,305 - strptime() argument 1 must be str, not int
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 161, in <module>
+    resultado = validacao.exp_validacao(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 390, in exp_validacao
+    cell_range = datetime.strptime(aba[f'E{linha}'].value, '%d/%m/%Y')
+TypeError: strptime() argument 1 must be str, not int

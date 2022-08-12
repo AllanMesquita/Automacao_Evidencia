@@ -1,0 +1,7 @@
+2022-06-29 20:35:10,797 - '>=' not supported between instances of 'str' and 'datetime.datetime'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 180, in <module>
+    atualizar_v2.popular_V17(aba, qtd_linhas, type_evidencia, df_mastersaf, v17)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\atualizar_v2.py", line 150, in popular_V17
+    if aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value >= aba[f'H{linha}'].value:
+TypeError: '>=' not supported between instances of 'str' and 'datetime.datetime'

@@ -1,0 +1,5 @@
+2022-04-01 12:24:15,775 - strptime() argument 1 must be str, not datetime.datetime
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 110, in <module>
+    aba_planilha[f'B2'] = datetime.strptime(datetime.today(), '%d/%m/%Y %H:%M')
+TypeError: strptime() argument 1 must be str, not datetime.datetime

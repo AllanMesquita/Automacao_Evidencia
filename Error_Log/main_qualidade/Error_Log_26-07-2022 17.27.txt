@@ -1,0 +1,9 @@
+2022-07-26 17:38:52,231 - strptime() argument 1 must be str, not None
+Traceback (most recent call last):
+  File "C:/Users/allan.mesquita/OneDrive - NTT/Documents/Projetos/Automacao_Evidencias/Script/Test_Zone/main_qualidade2.py", line 125, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 297, in rec_validation
+    print(save.connect())
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\class_erros.py", line 193, in connect
+    data_evidencia = datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')  # dado vazio
+TypeError: strptime() argument 1 must be str, not None

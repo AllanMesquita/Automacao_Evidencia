@@ -1,0 +1,10 @@
+2022-05-20 18:04:10,658 - syntax error at or near "SAO"
+LINE 1: ...o WHERE chaverelacionamento = E00000000000000000008079JR SAO
+                                                                    ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 54, in <module>
+    cur.execute(f"SELECT dataevidencia FROM tblrecebimento WHERE chaverelacionamento = {chaverelacionamento}")
+psycopg2.errors.SyntaxError: syntax error at or near "SAO"
+LINE 1: ...o WHERE chaverelacionamento = E00000000000000000008079JR SAO
+                                                                    ^
+

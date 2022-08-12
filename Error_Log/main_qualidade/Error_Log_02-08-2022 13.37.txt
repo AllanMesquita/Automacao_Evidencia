@@ -1,0 +1,9 @@
+2022-08-02 13:40:08,720 - name 'chave_nf' is not defined
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\main_qualidade2.py", line 128, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas, nome_evidencia[0] + '_' + nome_evidencia[1])
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 297, in rec_validation
+    print(save.connect())
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\class_erros.py", line 233, in connect
+    (self.tipo, chave_nf, data_evidencia, local, erro[0], 'Armazem', erro[1], lctobd_data)
+NameError: name 'chave_nf' is not defined

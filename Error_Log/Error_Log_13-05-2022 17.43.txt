@@ -1,0 +1,12 @@
+2022-05-13 17:43:46,533 - operator does not exist: text = numeric
+LINE 1: ...e_acesso FROM nf_entrada_itens WHERE chave_acesso = 35220572...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 108, in <module>
+    cur.execute(f"SELECT chave_acesso FROM nf_entrada_itens WHERE chave_acesso = {str(chave)}")
+psycopg2.errors.UndefinedFunction: operator does not exist: text = numeric
+LINE 1: ...e_acesso FROM nf_entrada_itens WHERE chave_acesso = 35220572...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+

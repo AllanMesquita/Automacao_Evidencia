@@ -1,0 +1,7 @@
+2022-05-31 18:42:38,301 - Error.__init__() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\main_qualidade2.py", line 127, in <module>
+    resultado = validacao.exp_validacao(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 362, in exp_validacao
+    error = Error(celula_error)
+TypeError: Error.__init__() takes 1 positional argument but 2 were given

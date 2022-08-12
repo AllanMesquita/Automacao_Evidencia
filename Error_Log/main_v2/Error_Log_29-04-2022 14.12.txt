@@ -1,0 +1,7 @@
+2022-04-29 14:13:17,484 - '>=' not supported between instances of 'str' and 'datetime.datetime'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 157, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 217, in rec_validation
+    if row['DataEvidencia'] >= cell_range:
+TypeError: '>=' not supported between instances of 'str' and 'datetime.datetime'

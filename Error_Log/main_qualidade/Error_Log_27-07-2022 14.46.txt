@@ -1,0 +1,9 @@
+2022-07-27 14:51:46,634 - strptime() argument 1 must be str, not datetime.datetime
+Traceback (most recent call last):
+  File "C:/Users/allan.mesquita/OneDrive - NTT/Documents/Projetos/Automacao_Evidencias/Script/main_qualidade2.py", line 149, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 304, in rec_validation
+    save.connect()
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\class_erros.py", line 180, in connect
+    data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')
+TypeError: strptime() argument 1 must be str, not datetime.datetime

@@ -1,0 +1,7 @@
+2022-06-28 19:28:58,201 - strptime() argument 1 must be str, not None
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 130, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 243, in rec_validation
+    cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
+TypeError: strptime() argument 1 must be str, not None

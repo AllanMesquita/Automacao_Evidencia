@@ -1,0 +1,7 @@
+2022-04-06 11:20:26,974 - (-2147352567, 'Exception occurred.', (0, 'Microsoft Excel', 'Save method of Application class failed', 'xlmain11.chm', 0, -2146827284), None)
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 147, in <module>
+    win32.Save()
+  File "C:\Users\ALLAN~1.MES\AppData\Local\Temp\gen_py\3.10\00020813-0000-0000-C000-000000000046x0x1x9.py", line 44664, in Save
+    return self._oleobj_.InvokeTypes(283, LCID, 1, (24, 0), ((12, 17),),Filename
+pywintypes.com_error: (-2147352567, 'Exception occurred.', (0, 'Microsoft Excel', 'Save method of Application class failed', 'xlmain11.chm', 0, -2146827284), None)

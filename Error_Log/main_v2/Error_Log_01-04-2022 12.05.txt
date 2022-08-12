@@ -1,0 +1,7 @@
+2022-04-01 12:09:37,994 - could not convert string to float: '20.306.555'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 100, in <module>
+    atualizar_v2.popular_V17(aba, qtd_linhas, type_evidencia, df_mastersaf, v17)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\atualizar_v2.py", line 239, in popular_V17
+    aba_v17[f'AE{ultima_linha_v17}'] = float(valor)
+ValueError: could not convert string to float: '20.306.555'

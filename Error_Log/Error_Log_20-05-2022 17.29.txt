@@ -1,0 +1,5 @@
+2022-05-20 17:29:16,251 - strptime() argument 1 must be str, not datetime.date
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 132, in <module>
+    print(datetime.strptime(dado, '%Y-%m-%D'))
+TypeError: strptime() argument 1 must be str, not datetime.date

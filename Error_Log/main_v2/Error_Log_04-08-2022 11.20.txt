@@ -1,0 +1,7 @@
+2022-08-04 11:21:01,663 - [WinError 3] The system cannot find the path specified: 'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\01 Processamento\\AGS RIO_332005054377340005805500100000016591100224968_Recebimento NF 1659 conf 1084.xlsx' -> 'C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\03 Erro\\AGS RIO_332005054377340005805500100000016591100224968_Recebimento NF 1659 conf 1084.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 132, in <module>
+    resultado = fuctions.atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\fuctions.py", line 61, in atualizar
+    os.replace(path + file_name,
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\01 Processamento\\AGS RIO_332005054377340005805500100000016591100224968_Recebimento NF 1659 conf 1084.xlsx' -> 'C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\03 Erro\\AGS RIO_332005054377340005805500100000016591100224968_Recebimento NF 1659 conf 1084.xlsx'

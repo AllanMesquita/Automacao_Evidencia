@@ -1,0 +1,5 @@
+2022-03-31 10:08:41,258 - No module named 'openpyxld'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 10, in <module>
+    import openpyxld as xl
+ModuleNotFoundError: No module named 'openpyxld'

@@ -1,0 +1,16 @@
+2022-07-26 17:14:06,698 - date/time field value out of range: "26/07/2022"
+LINE 1: ..., '32220704626426000700550010000492721684973626', '26/07/202...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\main_qualidade2.py", line 125, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 297, in rec_validation
+    print(save.connect())
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\class_erros.py", line 206, in connect
+    cur.execute(
+psycopg2.errors.DatetimeFieldOverflow: date/time field value out of range: "26/07/2022"
+LINE 1: ..., '32220704626426000700550010000492721684973626', '26/07/202...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+

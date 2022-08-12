@@ -1,0 +1,6 @@
+2022-05-26 12:46:33,183 - (-2147023174, 'The RPC server is unavailable.', None, None)
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 179, in <module>
+    aba_tblPA.Range(f'D{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M')
+  File "<COMObject <unknown>>", line 2, in Range
+pywintypes.com_error: (-2147023174, 'The RPC server is unavailable.', None, None)

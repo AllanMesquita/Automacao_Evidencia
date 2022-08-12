@@ -1,0 +1,10 @@
+2022-05-16 14:40:10,022 - invalid input syntax for integer: "1,0"
+LINE 1: ...ta', 15462589000126, '440.65', '03/05/2022 13:51:03', '1,0')
+                                                                 ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 166, in <module>
+    cur.execute(f'INSERT INTO nf_entrada_itens (natureza_operacao, serie, cnpj_cpf_destinatario, razao_social_destinatario, cnpj_emitente, valor_nf_e, data_emissao, qtde_com)'
+psycopg2.errors.InvalidTextRepresentation: invalid input syntax for integer: "1,0"
+LINE 1: ...ta', 15462589000126, '440.65', '03/05/2022 13:51:03', '1,0')
+                                                                 ^
+

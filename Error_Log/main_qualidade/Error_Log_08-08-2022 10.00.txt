@@ -1,0 +1,5 @@
+2022-08-08 10:00:16,767 - cursor already closed
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 140, in <module>
+    cur.execute(
+psycopg2.InterfaceError: cursor already closed

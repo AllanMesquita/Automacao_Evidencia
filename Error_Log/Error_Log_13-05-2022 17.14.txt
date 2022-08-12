@@ -1,0 +1,10 @@
+2022-05-13 17:14:36,311 - value "35220572381189001001550040001989671118636423" is out of range for type integer
+LINE 1: ...ro_nf_e FROM nf_entrada_itens WHERE numero_nf_e = '352205723...
+                                                             ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 106, in <module>
+    cur.execute("SELECT numero_nf_e FROM nf_entrada_itens WHERE numero_nf_e = '35220572381189001001550040001989671118636423'")
+psycopg2.errors.NumericValueOutOfRange: value "35220572381189001001550040001989671118636423" is out of range for type integer
+LINE 1: ...ro_nf_e FROM nf_entrada_itens WHERE numero_nf_e = '352205723...
+                                                             ^
+

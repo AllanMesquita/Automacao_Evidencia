@@ -1,0 +1,10 @@
+2022-05-04 19:14:08,691 - cross-database references are not implemented: "nf.entrada.itens"
+LINE 1: INSERT INTO nf.entrada.itens ("numero.nf_e") VALUES ("11111"...
+                    ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 153, in <module>
+    cur.execute('INSERT INTO nf.entrada.itens ("numero.nf_e") VALUES ("11111")')
+psycopg2.errors.FeatureNotSupported: cross-database references are not implemented: "nf.entrada.itens"
+LINE 1: INSERT INTO nf.entrada.itens ("numero.nf_e") VALUES ("11111"...
+                    ^
+

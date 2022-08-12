@@ -1,0 +1,8 @@
+2022-05-19 19:51:55,035 - insert or update on table "nf_entrada" violates foreign key constraint "nf_entrada_fk"
+DETAIL:  Key (razao_social_destinatario)=(2) is not present in table "destinatario".
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 113, in <module>
+    cur.execute(f'INSERT INTO nf_entrada (numero_nfe, serie, tipo_nfe, cnpj_destinatario, inscricao_estadual_destinatario, razao_social_destinatario, endereco_destinatario, bairro_destinatario, cep_destinatario, municipio_destinatario, uf_destinatario) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (numero_nfe, serie, tipo_nfe, cnpj_destinatario, inscricao_estadual_destinatario, razao_social_destinatario, endereco_destinatario, bairro_destinatario, cep_destinatario, municipio_destinatario, uf_destinatario))
+psycopg2.errors.ForeignKeyViolation: insert or update on table "nf_entrada" violates foreign key constraint "nf_entrada_fk"
+DETAIL:  Key (razao_social_destinatario)=(2) is not present in table "destinatario".
+

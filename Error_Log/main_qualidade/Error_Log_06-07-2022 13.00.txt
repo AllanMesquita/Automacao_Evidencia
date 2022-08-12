@@ -1,0 +1,7 @@
+2022-07-06 13:00:10,444 - (-2147418111, 'Call was rejected by callee.', None, None)
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 61, in <module>
+    qtd_linhas_tblPA = aba_tblPA.UsedRange.Rows.Count
+  File "C:\Users\allan.mesquita\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\win32com\client\dynamic.py", line 628, in __getattr__
+    ret = self._oleobj_.Invoke(retEntry.dispid, 0, invoke_type, 1)
+pywintypes.com_error: (-2147418111, 'Call was rejected by callee.', None, None)

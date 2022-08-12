@@ -1,0 +1,7 @@
+2022-08-04 11:13:06,802 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 132, in <module>
+    resultado = fuctions.atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\fuctions.py", line 15, in atualizar
+    aba_tblPA.Range(f'A{qtd_linhas_tblPA + 1}').Value = nome_evidencia[0] + '_' + nome_evidencia[1]
+IndexError: list index out of range

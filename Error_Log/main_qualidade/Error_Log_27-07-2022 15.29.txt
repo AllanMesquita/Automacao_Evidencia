@@ -1,0 +1,13 @@
+2022-07-27 15:58:30,839 - unconverted data remains:  15:33
+Traceback (most recent call last):
+  File "C:/Users/allan.mesquita/OneDrive - NTT/Documents/Projetos/Automacao_Evidencias/Script/main_qualidade2.py", line 149, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 304, in rec_validation
+    save.connect()
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\class_erros.py", line 184, in connect
+    data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if cell_range is None else datetime.strptime(str(cell_range), '%d/%m/%Y')
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.1520.0_x64__qbz5n2kfra8p0\lib\_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.1520.0_x64__qbz5n2kfra8p0\lib\_strptime.py", line 352, in _strptime
+    raise ValueError("unconverted data remains: %s" %
+ValueError: unconverted data remains:  15:33

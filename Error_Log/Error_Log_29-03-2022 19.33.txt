@@ -1,0 +1,5 @@
+2022-03-29 19:33:48,959  - name 'vall' is not defined
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\teste.py", line 59, in <module>
+    if vall == "texto":
+NameError: name 'vall' is not defined

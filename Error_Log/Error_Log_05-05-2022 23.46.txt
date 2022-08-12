@@ -1,0 +1,10 @@
+2022-05-05 23:46:27,611 - syntax error at or near "'natureza_operacao'"
+LINE 1: INSERT INTO nf_entrada_itens ('natureza_operacao') VALUES (V...
+                                      ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 154, in <module>
+    cur.execute(f"INSERT INTO nf_entrada_itens ('natureza_operacao') VALUES ({serie})")
+psycopg2.errors.SyntaxError: syntax error at or near "'natureza_operacao'"
+LINE 1: INSERT INTO nf_entrada_itens ('natureza_operacao') VALUES (V...
+                                      ^
+

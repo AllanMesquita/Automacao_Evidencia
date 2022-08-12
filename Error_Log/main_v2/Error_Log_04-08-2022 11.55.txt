@@ -1,0 +1,8 @@
+2022-08-04 13:05:05,254 - (-2146827864, 'OLE error 0x800a01a8', None, None)
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 136, in <module>
+    resultado = fuctions.atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\fuctions.py", line 110, in atualizar
+    aba_tblPA.Range(f'D{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M')
+  File "<COMObject <unknown>>", line 2, in Range
+pywintypes.com_error: (-2146827864, 'OLE error 0x800a01a8', None, None)

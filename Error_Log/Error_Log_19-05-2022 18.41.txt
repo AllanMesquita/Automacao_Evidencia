@@ -1,0 +1,6 @@
+2022-05-19 18:41:30,371 - integer out of range
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 97, in <module>
+    cur.execute(f'INSERT INTO destinatario (cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', (int(cnpj), inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf))
+psycopg2.errors.NumericValueOutOfRange: integer out of range
+

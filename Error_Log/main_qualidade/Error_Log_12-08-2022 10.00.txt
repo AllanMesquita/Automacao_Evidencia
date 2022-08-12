@@ -1,0 +1,17 @@
+2022-08-12 10:08:43,431 - [Errno 13] Permission denied: 'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\002 Evidências\\tblEvidenciaExpedicao.xlsm'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 220, in <module>
+    resultado = validacao.exp_validacao(aba, qtd_linhas, nome_evidencia[0] + '_' + nome_evidencia[1])
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 365, in exp_validacao
+    dfTblExp = pd.read_excel(
+  File "C:\Users\allan.mesquita\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 311, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\allan.mesquita\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\io\excel\_base.py", line 457, in read_excel
+    io = ExcelFile(io, storage_options=storage_options, engine=engine)
+  File "C:\Users\allan.mesquita\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\io\excel\_base.py", line 1376, in __init__
+    ext = inspect_excel_format(
+  File "C:\Users\allan.mesquita\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\io\excel\_base.py", line 1250, in inspect_excel_format
+    with get_handle(
+  File "C:\Users\allan.mesquita\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\io\common.py", line 795, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\002 Evidências\\tblEvidenciaExpedicao.xlsm'

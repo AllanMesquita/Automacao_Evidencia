@@ -1,0 +1,14 @@
+2022-07-26 16:48:44,023 - syntax error at or near "VALUE"
+LINE 1: ...sabilidade, quantidade_erros, data_processamento) VALUE('rec...
+                                                             ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\main_qualidade2.py", line 125, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 297, in rec_validation
+    print(save.connect())
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\class_erros.py", line 206, in connect
+    cur.execute(
+psycopg2.errors.SyntaxError: syntax error at or near "VALUE"
+LINE 1: ...sabilidade, quantidade_erros, data_processamento) VALUE('rec...
+                                                             ^
+

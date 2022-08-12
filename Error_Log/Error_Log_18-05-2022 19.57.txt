@@ -1,0 +1,5 @@
+2022-05-18 19:57:41,135 - unsupported operand type(s) for +=: 'int' and 'NoneType'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 115, in <module>
+    qtde += dado
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'

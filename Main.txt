@@ -1,0 +1,87 @@
+"""
+    Main Script
+"""
+
+import openpyxl as xl
+# from openpyxl.styles import PatternFill
+# import tkinter
+# from tkinter import filedialog
+from datetime import datetime
+from Modulos import validacao, atualizar_v2
+import os
+
+# root = tkinter.Tk()
+#
+# root.filename = tkinter.filedialog.askopenfilename(initialdir="/Users/Mesqu", filetypes=(("Excel files", "*.xlsx"),
+#                                                                                           ("Excel files", "*.xlsm")))
+#
+# local = root.filename
+
+now = datetime.now()
+
+path = "C:\\Users\\Mesqu\\Documents\\Projects\\Projeto_Melhoria_Evidencias\\"
+file_name = "Arquivo_Teste_Expedicao_Terca_122805_30.12.2021.xlsx"
+
+wb = xl.load_workbook(path + file_name)
+wb.active
+sheet = wb.sheetnames
+aba = wb[sheet[0]]
+
+verif_evid = aba["A2"].value  # Verificador do tipo de evidência
+
+
+# Variáveis
+
+
+type_evidencia = ""
+temp_val = ""
+qtd_linhas = len(aba["A"])
+resultado = ''
+
+if bool(verif_evid) is False:
+    print("Erro!")
+    # Alguma ação mais apropriada
+elif len(verif_evid) == 44:
+    type_evidencia = "Recebimento"
+    # verificador de repetição de caracteres
+elif len(verif_evid) == 24 and "E" in verif_evid:
+    type_evidencia = "Expedição"
+elif len(verif_evid) != 44:
+    print("Erro!")
+    # Alguma ação mais apropriada
+
+
+inicio = now
+print(now)
+
+
+if type_evidencia == "Recebimento":
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+if type_evidencia == "Expedição":
+    resultado = validacao.exp_validacao(aba, qtd_linhas)
+
+wb.save(path + file_name)
+
+if resultado == 'Erro nos dados':
+    os.replace(path + file_name, "C:\\Users\\Mesqu\\Documents\\Projects\\" + file_name)
+    # Verificar o caso se haver o mesmo arquivo no destino
+elif resultado == 'Sucesso':
+    atualizar_v2.popular_V17(aba, qtd_linhas, type_evidencia)
+
+# if error_chave > 0:
+#     print("Houve erro na coluna Chave NF")
+# else:
+#     print("Coluna Chave NF validada")
+
+
+print(inicio)
+print(f'Tempo total: {datetime.now() - now}')
+# print(datetime.now())
+# print(repeticao_RFID)
+# print(Modulos.rec_validation())
+# print(error_PO)
+# print(error_PN)
+# print(error_RFID)
+# print(error_SN)
+# print(error_Date)
+# print(f"{linha_validada:,}")

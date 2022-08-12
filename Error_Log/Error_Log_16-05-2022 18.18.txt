@@ -1,0 +1,5 @@
+2022-05-16 18:18:15,944 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 163, in <module>
+    if row[0][0] == chave:
+IndexError: list index out of range

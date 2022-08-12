@@ -1,0 +1,5 @@
+2022-07-12 13:18:25,768 - 'NoneType' object has no attribute 'strip'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 110, in <module>
+    if local.strip() == 'TERCA VIX' or local.strip() == 'JR SAO' or local.strip() == 'JR RIO' or local.strip() == 'AGS RIO' or local.strip() == 'NEXUS SAO':
+AttributeError: 'NoneType' object has no attribute 'strip'

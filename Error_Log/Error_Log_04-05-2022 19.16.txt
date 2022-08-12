@@ -1,0 +1,5 @@
+2022-05-04 19:16:52,853 - not all arguments converted during string formatting
+Traceback (most recent call last):
+  File "C:/Users/allan.mesquita/OneDrive - NTT/Documents/Projetos/Automacao_Evidencias/Script/connect_sql.py", line 153, in <module>
+    cur.execute('INSERT INTO nf_entrada_itens ("numero.nf_e") VALUES (%s)', (str(numero)))
+TypeError: not all arguments converted during string formatting

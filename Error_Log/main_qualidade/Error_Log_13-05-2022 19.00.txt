@@ -1,0 +1,7 @@
+2022-05-13 19:01:45,411 - 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_qualidade2.py", line 127, in <module>
+    resultado = validacao.rec_validation(aba, qtd_linhas)
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Modulos\validacao.py", line 168, in rec_validation
+    if cell_range[0:3] == '13S':
+TypeError: 'NoneType' object is not subscriptable

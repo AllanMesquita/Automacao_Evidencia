@@ -1,0 +1,10 @@
+2022-05-19 18:39:07,223 - value "05437734000318" is out of range for type integer
+LINE 1: ...al, endereco, bairro, cep, municipio, uf) VALUES ('054377340...
+                                                             ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 97, in <module>
+    cur.execute(f'INSERT INTO destinatario (cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', (cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf))
+psycopg2.errors.NumericValueOutOfRange: value "05437734000318" is out of range for type integer
+LINE 1: ...al, endereco, bairro, cep, municipio, uf) VALUES ('054377340...
+                                                             ^
+

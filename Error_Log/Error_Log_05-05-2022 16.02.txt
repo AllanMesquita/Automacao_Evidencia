@@ -1,0 +1,10 @@
+2022-05-05 16:02:19,646 - column "numero.nf_e" of relation "nf_entrada_itens" does not exist
+LINE 1: INSERT INTO nf_entrada_itens ("numero.nf_e", "serie") VALUES...
+                                      ^
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 154, in <module>
+    cur.execute(f'INSERT INTO nf_entrada_itens ("numero.nf_e", "serie") VALUES ({numero}, {serie})')
+psycopg2.errors.UndefinedColumn: column "numero.nf_e" of relation "nf_entrada_itens" does not exist
+LINE 1: INSERT INTO nf_entrada_itens ("numero.nf_e", "serie") VALUES...
+                                      ^
+

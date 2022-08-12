@@ -1,0 +1,8 @@
+2022-07-12 18:44:48,733 - (unicode error) 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape (validacao.py, line 358)
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\main_v2.py", line 64, in <module>
+    from Modulos import validacao, atualizar_v2
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos\validacao.py", line 358
+    df_NF_saida = pd.read_excel("C:\Users\allan.mesquita\OneDrive - NTT\Privado\INDICADORES\Bases\\2022 á 2027 - NFs Saída Mastersaf.xlsx", sheet_name='Dados dos Itens')
+                                                                                                                                            ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape

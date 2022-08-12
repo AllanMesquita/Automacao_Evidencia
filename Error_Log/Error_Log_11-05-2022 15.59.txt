@@ -1,0 +1,12 @@
+2022-05-11 15:59:19,279 - column "valor_nf_e" is of type money but expression is of type record
+LINE 1: ...88, 'Allan de Oliveira Mesquita', 15462589000126, (15, 450))
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 157, in <module>
+    cur.execute(f'INSERT INTO nf_entrada_itens (natureza_operacao, serie, cnpj_cpf_destinatario, razao_social_destinatario, cnpj_emitente, valor_nf_e)'
+psycopg2.errors.DatatypeMismatch: column "valor_nf_e" is of type money but expression is of type record
+LINE 1: ...88, 'Allan de Oliveira Mesquita', 15462589000126, (15, 450))
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+

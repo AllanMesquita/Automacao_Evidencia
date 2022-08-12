@@ -1,0 +1,5 @@
+2022-05-05 00:44:16,027 - object of type 'int' has no len()
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\main_v2.py", line 128, in <module>
+    elif len(verif_evid) == 44:
+TypeError: object of type 'int' has no len()

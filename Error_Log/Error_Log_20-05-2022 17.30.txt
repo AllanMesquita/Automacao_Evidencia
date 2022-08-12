@@ -1,0 +1,5 @@
+2022-05-20 17:30:49,407 - '>' not supported between instances of 'str' and 'datetime.datetime'
+Traceback (most recent call last):
+  File "C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\connect_sql.py", line 132, in <module>
+    print(data2 > datetime.strptime(str(dado), '%Y-%m-%d'))
+TypeError: '>' not supported between instances of 'str' and 'datetime.datetime'
