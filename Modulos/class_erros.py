@@ -189,12 +189,18 @@ class SaveError:
         if self.tipo == 'Recebimento':
             chave_nf = self.file_name if self.aba[f'A{self.linha}'].value is None else self.aba[f'A{self.linha}'].value
             local = 'NULL' if self.aba[f'G{self.linha}'].value is None else self.aba[f'G{self.linha}'].value
-            data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')
+            if self.aba[f'H{self.linha}'].value is datetime:
+                data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else self.aba[f'H{self.linha}'].value
+            else:
+                data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')
             lctobd_data = datetime.strptime(str(self.aba[f'L{self.linha}'].value), '%d/%m/%Y %H:%M')
         if self.tipo == 'Expedição':
             chave_nf = self.file_name if self.aba[f'B{self.linha}'].value is None else self.aba[f'B{self.linha}'].value
             local = 'NULL' if self.aba[f'D{self.linha}'].value is None else self.aba[f'D{self.linha}'].value
-            data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'E{self.linha}'].value is None else datetime.strptime(self.aba[f'E{self.linha}'].value, '%d/%m/%Y')
+            if self.aba[f'H{self.linha}'].value is datetime:
+                data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else self.aba[f'H{self.linha}'].value
+            else:
+                data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')
             lctobd_data = datetime.strptime(str(self.aba[f'I{self.linha}'].value), '%d/%m/%Y %H:%M')
 
         if self.erros['Célula sem dado'] == 6:

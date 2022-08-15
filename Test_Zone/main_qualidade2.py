@@ -49,46 +49,46 @@ aba_tblPA.Range(f'C{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.t
 
 query_name = datetime.strftime(datetime.now(), '%Y%m%d%H%M')
 query_id = query_name
-con = psycopg2.connect(
-    host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-    dbname="logistic-control",
-    user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-    password="EsjHSrS69295NzHu342ap6P!N",
-    sslmode="require"
-)
-cur = con.cursor()
+# con = psycopg2.connect(
+#     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+#     dbname="logistic-control",
+#     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+#     password="EsjHSrS69295NzHu342ap6P!N",
+#     sslmode="require"
+# )
+# cur = con.cursor()
 # Pesquisa 'EmProcessamento'
-cur.execute(f"SELECT status FROM material_management.mm_tbl_processamento_automacoes WHERE status = 'EmProcessamento'")
-retorno = cur.fetchall()
-if bool(retorno) is False:
-    cur.execute(f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,'
-                f'status) VALUES (%s, %s, %s, %s)',
-                (
-                 query_id,
-                 'QualidadeEvidencia',
-                 datetime.now(),
-                 'EmProcessamento'
-                 )
-                )
-    con.commit()
-    cur.execute(f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE id_tbl = '{query_id}'")
-    retorno = cur.fetchall()
-    for c in retorno:
-        id = c[0]
-else:
-    cur.execute(f"INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,"
-                f" processamento_fim, status) VALUES(%s, %s, %s, %s, %s)",
-                (
-                 query_id,
-                 'QualidadeEvidencia',
-                 datetime.now(),
-                 datetime.now(),
-                 'Error - EmProcessamento'
-                )
-                )
-    con.commit()
-    cur.close()
-    con.close()
+# cur.execute(f"SELECT status FROM material_management.mm_tbl_processamento_automacoes WHERE status = 'EmProcessamento'")
+# retorno = cur.fetchall()
+# if bool(retorno) is False:
+#     cur.execute(f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,'
+#                 f'status) VALUES (%s, %s, %s, %s)',
+#                 (
+#                  query_id,
+#                  'QualidadeEvidencia',
+#                  datetime.now(),
+#                  'EmProcessamento'
+#                  )
+#                 )
+#     con.commit()
+#     cur.execute(f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE id_tbl = '{query_id}'")
+#     retorno = cur.fetchall()
+#     for c in retorno:
+#         id = c[0]
+# else:
+#     cur.execute(f"INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,"
+#                 f" processamento_fim, status) VALUES(%s, %s, %s, %s, %s)",
+#                 (
+#                  query_id,
+#                  'QualidadeEvidencia',
+#                  datetime.now(),
+#                  datetime.now(),
+#                  'Error - EmProcessamento'
+#                 )
+#                 )
+#     con.commit()
+#     cur.close()
+#     con.close()
 
 for value in range(1, qtd_linhas_tblPA + 1):
     if str(aba_tblPA.Range(f'E{value}')) == "EmProcessamento":
@@ -119,24 +119,24 @@ if verificar_status is False:
                 tblPA.Save()
 
                 # QUERY ARQUIVO
-                cur.execute(
-                            f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, '
-                            f'processamento_inicio, status) VALUES (%s, %s, %s, %s)',
-                           (
-                            nome_evidencia[0] + '_' + nome_evidencia[1],
-                            'QualidadeEvidencia',
-                            datetime.now(),
-                            'EmProcessamento'
-                           )
-                           )
-                con.commit()
-                cur.execute(
-                            f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE "
-                            f"id_tbl = '{nome_evidencia[0] + '_' + nome_evidencia[1]}'"
-                           )
-                retorno = cur.fetchall()
-                for c in retorno:
-                    id_arquivo = c[0]
+                # cur.execute(
+                #             f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, '
+                #             f'processamento_inicio, status) VALUES (%s, %s, %s, %s)',
+                #            (
+                #             nome_evidencia[0] + '_' + nome_evidencia[1],
+                #             'QualidadeEvidencia',
+                #             datetime.now(),
+                #             'EmProcessamento'
+                #            )
+                #            )
+                # con.commit()
+                # cur.execute(
+                #             f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE "
+                #             f"id_tbl = '{nome_evidencia[0] + '_' + nome_evidencia[1]}'"
+                #            )
+                # retorno = cur.fetchall()
+                # for c in retorno:
+                #     id_arquivo = c[0]
 
                 wb = xl.load_workbook(path + file_name)
                 wb.active
@@ -223,12 +223,12 @@ if verificar_status is False:
                 tblPA.Save()
 
                 # STATUS FIM ARQUIVO
-                cur.execute(
-                            f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                            f"processamento_fim = '{datetime.now()}',"
-                            f"status = '{resultado}' "
-                            f"WHERE id = '{id_arquivo}'")
-                con.commit()
+                # cur.execute(
+                #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+                #             f"processamento_fim = '{datetime.now()}',"
+                #             f"status = '{resultado}' "
+                #             f"WHERE id = '{id_arquivo}'")
+                # con.commit()
 
             aba_tblPA.Range(f'D{var_linha}').Value = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
             aba_tblPA.Range(f'E{var_linha}').Value = 'Sucesso'
@@ -236,14 +236,14 @@ if verificar_status is False:
             win32.Application.Quit()
 
             # STATUS FIM PROCESSO
-            cur.execute(
-                        f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                        f"processamento_fim = '{datetime.now()}', "
-                        f"status = 'Sucesso' "
-                        f"WHERE id = '{id}'")
-            con.commit()
-            cur.close()
-            con.close()
+            # cur.execute(
+            #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+            #             f"processamento_fim = '{datetime.now()}', "
+            #             f"status = 'Sucesso' "
+            #             f"WHERE id = '{id}'")
+            # con.commit()
+            # cur.close()
+            # con.close()
         else:
             resultado = 'Sem arquivos na pasta.'  ### Bloco movido para a linha 148 - 05/05/2022
             # print('teste')
@@ -251,14 +251,14 @@ if verificar_status is False:
             aba_tblPA.Range(f'E{var_linha}').Value = resultado
 
             # STATUS SEM ARQUIVO NA PASTA
-            cur.execute(
-                        f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                        f"processamento_fim = '{datetime.now()}', "
-                        f"status = '{resultado}' "
-                        f"WHERE id = '{id}'")
-            con.commit()
-            cur.close()
-            con.close()
+            # cur.execute(
+            #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+            #             f"processamento_fim = '{datetime.now()}', "
+            #             f"status = '{resultado}' "
+            #             f"WHERE id = '{id}'")
+            # con.commit()
+            # cur.close()
+            # con.close()
 
     except Exception as error:
         logging.basicConfig(filename=name_log, filemode='w', format='%(asctime)s %(message)s')
@@ -275,21 +275,21 @@ if verificar_status is False:
 
         # STATUS ERROR-LOG
         '''Update query_id'''
-        cur.execute(
-                    f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                    f"processamento_fim = '{datetime.now()}',"
-                    f"status = 'Error-log' "
-                    f"WHERE id = '{id}'")
-        con.commit()
-        '''Update id_arquivo'''
-        cur.execute(
-                    f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                    f"processamento_fim = '{datetime.now()}',"
-                    f"status = 'Error-log' "
-                    f"WHERE id = '{id_arquivo}'")
-        con.commit()
-        cur.close()
-        con.close()
+        # cur.execute(
+        #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+        #             f"processamento_fim = '{datetime.now()}',"
+        #             f"status = 'Error-log' "
+        #             f"WHERE id = '{id}'")
+        # con.commit()
+        # '''Update id_arquivo'''
+        # cur.execute(
+        #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+        #             f"processamento_fim = '{datetime.now()}',"
+        #             f"status = 'Error-log' "
+        #             f"WHERE id = '{id_arquivo}'")
+        # con.commit()
+        # cur.close()
+        # con.close()
 
 else:
     aba_tblPA.Range(f'D{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
