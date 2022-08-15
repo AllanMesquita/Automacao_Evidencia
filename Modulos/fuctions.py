@@ -6,8 +6,10 @@ def atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17):
     from openpyxl.styles import PatternFill
     import os
     from datetime import datetime
+    import psycopg2
 
     ###
+    global id_arquivo
     qtd_linhas_tblPA = aba_tblPA.UsedRange.Rows.Count
 
     nome_evidencia = file_name.split('_')
@@ -27,6 +29,36 @@ def atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17):
     # aba_tblPA[f'E{qtd_linhas_tblPA + 1}'] = 'EmProcessamento'
 
     # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
+
+    # QUERY ARQUIVO - BD
+    con = psycopg2.connect(
+        host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+        dbname="logistic-control",
+        user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+        password="EsjHSrS69295NzHu342ap6P!N",
+        sslmode="require"
+    )
+    cur = con.cursor()
+    cur.execute(
+        f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, '
+        f'processamento_inicio, status) VALUES (%s, %s, %s, %s)',
+        (
+            nome_evidencia[0] + '_' + nome_evidencia[1],
+            'UpdatePlanEstoque',
+            datetime.now(),
+            'EmProcessamento'
+        )
+    )
+    con.commit()
+    cur.execute(
+        f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE "
+        f"id_tbl = '{nome_evidencia[0] + '_' + nome_evidencia[1]}'"
+    )
+    retorno = cur.fetchall()
+    for c in retorno:
+        id_arquivo = c[0]
+    cur.close()
+    con.close()
 
     # print(file_name)
     wb = xl.open(path + file_name)
@@ -116,5 +148,24 @@ def atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17):
     # aba_tblPA[f'E{qtd_linhas_tblPA + 1}'] = resultado
     #
     # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
+
+    # STATUS FIM ARQUIVO
+    con = psycopg2.connect(
+        host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+        dbname="logistic-control",
+        user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+        password="EsjHSrS69295NzHu342ap6P!N",
+        sslmode="require"
+    )
+    cur = con.cursor()
+    cur.execute(
+        f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+        f"processamento_fim = '{datetime.now()}', "
+        f"status = '{resultado}' "
+        f"WHERE id = '{id_arquivo}'"
+    )
+    con.commit()
+    cur.close()
+    con.close()
 
     return resultado
