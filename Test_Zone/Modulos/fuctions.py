@@ -107,9 +107,9 @@ def atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17):
 
     if validacao_local is False:
         if type_evidencia == "Recebimento":
-            resultado = validacao.rec_validation(aba, qtd_linhas)
+            resultado = validacao.rec_validation(aba, qtd_linhas, file_name)
         if type_evidencia == "Expedição":
-            resultado = validacao.exp_validacao(aba, qtd_linhas)
+            resultado = validacao.exp_validacao(aba, qtd_linhas, file_name)
 
     wb.save(path + file_name)
 
