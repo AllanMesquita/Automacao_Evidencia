@@ -349,23 +349,23 @@ from openpyxl.worksheet.table import Table
 import psycopg2
 import time
 
-con = psycopg2.connect(
-    host = "psql-itlatam-logisticcontrol.postgres.database.azure.com",
-    dbname = "logistic-control",
-    user = "logisticpsqladmin@psql-itlatam-logisticcontrol",
-    password = "EsjHSrS69295NzHu342ap6P!N",
-    sslmode = "require"
-)
-
-tempo = datetime.now()
-
-cur = con.cursor()
-
-id_tbl = datetime.strftime(datetime.now(), '%Y%m%d%H%M')
-id_tbl2 = id_tbl
-query = 'QualidadeEvidencia'
-dta_inicio = datetime.now()
-status = 'EmProcessamento'
+# con = psycopg2.connect(
+#     host = "psql-itlatam-logisticcontrol.postgres.database.azure.com",
+#     dbname = "logistic-control",
+#     user = "logisticpsqladmin@psql-itlatam-logisticcontrol",
+#     password = "EsjHSrS69295NzHu342ap6P!N",
+#     sslmode = "require"
+# )
+#
+# tempo = datetime.now()
+#
+# cur = con.cursor()
+#
+# id_tbl = datetime.strftime(datetime.now(), '%Y%m%d%H%M')
+# id_tbl2 = id_tbl
+# query = 'QualidadeEvidencia'
+# dta_inicio = datetime.now()
+# status = 'EmProcessamento'
 
 ### INSERT
 # cur.execute(f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio, '
@@ -391,15 +391,22 @@ id = ''
 #             (datetime.now()))
 # con.commit()
 ### UPDATE STATUS
-cur.execute(f"UPDATE material_management.mm_tbl_processamento_automacoes SET status = 'Sucesso' WHERE id = '80'")
-con.commit()
-# cur.execute(f"UPDATE material_management.mm_tbl_processamento_automacoes SET processamento_fim = '{datetime.now()}' WHERE id = '{id}'")
+# cur.execute(f"UPDATE material_management.mm_tbl_processamento_automacoes SET status = 'Sucesso' WHERE id = '80'")
 # con.commit()
-
-print(datetime.now() - tempo)
-
-cur.close()
-con.close()
+# # cur.execute(f"UPDATE material_management.mm_tbl_processamento_automacoes SET processamento_fim = '{datetime.now()}' WHERE id = '{id}'")
+# # con.commit()
+#
+# print(datetime.now() - tempo)
+#
+# cur.close()
+# con.close()
 #
 # print(datetime.now())
 # print(datetime.strftime(datetime.now(), '%Y%m%d%H%M'))
+from dateutil.parser import parse
+data = '16/08/2022'
+
+# print(datetime.strptime(data, '%d/%m/%Y'))
+# print(datetime.strftime(parse(data), '%Y/%m/%d'))
+
+print(parse(data))

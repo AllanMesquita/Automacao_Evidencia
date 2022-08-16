@@ -17,12 +17,12 @@ global error_RFID
 global error_SN
 global error_Date
 global error_ChaveRel
-
+global retorno
 
 def rec_validation(aba, qtd_linhas, file_name):
     # Imports
 
-    global error_chave, error_PO, error_PN, error_RFID, error_SN, error_Date, error_ChaveRel
+    global error_chave, error_PO, error_PN, error_RFID, error_SN, error_Date, error_ChaveRel, retorno
     from datetime import datetime
     from openpyxl.styles import PatternFill
     import pandas as pd
@@ -49,6 +49,8 @@ def rec_validation(aba, qtd_linhas, file_name):
     dfTblRec_ChaveRelacionamento = dfTblRec['ChaveRelacionamento'].tolist()
 
     # print('Início da validação - Recebimento')
+
+    retorno = ""
 
     while linha != qtd_linhas + 1:
         # print(linha)
@@ -304,6 +306,7 @@ def rec_validation(aba, qtd_linhas, file_name):
             aba[f'N{linha}'] = error.retornar()
             save = SaveError(aba, linha, 'Recebimento', error.dic_erros, file_name)
             save.connect()
+            retorno = 'Erro nos dados'
             linha += 1
         else:
             linha += 1
@@ -337,8 +340,9 @@ def rec_validation(aba, qtd_linhas, file_name):
     repeticao_RFID.clear()
     repeticao_SN.clear()
 
-    if error_chave > 0 or error_PO > 0 or error_PN > 0 \
-            or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
+    # if error_chave > 0 or error_PO > 0 or error_PN > 0 \
+    #         or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel > 0:
+    if retorno == "Erro nos dados":
         aba['N1'] = 'ERROS'
         return 'Erro nos dados'
     else:
