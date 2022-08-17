@@ -1,7 +1,7 @@
 # Dicionários
 
 # from tkinter.ttk import Style
-
+import dateutil.parser
 
 repeticao_RFID = {}
 repeticao_SN = {}
@@ -28,6 +28,7 @@ def rec_validation(aba, qtd_linhas, file_name):
     import pandas as pd
     import warnings
     from Modulos.class_erros import Error, SaveError
+    from dateutil.parser import parse
 
     # tempo_recebimento = datetime.now()
 
@@ -239,38 +240,62 @@ def rec_validation(aba, qtd_linhas, file_name):
         # linha_validada += 1
         cell_range = aba[f'H{linha}'].value
 
-        if bool(aba[f'H{linha}'].value) is False or cell_range is None:
-            aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
-            # aba[f'N{linha}'] = 'Célula sem dado.'
-            error.empty()
-            error_Date += 1
-        if bool(cell_range) is True:
-            if type(aba[f'H{linha}'].value) == datetime:
-                cell_range = aba[f'H{linha}'].value
+        try:
+            parse(cell_range)
+            data = parse(cell_range)
+            if data.day <= 12:
+                data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+            if data > datetime.today():
+                aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                error.data_maior()
+                error_Date += 1
             else:
-                cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
-        if type(cell_range) != datetime:
+                pass
+        except dateutil.parser.ParserError:
             aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            # aba[f'N{linha}'] = 'Data fora do padrão.'
             error.data()
             error_Date += 1
-        elif cell_range > datetime.today():
-            aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            # aba[f'N{linha}'] = 'Data maior que a data atual.'
-            error.data_maior()
-            error_Date += 1
-        else:
-            pass
+
+        # if bool(aba[f'H{linha}'].value) is False or cell_range is None:
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
+        #     # aba[f'N{linha}'] = 'Célula sem dado.'
+        #     error.empty()
+        #     error_Date += 1
+        # if bool(cell_range) is True:
+        #     if type(aba[f'H{linha}'].value) == datetime:
+        #         cell_range = aba[f'H{linha}'].value
+        #     else:
+        #         cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
+        # if type(cell_range) != datetime:
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     # aba[f'N{linha}'] = 'Data fora do padrão.'
+        #     error.data()
+        #     error_Date += 1
+        # elif cell_range > datetime.today():
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     # aba[f'N{linha}'] = 'Data maior que a data atual.'
+        #     error.data_maior()
+        #     error_Date += 1
+        # else:
+        #     pass
 
         ### CHAVE DE RELACIONAMENTO
 
         aba[f'K{linha}'] = str(aba[f'E{linha}'].value) + str(aba[f'G{linha}'].value)
 
-        if bool(aba[f'H{linha}'].value) is True:
-            if type(aba[f'H{linha}'].value) == datetime:
-                cell_range = aba[f'H{linha}'].value
+        try:
+            cell_range = aba[f'H{linha}'].value
+            parse(cell_range)
+            data = parse(cell_range)
+            if data.day <= 12:
+                cell_range = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
             else:
-                cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
+                cell_range = data
+        # if bool(aba[f'H{linha}'].value) is True:
+        #     if type(aba[f'H{linha}'].value) == datetime:
+        #         cell_range = aba[f'H{linha}'].value
+        #     else:
+        #         cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
 
             if aba[f'K{linha}'].value in dfTblRec_ChaveRelacionamento:
                 tem_df = dfTblRec.loc[dfTblRec['ChaveRelacionamento'] == aba[f'K{linha}'].value]
@@ -289,7 +314,8 @@ def rec_validation(aba, qtd_linhas, file_name):
                         pass
             else:
                 pass
-        else:
+        # else:
+        except dateutil.parser.ParserError:
             error_ChaveRel += 1
 
         ### LANÇAMENTO BANCO DE DADOS - DATA
@@ -351,11 +377,12 @@ def rec_validation(aba, qtd_linhas, file_name):
 
 def exp_validacao(aba, qtd_linhas, file_name):
     # Imports
-    global error_chave, error_RFID, error_Date, error_ChaveRel
+    global error_chave, error_RFID, error_Date, error_ChaveRel, retorno
     from openpyxl.styles import PatternFill
     from datetime import datetime
     import pandas as pd
     from Modulos.class_erros import Error, SaveError
+    from dateutil.parser import parse
 
     # Variáveis
 
@@ -376,6 +403,8 @@ def exp_validacao(aba, qtd_linhas, file_name):
         sheet_name='Dados dos Itens')  # Diretórios trocados após atualização no OneDrive 06.06.2022
 
     # print('Início da validação - Expedição')
+
+    retorno = ""
 
     while linha != qtd_linhas + 1:
 
@@ -438,27 +467,43 @@ def exp_validacao(aba, qtd_linhas, file_name):
 
         # linha_validada += 1
         cell_range = aba[f"E{linha}"].value
-        if bool(cell_range) is False:
-            aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
-            error.empty()
-            error_Date += 1
 
-        if bool(cell_range):
-            if type(cell_range) == datetime:
-                cell_range = aba[f'E{linha}'].value
-            elif type(cell_range) == str:
-                cell_range = datetime.strptime(cell_range, '%d/%m/%Y')
-
-        if type(cell_range) != datetime:
+        try:
+            parse(cell_range)
+            data = parse(cell_range)
+            if data.day < 12:
+                data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+            if data > datetime.today():
+                aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                error.data_maior()
+                error_Date += 1
+            else:
+                pass
+        except dateutil.parser.ParserError:
             aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
             error.data()
             error_Date += 1
-        elif cell_range > datetime.today():
-            aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            error.data_maior()
-            error_Date += 1
-        else:
-            pass
+        # if bool(cell_range) is False:
+        #     aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
+        #     error.empty()
+        #     error_Date += 1
+        #
+        # if bool(cell_range):
+        #     if type(cell_range) == datetime:
+        #         cell_range = aba[f'E{linha}'].value
+        #     elif type(cell_range) == str:
+        #         cell_range = datetime.strptime(cell_range, '%d/%m/%Y')
+        #
+        # if type(cell_range) != datetime:
+        #     aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     error.data()
+        #     error_Date += 1
+        # elif cell_range > datetime.today():
+        #     aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     error.data_maior()
+        #     error_Date += 1
+        # else:
+        #     pass
 
         ### CHAVE DE RELACIONAMENTO
 
@@ -475,11 +520,17 @@ def exp_validacao(aba, qtd_linhas, file_name):
         # else:
         #     pass
 
-        if bool(aba[f'E{linha}'].value) is True:
-            if type(aba[f'E{linha}'].value) == datetime:
-                cell_range = aba[f'E{linha}'].value
-            else:
-                cell_range = datetime.strptime(aba[f'E{linha}'].value, '%d/%m/%Y')
+        try:
+            cell_range = aba[f'E{linha}'].value
+            parse(cell_range)
+            data = parse(cell_range)
+            if data.day <= 12:
+                cell_range = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+        # if bool(aba[f'E{linha}'].value) is True:
+        #     if type(aba[f'E{linha}'].value) == datetime:
+        #         cell_range = aba[f'E{linha}'].value
+        #     else:
+        #         cell_range = datetime.strptime(aba[f'E{linha}'].value, '%d/%m/%Y')
 
             if aba[f'H{linha}'].value in dfTblExp_ChaveRelacionamento:
                 tem_df = dfTblExp.loc[dfTblExp['ChaveRelacionamento'] == aba[f'H{linha}'].value]
@@ -496,7 +547,8 @@ def exp_validacao(aba, qtd_linhas, file_name):
                         pass
             else:
                 pass
-        else:
+        # else:
+        except dateutil.parser.ParserError:
             error_ChaveRel += 1
 
         ### lANÇAMENTO BANCO DE DADOS - DATA
@@ -510,9 +562,10 @@ def exp_validacao(aba, qtd_linhas, file_name):
 
         if error_RFID > 0 or error_chave > 0 or error_Date > 0 or error_ChaveRel > 0:
             aba[f'K{linha}'] = error.retornar()
-            save = SaveError(aba, linha,'Expedição', error.dic_erros, file_name)
+            save = SaveError(aba, linha, 'Expedição', error.dic_erros, file_name)
             save.connect()
             linha += 1
+            retorno = "Erro nos dados"
         else:
             linha += 1
 
@@ -572,7 +625,9 @@ def exp_validacao(aba, qtd_linhas, file_name):
     repeticao_RFID.clear()
     dict_chaves.clear()
 
-    if error_RFID > 0 or error_chave > 0 or error_Date > 0 or error_ChaveRel > 0:
+
+    # if error_RFID > 0 or error_chave > 0 or error_Date > 0 or error_ChaveRel > 0:
+    if retorno == "Erro nos dados":
         aba['k1'] = 'ERROS'
         return 'Erro nos dados'
     else:

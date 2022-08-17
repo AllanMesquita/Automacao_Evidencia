@@ -404,9 +404,34 @@ id = ''
 # print(datetime.now())
 # print(datetime.strftime(datetime.now(), '%Y%m%d%H%M'))
 from dateutil.parser import parse
-data = '16/08/2022'
+data = '13/08/2022'
 
 # print(datetime.strptime(data, '%d/%m/%Y'))
 # print(datetime.strftime(parse(data), '%Y/%m/%d'))
 
-print(parse(data))
+try:
+    parse(data)
+    print(parse(data))
+
+    var = parse(data)
+    # print(var.day)
+    if var.day <= 12:
+        print(
+            datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+        )
+    else:
+        print(var.day)
+        print(var.strftime("%d/%m/%Y"))
+    # data2 = datetime.strftime(parse(data), "%m/%d/%Y")
+    # print(data2)
+    # print(datetime.strptime(data2, "%d/%m/%Y"))
+    # print(
+    #     datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+    # )
+except:
+    print(parse(data))
+    print("erro")
+
+# print(
+#         datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+#     )

@@ -1,7 +1,7 @@
 # Dicionários
 
-#from tkinter.ttk import Style
-
+# from tkinter.ttk import Style
+import dateutil.parser
 
 repeticao_RFID = {}
 repeticao_SN = {}
@@ -9,7 +9,7 @@ repeticao_SN = {}
 
 # Variáveis
 
-#global linha_validada
+# global linha_validada
 global linha
 global error_chave
 global error_PO
@@ -21,7 +21,6 @@ global error_ChaveRel
 
 
 def rec_validation(aba, qtd_linhas, file_name):
-
     # Imports
 
     from datetime import datetime
@@ -29,26 +28,29 @@ def rec_validation(aba, qtd_linhas, file_name):
     import pandas as pd
     import warnings
     from Modulos.class_erros import Error, SaveError
+    from dateutil.parser import parse
 
-    #tempo_recebimento = datetime.now()
+    # tempo_recebimento = datetime.now()
 
-    #linha_validada = 0
+    # linha_validada = 0
     linha = 2
 
-
     warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
-    #print('carregamento V17')
-    dfV17 = pd.read_excel("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm", sheet_name="ItensArmazenados")
-    #print('Carregamento tbl recebimento')
-    dfTblRec = pd.read_excel("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm")
+    # print('carregamento V17')
+    dfV17 = pd.read_excel(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm",
+        sheet_name="ItensArmazenados")
+    # print('Carregamento tbl recebimento')
+    dfTblRec = pd.read_excel(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm")
     dfRFID = dfV17['Unnamed: 8'].tolist()
     dfSerial = dfV17['Unnamed: 9'].tolist()
     dfTblRec_ChaveRelacionamento = dfTblRec['ChaveRelacionamento'].tolist()
-    
-    #print('Início da validação - Recebimento')
+
+    # print('Início da validação - Recebimento')
 
     while linha != qtd_linhas + 1:
-        #print(linha)
+        # print(linha)
 
         # celula_error = aba[f'N{linha}'].value
         error = Error()
@@ -63,7 +65,7 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
 
-        #linha_validada += 1
+        # linha_validada += 1
         cell_range = aba[f"A{linha}"].value
         if bool(cell_range) is False:
             aba[f"A{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF7B00")
@@ -85,7 +87,7 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DO PEDIDO DE COMPRA (PO)
 
-        #linha_validada += 1
+        # linha_validada += 1
         cell_range = aba[f"B{linha}"].value
         if bool(cell_range) is False:
             error_PO += 1
@@ -115,7 +117,7 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DO PART-NUMBER
 
-        #linha_validada += 1
+        # linha_validada += 1
         cell_range = aba[f"D{linha}"].value
         if bool(cell_range) is False or cell_range is None:
             aba[f"D{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF7B00")
@@ -123,15 +125,15 @@ def rec_validation(aba, qtd_linhas, file_name):
             error.empty()
             error_PN += 1
         elif "!" in cell_range or \
-             "@" in cell_range or \
-             "$" in cell_range or \
-             "%" in cell_range or \
-             "&" in cell_range or \
-             "*" in cell_range or \
-             ")" in cell_range or \
-             "'" in cell_range or \
-             ":" in cell_range or \
-             ";" in cell_range:
+                "@" in cell_range or \
+                "$" in cell_range or \
+                "%" in cell_range or \
+                "&" in cell_range or \
+                "*" in cell_range or \
+                ")" in cell_range or \
+                "'" in cell_range or \
+                ":" in cell_range or \
+                ";" in cell_range:
             aba[f"D{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF0000")
             # aba[f'N{linha}'] = Error(celula_error).part_number()
             error.part_number()
@@ -145,7 +147,7 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO RFID DO PRODUTO
 
-        #linha_validada += 1
+        # linha_validada += 1
 
         cell_range = aba[f"E{linha}"].value
         if bool(cell_range) is False:
@@ -181,7 +183,7 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DO SERIAL NUMBER
 
-        #linha_validada += 1
+        # linha_validada += 1
         cell_range = aba[f"F{linha}"].value
         if bool(cell_range) is False:
             aba[f"F{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF7B00")
@@ -191,16 +193,16 @@ def rec_validation(aba, qtd_linhas, file_name):
         elif "S" == str(cell_range)[0]:
             aba[f"F{linha}"] = cell_range[1:]
         if "!" in str(cell_range) or \
-            "@" in str(cell_range) or \
-            "$" in str(cell_range) or \
-            "%" in str(cell_range) or \
-            "&" in str(cell_range) or \
-            "*" in str(cell_range) or \
-            "(" in str(cell_range) or \
-            ")" in str(cell_range) or \
-            "'" in str(cell_range) or \
-            ":" in str(cell_range) or \
-            "/" in str(cell_range):
+                "@" in str(cell_range) or \
+                "$" in str(cell_range) or \
+                "%" in str(cell_range) or \
+                "&" in str(cell_range) or \
+                "*" in str(cell_range) or \
+                "(" in str(cell_range) or \
+                ")" in str(cell_range) or \
+                "'" in str(cell_range) or \
+                ":" in str(cell_range) or \
+                "/" in str(cell_range):
             aba[f"F{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF0000")
             # aba[f'N{linha}'] = Error(celula_error).serial_number()
             error.serial_number()
@@ -223,54 +225,79 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DA DATA
 
-            ### Formatar a data, para ser copiada para as tabelas e estoque ###
-        
-        #linha_validada += 1
+        ### Formatar a data, para ser copiada para as tabelas e estoque ###
+
+        # linha_validada += 1
 
         cell_range = aba[f'H{linha}'].value
 
-        if bool(aba[f'H{linha}'].value) is False or cell_range is None:
-            aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
-            # aba[f'N{linha}'] = Error(celula_error).empty()
-            error.empty()
-            error_Date += 1
-        if bool(cell_range) is True:
-            if type(aba[f'H{linha}'].value) == datetime:
-                cell_range = aba[f'H{linha}'].value
+        try:
+            parse(cell_range)
+            data = parse(cell_range)
+            if data.day <= 12:
+                data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+            # else:
+            #     data = data
+            if data > datetime.today():
+                aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                error.data_maior()
+                error_Date += 1
             else:
-                cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
-        if type(cell_range) != datetime:
+                pass
+        except Exception as erros:
+            print(erros)
             aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            # aba[f'N{linha}'] = Error(celula_error).data()
             error.data()
             error_Date += 1
-        elif cell_range > datetime.today():
-            aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            # aba[f'N{linha}'] = Error(celula_error).data_maior()
-            error.data_maior()
-            error_Date += 1
-        else:
-            pass
+
+        # if bool(aba[f'H{linha}'].value) is False or cell_range is None:
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
+        #     # aba[f'N{linha}'] = Error(celula_error).empty()
+        #     error.empty()
+        #     error_Date += 1
+        # if bool(cell_range) is True:
+        #     if type(aba[f'H{linha}'].value) == datetime:
+        #         cell_range = aba[f'H{linha}'].value
+        #     else:
+        #         cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
+        # if type(cell_range) != datetime:
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     # aba[f'N{linha}'] = Error(celula_error).data()
+        #     error.data()
+        #     error_Date += 1
+        # elif cell_range > datetime.today():
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     # aba[f'N{linha}'] = Error(celula_error).data_maior()
+        #     error.data_maior()
+        #     error_Date += 1
+        # else:
+        #     pass
 
         ### CHAVE DE RELACIONAMENTO
 
         aba[f'K{linha}'] = str(aba[f'E{linha}'].value) + str(aba[f'G{linha}'].value)
 
-        if bool(aba[f'H{linha}'].value) is True:
-            if type(aba[f'H{linha}'].value) == datetime:
-                cell_range = aba[f'H{linha}'].value
-            else:
-                cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
+        try:
+            cell_range = aba[f'H{linha}'].value
+            data = parse(cell_range)
+            if data.day <= 12:
+                data = datetime.strptime(datetime.strftime(parse(aba[f'H{linha}'].value), "%m/%d/%Y"), "%d/%m/%Y")
+
+            # if bool(aba[f'H{linha}'].value) is True:
+            #     if type(aba[f'H{linha}'].value) == datetime:
+            #         cell_range = aba[f'H{linha}'].value
+            #     else:
+            #         cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
 
             if aba[f'K{linha}'].value in dfTblRec_ChaveRelacionamento:
                 tem_df = dfTblRec.loc[dfTblRec['ChaveRelacionamento'] == aba[f'K{linha}'].value]
                 for i, row in tem_df.iterrows():
-                    #print(row['DataEvidencia'], '-', datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y'))
+                    # print(row['DataEvidencia'], '-', datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y'))
                     if type(row['DataEvidencia']) == datetime:
                         data_verif = row['DataEvidencia']
                     else:
                         data_verif = datetime.strptime(row['DataEvidencia'], '%d/%m/%Y')
-                    if data_verif >= cell_range:
+                    if data_verif >= data:
                         aba[f'K{linha}'].fill = PatternFill(fill_type='solid', fgColor='E7E200')
                         # aba[f'N{linha}'] = Error(celula_error).chave_relacionamento()
                         error.chave_relacionamento()
@@ -279,9 +306,10 @@ def rec_validation(aba, qtd_linhas, file_name):
                         pass
             else:
                 pass
-        else:
+        # else:
+        except dateutil.parser.ParserError:
             error_ChaveRel += 1
-                        
+
         ### LANÇAMENTO BANCO DE DADOS - DATA
 
         date = datetime.today()
@@ -315,23 +343,23 @@ def rec_validation(aba, qtd_linhas, file_name):
     aba['L1'] = 'LctoBD_Data'
     aba['M1'] = 'LctoBD_Usuario'
 
-    #print(f"Erro ChaveNF:{error_chave:>8}"
-          #f"\nErro Pedido: {error_PO:>8}"
-          #f"\nErro PartNumber: {error_PN:>4}"
-          #f"\nErro RFID: {error_RFID:>10}"
-          #f"\nErro SerialNumber:{error_SN:>3}"
-          #f"\nErro Data: {error_Date:>10}"
-          #f"\nErro Chave Relacionamento: {error_ChaveRel:>10}"
-          #f"\nCélulas validadas: {linha_validada:>4}")
+    # print(f"Erro ChaveNF:{error_chave:>8}"
+    # f"\nErro Pedido: {error_PO:>8}"
+    # f"\nErro PartNumber: {error_PN:>4}"
+    # f"\nErro RFID: {error_RFID:>10}"
+    # f"\nErro SerialNumber:{error_SN:>3}"
+    # f"\nErro Data: {error_Date:>10}"
+    # f"\nErro Chave Relacionamento: {error_ChaveRel:>10}"
+    # f"\nCélulas validadas: {linha_validada:>4}")
 
-    #print(f'Tempo validação recebimento: {datetime.now() - tempo_recebimento}')
-    #print('Fim da validação')
-    
+    # print(f'Tempo validação recebimento: {datetime.now() - tempo_recebimento}')
+    # print('Fim da validação')
+
     repeticao_RFID.clear()
     repeticao_SN.clear()
 
     if error_chave > 0 or error_PO > 0 or error_PN > 0 \
-       or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
+            or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
         aba['N1'] = 'ERROS'
         return 'Erro nos dados'
     else:
@@ -339,7 +367,6 @@ def rec_validation(aba, qtd_linhas, file_name):
 
 
 def exp_validacao(aba, qtd_linhas, file_name):
-
     # Imports
     from openpyxl.styles import PatternFill
     from datetime import datetime
@@ -350,7 +377,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
 
     tempo_exp = datetime.now()
 
-    #linha_validada = 0
+    # linha_validada = 0
     linha = 2
     # error_chave = 0
     # error_RFID = 0
@@ -358,9 +385,13 @@ def exp_validacao(aba, qtd_linhas, file_name):
     # error_ChaveRel = 0
     dict_chaves = {}
 
-    dfTblExp = pd.read_excel("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm", sheet_name='Evidencias')
+    dfTblExp = pd.read_excel(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm",
+        sheet_name='Evidencias')
     dfTblExp_ChaveRelacionamento = dfTblExp['ChaveRelacionamento'].tolist()
-    df_NF_saida = pd.read_excel("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - NFs Saída Mastersaf.xlsx", sheet_name='Dados dos Itens')
+    df_NF_saida = pd.read_excel(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - NFs Saída Mastersaf.xlsx",
+        sheet_name='Dados dos Itens')
 
     # print('Início da validação - Expedição')
 
@@ -376,7 +407,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO RFID DO PRODUTO
 
-        #linha_validada += 1
+        # linha_validada += 1
         # print(linha)
         cell_range = aba[f"A{linha}"].value
         if bool(cell_range) is False:
@@ -405,7 +436,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
 
-        #linha_validada += 1
+        # linha_validada += 1
         cell_range = aba[f"B{linha}"].value
 
         if bool(cell_range) is False:
@@ -432,7 +463,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
 
         ### VALIDAÇÃO DA DATA
 
-        #linha_validada += 1
+        # linha_validada += 1
         cell_range = aba[f"E{linha}"].value
         if bool(cell_range) is False:
             aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
@@ -444,7 +475,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
                 cell_range = aba[f'E{linha}'].value
             elif type(cell_range) == str:
                 cell_range = datetime.strptime(cell_range, '%d/%m/%Y')
-        
+
         if type(cell_range) != datetime:
             aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
             # aba[f'K{linha}'] = error.data()
@@ -472,7 +503,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
         #             continue
         # else:
         #     pass
-        
+
         if bool(aba[f'E{linha}'].value) is True:
             if type(aba[f'E{linha}'].value) == datetime:
                 cell_range = aba[f'E{linha}'].value
@@ -558,11 +589,11 @@ def exp_validacao(aba, qtd_linhas, file_name):
                     linha += 1
         itens_chave.clear()
 
-    #print(f"Erro ChaveNF:{error_chave:>8}"
-          #f"\nErro RFID: {error_RFID:>10}"
-          #f"\nErro Data: {error_Date:>10}"
-          #f"\nErro Chave Relacionamento: {error_ChaveRel}"
-          #f"\nCálulas validadas: {linha_validada:>4}")
+    # print(f"Erro ChaveNF:{error_chave:>8}"
+    # f"\nErro RFID: {error_RFID:>10}"
+    # f"\nErro Data: {error_Date:>10}"
+    # f"\nErro Chave Relacionamento: {error_ChaveRel}"
+    # f"\nCálulas validadas: {linha_validada:>4}")
 
     # print(dict_chaves)
     # print(datetime.now() - tempo_exp)

@@ -1,3 +1,6 @@
+import dateutil.parser
+
+
 class Error:
 
     def __init__(self):
@@ -179,6 +182,7 @@ class SaveError:
         global chave_nf, data_evidencia, local, lctobd_data
         import psycopg2
         from datetime import datetime
+        from dateutil.parser import parse
 
         con = psycopg2.connect(
             host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
@@ -194,7 +198,17 @@ class SaveError:
         if self.tipo == 'Recebimento':
             chave_nf = self.file_name if self.aba[f'A{self.linha}'].value is None else self.aba[f'A{self.linha}'].value
             local = 'NULL' if self.aba[f'G{self.linha}'].value is None else self.aba[f'G{self.linha}'].value
-            data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')
+            # data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')
+            try:
+                parse(self.aba[f'H{self.linha}'].value)
+                data = parse(self.aba[f'H{self.linha}'].value)
+                if data.day <= 12:
+                    data_evidencia = datetime.strptime(datetime.strftime(parse(self.aba[f'H{self.linha}'].value), "%m/%d/%Y"), "%d/%m/%Y")
+                else:
+                    data_evidencia = data.strftime("%d/%m/%Y")
+            except dateutil.parser.ParserError:
+                data_evidencia = datetime.strptime("01/01/2001", "%d/%m/%Y")
+
             lctobd_data = datetime.strptime(str(self.aba[f'L{self.linha}'].value), '%d/%m/%Y %H:%M')
         if self.tipo == 'Expedição':
             chave_nf = self.file_name if self.aba[f'B{self.linha}'].value is None else self.aba[f'B{self.linha}'].value
