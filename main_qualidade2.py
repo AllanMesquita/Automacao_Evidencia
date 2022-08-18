@@ -84,6 +84,8 @@ if bool(retorno) is False:
     retorno = cur.fetchall()
     for c in retorno:
         id = c[0]
+    cur.close()
+    con.close()
 else:
     cur.execute(f"INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,"
                 f" processamento_fim, status) VALUES(%s, %s, %s, %s, %s)",
@@ -137,6 +139,14 @@ if verificar_status is False:
                 # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
 
                 # QUERY ARQUIVO
+                con = psycopg2.connect(
+                    host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+                    dbname="logistic-control",
+                    user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+                    password="EsjHSrS69295NzHu342ap6P!N",
+                    sslmode="require"
+                )
+                cur = con.cursor()
                 cur.execute(
                             f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, '
                             f'processamento_inicio, status) VALUES (%s, %s, %s, %s)',
@@ -155,6 +165,8 @@ if verificar_status is False:
                 retorno = cur.fetchall()
                 for c in retorno:
                     id_arquivo = c[0]
+                cur.close()
+                con.close()
 
                 wb = xl.load_workbook(path + file_name)
                 wb.active
@@ -242,12 +254,22 @@ if verificar_status is False:
                 # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
 
                 # STATUS FIM ARQUIVO
+                con = psycopg2.connect(
+                    host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+                    dbname="logistic-control",
+                    user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+                    password="EsjHSrS69295NzHu342ap6P!N",
+                    sslmode="require"
+                )
+                cur = con.cursor()
                 cur.execute(
                             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
                             f"processamento_fim = '{datetime.now()}',"
                             f"status = '{resultado}' "
                             f"WHERE id = '{id_arquivo}'")
                 con.commit()
+                cur.close()
+                con.close()
 
             aba_tblPA.Range(f'D{var_linha}').Value = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
             aba_tblPA.Range(f'E{var_linha}').Value = 'Sucesso'
@@ -259,6 +281,14 @@ if verificar_status is False:
             # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
 
             # STATUS FIM PROCESSO
+            con = psycopg2.connect(
+                host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+                dbname="logistic-control",
+                user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+                password="EsjHSrS69295NzHu342ap6P!N",
+                sslmode="require"
+            )
+            cur = con.cursor()
             cur.execute(
                         f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
                         f"processamento_fim = '{datetime.now()}', "
@@ -282,6 +312,14 @@ if verificar_status is False:
             # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
 
             # STATUS SEM ARQUIVO NA PASTA
+            con = psycopg2.connect(
+                host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+                dbname="logistic-control",
+                user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+                password="EsjHSrS69295NzHu342ap6P!N",
+                sslmode="require"
+            )
+            cur = con.cursor()
             cur.execute(
                         f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
                         f"processamento_fim = '{datetime.now()}', "
@@ -312,6 +350,14 @@ if verificar_status is False:
 
         # STATUS ERROR-LOG
         '''Update query_id'''
+        con = psycopg2.connect(
+            host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            dbname="logistic-control",
+            user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            password="EsjHSrS69295NzHu342ap6P!N",
+            sslmode="require"
+        )
+        cur = con.cursor()
         cur.execute(
                     f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
                     f"processamento_fim = '{datetime.now()}',"
