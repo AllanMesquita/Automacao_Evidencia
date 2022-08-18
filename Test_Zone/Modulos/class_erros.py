@@ -218,7 +218,14 @@ class SaveError:
         # local = self.aba[f'G{self.linha}'].value  # dado vazio
         # data_evidencia = datetime.strptime(self.aba[f'H{self.linha}'].value, '%d/%m/%Y')  # dado vazio
 
-        if self.erros['Célula sem dado'] == 6:
+        if self.tipo == 'Recebimento' and self.erros['Célula sem dado'] <= 4:
+            cur.execute(
+                'INSERT INTO public.erros_evidencias (tipo_evidencia, chave_nf, data_evidencia, local, erro, '
+                'responsabilidade, quantidade_erros, data_processamento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                (self.tipo, chave_nf, data_evidencia, local, 'Linha em braco', 'NTT', '1', lctobd_data)
+            )
+            con.commit()
+        elif self.tipo == 'Expedição' and self.erros['Célula sem dado'] <= 3:
             cur.execute(
                 'INSERT INTO public.erros_evidencias (tipo_evidencia, chave_nf, data_evidencia, local, erro, '
                 'responsabilidade, quantidade_erros, data_processamento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',

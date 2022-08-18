@@ -404,34 +404,74 @@ id = ''
 # print(datetime.now())
 # print(datetime.strftime(datetime.now(), '%Y%m%d%H%M'))
 from dateutil.parser import parse
-data = '13/08/2022'
+# data = '13/08/2022'
 
 # print(datetime.strptime(data, '%d/%m/%Y'))
 # print(datetime.strftime(parse(data), '%Y/%m/%d'))
 
-try:
-    parse(data)
-    print(parse(data))
-
-    var = parse(data)
-    # print(var.day)
-    if var.day <= 12:
-        print(
-            datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
-        )
-    else:
-        print(var.day)
-        print(var.strftime("%d/%m/%Y"))
-    # data2 = datetime.strftime(parse(data), "%m/%d/%Y")
-    # print(data2)
-    # print(datetime.strptime(data2, "%d/%m/%Y"))
-    # print(
-    #     datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
-    # )
-except:
-    print(parse(data))
-    print("erro")
+# try:
+#     parse(data)
+#     print(parse(data))
+#
+#     var = parse(data)
+#     # print(var.day)
+#     if var.day <= 12:
+#         print(
+#             datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+#         )
+#     else:
+#         print(var.day)
+#         print(var.strftime("%d/%m/%Y"))
+#     # data2 = datetime.strftime(parse(data), "%m/%d/%Y")
+#     # print(data2)
+#     # print(datetime.strptime(data2, "%d/%m/%Y"))
+#     # print(
+#     #     datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+#     # )
+# except:
+#     print(parse(data))
+#     print("erro")
 
 # print(
 #         datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
 #     )
+
+# tbl_rec = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm", keep_vba=True)
+# tbl_rec.active
+# tbl_rec_sheets = tbl_rec.sheetnames
+# aba_tblRec = tbl_rec[tbl_rec_sheets[0]]
+#
+# data = '01/01/2001'
+#
+# aba_tblRec['H328131'] = parse(data)
+#
+# tbl_rec.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm")
+#
+# print(datetime.strptime(datetime.strftime(parse(data), "%d/%m/%Y"), "%d/%m/%Y"))
+
+con = psycopg2.connect(
+    host = "psql-itlatam-logisticcontrol.postgres.database.azure.com",
+    dbname = "logistic-control",
+    user = "logisticpsqladmin@psql-itlatam-logisticcontrol",
+    password = "EsjHSrS69295NzHu342ap6P!N",
+    sslmode = "require"
+)
+
+tempo = datetime.now()
+
+cur = con.cursor()
+
+id = 4470
+## INSERT
+for c in range(2528, id):
+    print(c)
+    cur.execute(
+                f"UPDATE material_management.error_recebimento SET "
+                f"erro = 'Execução de testes' "
+                f"WHERE id = '{c}'"
+    )
+
+    con.commit()
+
+cur.close()
+con.close()

@@ -238,7 +238,7 @@ def rec_validation(aba, qtd_linhas, file_name):
         ### Formatar a data, para ser copiada para as tabelas e estoque ###
 
         # linha_validada += 1
-        cell_range = aba[f'H{linha}'].value
+        cell_range = str(aba[f'H{linha}'].value)
 
         try:
             parse(cell_range)
@@ -284,7 +284,7 @@ def rec_validation(aba, qtd_linhas, file_name):
         aba[f'K{linha}'] = str(aba[f'E{linha}'].value) + str(aba[f'G{linha}'].value)
 
         try:
-            cell_range = aba[f'H{linha}'].value
+            cell_range = str(aba[f'H{linha}'].value)
             parse(cell_range)
             data = parse(cell_range)
             if data.day <= 12:
@@ -466,7 +466,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
         ### VALIDAÇÃO DA DATA
 
         # linha_validada += 1
-        cell_range = aba[f"E{linha}"].value
+        cell_range = str(aba[f"E{linha}"].value)
 
         try:
             parse(cell_range)
@@ -521,7 +521,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
         #     pass
 
         try:
-            cell_range = aba[f'E{linha}'].value
+            cell_range = str(aba[f'E{linha}'].value)
             parse(cell_range)
             data = parse(cell_range)
             if data.day <= 12:
