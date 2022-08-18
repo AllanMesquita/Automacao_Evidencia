@@ -198,7 +198,7 @@ class SaveError:
             # else:
             #     data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'H{self.linha}'].value is None else datetime.strptime(str(self.aba[f'H{self.linha}'].value), '%d/%m/%Y')
             try:
-                parse(self.aba[f'H{self.linha}'].value)
+                parse(str(self.aba[f'H{self.linha}'].value))
                 data = parse(self.aba[f'H{self.linha}'].value)
                 if data.day <= 12:
                     data_evidencia = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
@@ -215,7 +215,7 @@ class SaveError:
             # else:
             #     data_evidencia = datetime.strptime('01/01/2001', '%d/%m/%Y') if self.aba[f'E{self.linha}'].value is None else datetime.strptime(str(self.aba[f'E{self.linha}'].value), '%d/%m/%Y')
             try:
-                parse(self.aba[f'E{self.linha}'].value)
+                parse(str(self.aba[f'E{self.linha}'].value))
                 data = parse(self.aba[f'E{self.linha}'].value)
                 if data.day <= 12:
                     data_evidencia = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
