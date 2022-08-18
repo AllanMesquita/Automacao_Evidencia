@@ -525,7 +525,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
             parse(cell_range)
             data = parse(cell_range)
             if data.day <= 12:
-                cell_range = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+                data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
         # if bool(aba[f'E{linha}'].value) is True:
         #     if type(aba[f'E{linha}'].value) == datetime:
         #         cell_range = aba[f'E{linha}'].value
@@ -539,7 +539,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
                         data_verif = row['DataEvidencia']
                     else:
                         data_verif = datetime.strptime(row['DataEvidencia'], '%d/%m/%Y')
-                    if data_verif >= cell_range:
+                    if data_verif >= data:
                         aba[f'H{linha}'].fill = PatternFill(fill_type='solid', fgColor='E7E200')
                         error.chave_relacionamento()
                         error_ChaveRel += 1
