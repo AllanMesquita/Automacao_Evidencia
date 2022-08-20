@@ -590,7 +590,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
             continue
         else:
             for itens in qtd_chave:
-                itens_chave.append(float(itens.replace(',', '.')))
+                itens_chave.append(float(itens.replace('.', '').replace(',', '.')))
 
             if sum(itens_chave) == dict_chaves[chaves]:
                 pass

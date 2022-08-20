@@ -449,29 +449,33 @@ from dateutil.parser import parse
 #
 # print(datetime.strptime(datetime.strftime(parse(data), "%d/%m/%Y"), "%d/%m/%Y"))
 
-con = psycopg2.connect(
-    host = "psql-itlatam-logisticcontrol.postgres.database.azure.com",
-    dbname = "logistic-control",
-    user = "logisticpsqladmin@psql-itlatam-logisticcontrol",
-    password = "EsjHSrS69295NzHu342ap6P!N",
-    sslmode = "require"
-)
+# con = psycopg2.connect(
+#     host = "psql-itlatam-logisticcontrol.postgres.database.azure.com",
+#     dbname = "logistic-control",
+#     user = "logisticpsqladmin@psql-itlatam-logisticcontrol",
+#     password = "EsjHSrS69295NzHu342ap6P!N",
+#     sslmode = "require"
+# )
+#
+# tempo = datetime.now()
+#
+# cur = con.cursor()
+#
+# id = 4470
+# ## INSERT
+# for c in range(2528, id):
+#     print(c)
+#     cur.execute(
+#                 f"UPDATE material_management.error_recebimento SET "
+#                 f"erro = 'Execução de testes' "
+#                 f"WHERE id = '{c}'"
+#     )
+#
+#     con.commit()
+#
+# cur.close()
+# con.close()
 
-tempo = datetime.now()
+var = '100.00'
 
-cur = con.cursor()
-
-id = 4470
-## INSERT
-for c in range(2528, id):
-    print(c)
-    cur.execute(
-                f"UPDATE material_management.error_recebimento SET "
-                f"erro = 'Execução de testes' "
-                f"WHERE id = '{c}'"
-    )
-
-    con.commit()
-
-cur.close()
-con.close()
+print(var.replace('.', '').replace(',', '.'))
