@@ -311,7 +311,7 @@ if verificar_status is False:
             con.close()
 
         else:
-            resultado = "Sem arquivos na pasta '01 Processamento'."
+            resultado = "Sem arquivos na pasta."
             aba_tblPA.Range(f'D{var_linha}').Value = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%H')
             aba_tblPA.Range(f'E{var_linha}').Value = resultado
             # aba_tblPA[f'D{var_linha}'] = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M')
