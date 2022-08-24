@@ -476,6 +476,15 @@ from dateutil.parser import parse
 # cur.close()
 # con.close()
 
-var = '100.00'
+# var = '100.00'
+#
+# print(var.replace('.', '').replace(',', '.'))
 
-print(var.replace('.', '').replace(',', '.'))
+try:
+    print(10/10)
+except:
+    print('Error')
+else:
+    print('else')
+finally:
+    print('Teste')
