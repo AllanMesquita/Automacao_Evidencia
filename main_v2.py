@@ -36,6 +36,9 @@ error_log_registro = str(
 # qtd_linhas_tblPA = len(aba_tblPA['A'])
 verificar_status = False
 local_emprocessamento = ""
+tblPA = ""
+aba_tblPA = ""
+
 
 # aba_tblPA.Range(f'A{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.today(), '%Y%m%d%H%M')
 # aba_tblPA.Range(f'B{qtd_linhas_tblPA + 1}').Value = 'UpdatePlanEstoque'
