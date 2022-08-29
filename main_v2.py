@@ -10,7 +10,7 @@ from Modulos import fuctions
 import psycopg2
 
 global id
-global id_arquivo, tblPA, aba_tblPA
+global id_arquivo, tblPA, aba_tblPA, file_name
 
 name_log = str(
     'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Script\\Error_Log\\main_v2\\Error_Log_' + datetime.strftime(
@@ -453,30 +453,55 @@ finally:
             # tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
 
             # STATUS ERROR-LOG
-            con = psycopg2.connect(
-                host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-                dbname="logistic-control",
-                user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-                password="EsjHSrS69295NzHu342ap6P!N",
-                sslmode="require"
-            )
-            cur = con.cursor()
-            '''Update query_id'''
-            cur.execute(
-                f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                f"processamento_fim = '{datetime.now()}',"
-                f"status = 'Error-log' "
-                f"WHERE id = '{id}'")
-            con.commit()
-            '''Update id_arquivo'''
-            cur.execute(
-                f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                f"processamento_fim = '{datetime.now()}',"
-                f"status = 'Error-log' "
-                f"WHERE status = 'EmProcessamento'")
-            con.commit()
-            cur.close()
-            con.close()
+            try:
+                con = psycopg2.connect(
+                    host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+                    dbname="logistic-control",
+                    user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+                    password="EsjHSrS69295NzHu342ap6P!N",
+                    sslmode="require"
+                )
+                cur = con.cursor()
+                '''Update query_id'''
+                cur.execute(
+                    f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+                    f"processamento_fim = '{datetime.now()}',"
+                    f"status = 'Error-log' "
+                    f"WHERE id = '{id}'")
+                con.commit()
+                '''Update id_arquivo'''
+                cur.execute(
+                    f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+                    f"processamento_fim = '{datetime.now()}',"
+                    f"status = 'Error-log' "
+                    f"WHERE status = 'EmProcessamento'")
+                con.commit()
+                cur.close()
+                con.close()
+
+            except Exception as error:
+                logging.basicConfig(filename=error_log_registro, filemode='w', format='%(asctime)s %(message)s')
+                logging.critical(f'- {error}', exc_info=True)
+
+                tblPA = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
+                wb = tblPA.active
+                tblPA_sheet = tblPA.sheetnames
+                aba_tblPA = tblPA[tblPA_sheet[0]]
+
+                qtd_linhas_tblPA = len(aba_tblPA['A'])
+                var_linha = qtd_linhas_tblPA + 1
+
+                evidencia = file_name.split('_')
+
+                aba_tblPA[f'A{qtd_linhas_tblPA + 1}'] = query_name
+                aba_tblPA[f'B{qtd_linhas_tblPA + 1}'] = 'UpdatePlanEstoque'
+                aba_tblPA[f'D{qtd_linhas_tblPA + 1}'] = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
+                aba_tblPA[f'E{var_linha}'] = 'Error-log'
+                aba_tblPA[f'A{qtd_linhas_tblPA + 1}'] = evidencia[0] + '_' + evidencia[1]
+                aba_tblPA[f'B{qtd_linhas_tblPA + 1}'] = 'UpdatePlanEstoque'
+                aba_tblPA[f'D{qtd_linhas_tblPA + 1}'] = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
+                aba_tblPA[f'E{var_linha}'] = 'Error-log'
+                tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
 
     else:
         # aba_tblPA.Range(f'D{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
