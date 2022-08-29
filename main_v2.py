@@ -96,6 +96,7 @@ try:
         con.close()
     else:
         verificar_status = True
+
 except Exception as error:
     logging.basicConfig(filename=error_log_registro, filemode='w', format='%(asctime)s %(message)s')
     logging.critical(f'- {error}', exc_info=True)
@@ -114,14 +115,14 @@ except Exception as error:
     aba_tblPA[f'C{qtd_linhas_tblPA + 1}'] = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
     aba_tblPA[f'E{var_linha}'] = 'EmProcessamento'
 
-    for value in range(1, qtd_linhas_tblPA + 1):
-        # print(value, aba_tblPA.Range(f'E{value}'), type(aba_tblPA.Range(f'E{value}')))
-        # if str(aba_tblPA.Range(f'E{value}')) == "EmProcessamento":
-        if str(aba_tblPA[f'E{value}'].value) == 'EmProcessamento':
-            verificar_status = True
-            # local_emprocessamento = str(aba_tblPA.Range(f'E{value}'))
-            local_emprocessamento = str(aba_tblPA[f'E{value}'].value)
-            continue
+    # for value in range(1, qtd_linhas_tblPA + 1):
+    #     # print(value, aba_tblPA.Range(f'E{value}'), type(aba_tblPA.Range(f'E{value}')))
+    #     # if str(aba_tblPA.Range(f'E{value}')) == "EmProcessamento":
+    #     if str(aba_tblPA[f'E{value}'].value) == 'EmProcessamento':
+    #         verificar_status = True
+    #         # local_emprocessamento = str(aba_tblPA.Range(f'E{value}'))
+    #         local_emprocessamento = str(aba_tblPA[f'E{value}'].value)
+    #         continue
         # continue
 
     tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\002 Tabelas\\tblProcessamentoAutomacoes.xlsx")
