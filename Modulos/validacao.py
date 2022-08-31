@@ -395,7 +395,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
     # dfTblExp = pd.read_excel("C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\GESTÃO DE ESTOQUE\\002 Evidências\\tblEvidenciaExpedicao.xlsm", sheet_name='Evidencias')
     dfTblExp = pd.read_excel(
         "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\002 Evidências\\tblEvidenciaExpedicao.xlsm",
-        sheet_name='Evidencias')  # Diretórios trocados após atualização no OneDrive 06.06.2022
+        sheet_name='Evidencias Exped')  # Diretórios trocados após atualização no OneDrive 06.06.2022
     dfTblExp_ChaveRelacionamento = dfTblExp['ChaveRelacionamento'].tolist()
     # df_NF_saida = pd.read_excel("C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\INDICADORES\\Bases\\2022 á 2027 - NFs Saída Mastersaf.xlsx", sheet_name='Dados dos Itens')
     df_NF_saida = pd.read_excel(
