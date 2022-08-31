@@ -471,7 +471,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
         try:
             parse(cell_range)
             data = parse(cell_range)
-            if data.day < 12:
+            if data.day <= 12:
                 data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
             if data > datetime.today():
                 aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')

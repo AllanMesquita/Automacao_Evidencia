@@ -480,11 +480,25 @@ from dateutil.parser import parse
 #
 # print(var.replace('.', '').replace(',', '.'))
 
-try:
-    print(10/10)
-except:
-    print('Error')
+# try:
+#     print(10/10)
+# except:
+#     print('Error')
+# else:
+#     print('else')
+# finally:
+#     print('Teste')
+
+data = '10/08/2022'
+
+print(parse(data))
+
+var = parse(data)
+print(var.day)
+if var.day <= 12:
+    print(
+        datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+    )
 else:
-    print('else')
-finally:
-    print('Teste')
+    print(var.day)
+    print(var.strftime("%d/%m/%Y"))
