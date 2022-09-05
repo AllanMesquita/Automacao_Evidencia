@@ -16,7 +16,7 @@ now = datetime.now()
 
 name_log = str('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Script\\Error_Log\\main_qualidade\\Error_Log_' + datetime.strftime(datetime.today(), '%d-%m-%Y %H.%M') + '.txt')
 error_log_registro = str(
-    'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Script\\Error_Log\\main_v2\\Error_Log_\\Error-log - Registro\\' + datetime.strftime(
+    'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Script\\Error_Log\\Error-log - Registro\\' + datetime.strftime(
         datetime.today(), '%d-%m-%Y %H.%M') + '.txt')
 
 global query_name, nome_evidencia, var_linha, query_id
