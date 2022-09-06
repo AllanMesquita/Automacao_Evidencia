@@ -488,17 +488,23 @@ from dateutil.parser import parse
 #     print('else')
 # finally:
 #     print('Teste')
-
-data = '10/08/2022'
-
-print(parse(data))
-
-var = parse(data)
-print(var.day)
-if var.day <= 12:
-    print(
-        datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
-    )
-else:
-    print(var.day)
-    print(var.strftime("%d/%m/%Y"))
+#
+# data = '10/08/2022'
+#
+# print(parse(data))
+#
+# var = parse(data)
+# print(var.day)
+# if var.day <= 12:
+#     print(
+#         datetime.strptime(datetime.strftime(parse(data), "%m/%d/%Y"), "%d/%m/%Y")
+#     )
+# else:
+#     print(var.day)
+#     print(var.strftime("%d/%m/%Y"))
+import traceback
+try:
+    var = [1, 3]
+    print(var[3])
+except:
+    print(traceback.format_exc())
