@@ -1,5 +1,7 @@
 from fileinput import filename
 import traceback
+
+import dateutil.parser
 import openpyxl as xl
 from openpyxl.styles import NamedStyle
 from datetime import datetime
@@ -508,3 +510,16 @@ try:
     print(var[3])
 except:
     print(traceback.format_exc())
+# try:
+#     data = ''
+#
+#     print(parse(data))
+# except dateutil.parser.ParserError:
+# import json
+#
+# data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
+#
+# obj = json.load(data)
+#
+# for linha in obj:
+#     print(linha['NÃºmero da NF-e'])

@@ -233,7 +233,7 @@ class SaveError:
         #         (self.tipo, chave_nf, data_evidencia, local, 'Linha em braco', 'NTT', '1', lctobd_data)
         #     )
         #     con.commit()
-        if self.tipo == 'Recebimento' and self.erros['Célula sem dado'] <= 4:
+        if self.tipo == 'Recebimento' and self.erros['Célula sem dado'] >= 4:
             cur.execute(
                 'INSERT INTO material_management.error_recebimento (tipo_evidencia, chave_nf, data_eviencia, local, '
                 'erro,'
@@ -241,7 +241,7 @@ class SaveError:
                 (self.tipo, chave_nf, str(data_evidencia), local, 'linha em branco', 'NTT', '1', lctobd_data)
             )
             con.commit()
-        elif self.tipo == 'Expedição' and self.erros['Célula sem dado'] <= 3:
+        elif self.tipo == 'Expedição' and self.erros['Célula sem dado'] >= 2:
             cur.execute(
                 'INSERT INTO material_management.error_recebimento (tipo_evidencia, chave_nf, data_evidencia, local,'
                 'erro, responsabilidade, quantidade_erros, data_processamento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
