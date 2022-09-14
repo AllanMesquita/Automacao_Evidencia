@@ -147,9 +147,18 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
             """
             if aba[f'K{linha}'].value in chaveRelac_dic:
                 if type(aba[f'H{linha}'].value) == datetime:
-                    if aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value >= aba[f'H{linha}'].value:
-                        linha += 1
-                        continue
+                    if type(aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value) == str:
+                        tblExp_to_date = datetime.strptime(aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value, '%d/%m/%Y')
+                    # if aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value >= aba[f'H{linha}'].value:
+                    #     linha += 1
+                    #     continue
+                        if tblExp_to_date >= aba[f'H{linha}'].value:
+                            linha += 1
+                            continue
+                    elif type(aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value) == datetime:
+                        if aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value >= aba[f'H{linha}'].value:
+                            linha += 1
+                            continue
                 elif type(aba[f'H{linha}'].value) == str:
                     aba_to_date = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
                     if type(aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value) == str:

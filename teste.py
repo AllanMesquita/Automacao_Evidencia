@@ -450,7 +450,7 @@ from dateutil.parser import parse
 # tbl_rec.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm")
 #
 # print(datetime.strptime(datetime.strftime(parse(data), "%d/%m/%Y"), "%d/%m/%Y"))
-
+#
 # con = psycopg2.connect(
 #     host = "psql-itlatam-logisticcontrol.postgres.database.azure.com",
 #     dbname = "logistic-control",
@@ -458,7 +458,13 @@ from dateutil.parser import parse
 #     password = "EsjHSrS69295NzHu342ap6P!N",
 #     sslmode = "require"
 # )
-#
+# cursor = con.cursor()
+# cursor.execute(f"SELECT chave_acesso FROM public.nf_entrada2 WHERE chave_acesso = '35220915494741000143550010000370271407130895'")
+# resultado = cursor.fetchall()
+# for lista in resultado:
+#     for dado in lista:
+#         print(dado)
+
 # tempo = datetime.now()
 #
 # cur = con.cursor()
@@ -504,12 +510,12 @@ from dateutil.parser import parse
 # else:
 #     print(var.day)
 #     print(var.strftime("%d/%m/%Y"))
-import traceback
-try:
-    var = [1, 3]
-    print(var[3])
-except:
-    print(traceback.format_exc())
+# import traceback
+# try:
+#     var = [1, 3]
+#     print(var[3])
+# except:
+#     print(traceback.format_exc())
 # try:
 #     data = ''
 #
@@ -522,4 +528,13 @@ except:
 # obj = json.load(data)
 #
 # for linha in obj:
-#     print(linha['NÃºmero da NF-e'])
+#     print(linha)
+#
+# for c in range(0, 11):
+#     if c == 5:
+#         continue
+#     else:
+#         print(c)
+var = "13/09/2022 07:39:47"
+
+print(parse(var))
