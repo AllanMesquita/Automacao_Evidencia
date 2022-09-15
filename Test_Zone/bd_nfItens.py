@@ -65,7 +65,7 @@ for dic in req_body:
         print(id_cfop)
 
     cursor.execute(
-        'INSERT INTO public.nf_entraa_itens2 ('
+        'INSERT INTO public.nf_entrada_itens2 ('
         'chave_acesso, data_emissao, descricao_produto, cod_produto, numero_pedido, cean, cean_trib, unid_com, '
         'valor_unitario, quantidade_com, valor_total, origem, base_calculo_icms, cst_icms_csosn, aliq_icms, valor_icms,'
         'perc_margem_icms_st, base_calc_icms_st, valor_icms_st, aliq_icms_st, valor_pis, cst_pis, valor_cofins, '
@@ -76,12 +76,19 @@ for dic in req_body:
         '%s, %s'
         ')',
         (
-            chave_acesso, data_emissao, descricao_produto, cod_produto, numero_pedido, cean, cean_trib, unid_com,
-            valor_unitario, quantidade, valor_total, origem, base_icms, cst_icms, aliq_icms, valor_icms,
-            perc_icms, base_icms_st, valor_icms_st, aliq_icms_st, valor_pis, cst_pis, valor_cofins,
-            cst_cofins, valor_ipi, cst_ipi, aliq_ipi, ncm, id_cfop
+            chave_acesso, parse(data_emissao), descricao_produto, cod_produto, numero_pedido, cean, cean_trib, unid_com,
+            valor_unitario.replace('.', '').replace(',', '.'), quantidade.split(',')[0],
+            valor_total.replace('.', '').replace(',', '.'), origem, base_icms.replace('.', '').replace(',', '.'),
+            cst_icms.replace('.', '').replace(',', '.'), aliq_icms.replace('.', '').replace(',', '.'),
+            valor_icms.replace('.', '').replace(',', '.'), perc_icms.replace('.', '').replace(',', '.'),
+            base_icms_st.replace('.', '').replace(',', '.'), valor_icms_st.replace('.', '').replace(',', '.'),
+            aliq_icms_st.replace('.', '').replace(',', '.'), valor_pis.replace('.', '').replace(',', '.'),
+            cst_pis.replace('.', '').replace(',', '.'), valor_cofins.replace('.', '').replace(',', '.'),
+            cst_cofins.replace('.', '').replace(',', '.'), valor_ipi.replace('.', '').replace(',', '.'),
+            cst_ipi.replace('.', '').replace(',', '.'), aliq_ipi.replace('.', '').replace(',', '.'), ncm, id_cfop
         )
     )
+    conn.commit()
 
 cursor.close()
 conn.close()

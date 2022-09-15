@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -339,7 +338,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663263160883</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Update">
+      <created>1663272251282</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1663272251282</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
