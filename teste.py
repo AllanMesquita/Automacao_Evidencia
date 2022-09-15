@@ -535,6 +535,15 @@ from dateutil.parser import parse
 #         continue
 #     else:
 #         print(c)
-var = "13/09/2022 07:39:47"
+import traceback
+#
+# try:
+#     var = 2/0
+#     print(var)
+# except:
+#     print(f'{traceback.format_exc()}')
 
-print(parse(var))
+lista = {}
+
+for c in lista:
+    print(c['Nome'])
