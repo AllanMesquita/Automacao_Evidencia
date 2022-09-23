@@ -459,6 +459,8 @@ from dateutil.parser import parse
 #     sslmode = "require"
 # )
 # cursor = con.cursor()
+#
+
 # cursor.execute(f"SELECT chave_acesso FROM public.nf_entrada2 WHERE chave_acesso = '35220915494741000143550010000370271407130895'")
 # resultado = cursor.fetchall()
 # for lista in resultado:
@@ -521,17 +523,17 @@ from dateutil.parser import parse
 #
 #     print(parse(data))
 # except dateutil.parser.ParserError:
-import json
-
-data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
-
-obj = json.load(data)
-
-for linha in obj:
-    print(linha)
+# import json
 #
-# for c in range(0, 11):
-#     if c == 5:
+# data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
+#
+# obj = json.load(data)
+#
+# for linha in obj:
+#     print(linha)
+# #
+# # for c in range(0, 11):
+# #     if c == 5:
 #         continue
 #     else:
 #         print(c)
@@ -547,3 +549,29 @@ import traceback
 #
 # for c in lista:
 #     print(c['Nome'])
+
+# dic = {'chave1': 2,
+#        'chave2': 2
+#        }
+#
+# for chave in dic.items():
+#     print(chave[0])
+# var = '29220776535764001891550030000271041420221645'
+# var = '00000000000000000000000000000000000000000001'
+# print(var.count('0'))
+# for c in var:
+#     # print(c)
+#     if var.count(c) == 44:
+#         # aba['A2'].fill = PatternFill(fill_type="solid", fgColor="FF0000")
+#         # resultado = 'Erro nos dados'
+#         # break
+#         print('igual')
+#     else:
+#         continue
+var = '12/04/2022'
+print(parse(var))
+data = parse(var)
+print(data.day)
+if data.day <= 12:
+    data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+    print(data)

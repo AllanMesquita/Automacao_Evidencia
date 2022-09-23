@@ -212,14 +212,15 @@ try:
         #########################################################################################################################
                 ### Delete data
         
-    # id = 1
+    id = 1040
     #
-    # while id != 3:
-    cur.execute(f"DELETE FROM fornecedor WHERE id = '2'")
+    while id != 1296:
 
-    con.commit()
+        cur.execute(f"DELETE FROM public.nf_entrada_itens2 WHERE id = '{id}'")
 
-    #     id += 1
+        con.commit()
+
+        id += 1
 
 
 

@@ -606,6 +606,7 @@ def exp_validacao(aba, qtd_linhas, file_name):
                         erro.quantidade()
                         save = SaveError(aba, linha, 'Expedição', erro.dic_erros, file_name)
                         save.connect()
+                        retorno = 'Erro nos dados'
                     else:
                         linha += 1
                         continue
