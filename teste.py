@@ -523,14 +523,14 @@ from dateutil.parser import parse
 #
 #     print(parse(data))
 # except dateutil.parser.ParserError:
-# import json
-#
-# data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
-#
-# obj = json.load(data)
-#
-# for linha in obj:
-#     print(linha)
+import json
+
+data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
+
+obj = json.load(data)
+
+for linha in obj:
+    print(linha)
 # #
 # # for c in range(0, 11):
 # #     if c == 5:
@@ -568,10 +568,10 @@ import traceback
 #         print('igual')
 #     else:
 #         continue
-var = '12/04/2022'
-print(parse(var))
-data = parse(var)
-print(data.day)
-if data.day <= 12:
-    data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
-    print(data)
+# var = '12/04/2022'
+# print(parse(var))
+# data = parse(var)
+# print(data.day)
+# if data.day <= 12:
+#     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+#     print(data)

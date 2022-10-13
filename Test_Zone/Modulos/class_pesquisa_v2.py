@@ -94,7 +94,7 @@ class Pesquisa:
         id_natureza = ''
         # DADO VAZIO
         if bool(self.pesquisa) is False:
-            natureza_cfop = 'NULL'
+            id_natureza = 'NULL'
         else:
             # DADO NO BANCO
             self.cur.execute(f"SELECT id FROM public.natureza_cfop WHERE natureza = '{self.pesquisa}'")
