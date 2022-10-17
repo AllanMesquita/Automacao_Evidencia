@@ -206,7 +206,49 @@ class Pesquisa:
                 )
                 self.conn.commit()
 
-                self.cur.execute(f"SELECT id FROM public.natureza_cfop WHERE natureza = '{self.pesquisa}'")
+                self.cur.execute(f"SELECT id FROM public.natureza_cfop WHERE natureza = '{natureza}'")
+                id_natureza = self.cur.fetchall()
+                for lista in id_natureza:
+                    for dado in lista:
+                        id_cfop = dado
+
+        return id_cfop
+
+
+    def cfop_saida(self):
+        id_cfop = ''
+        # DADO VAZIO
+        if bool(self.pesquisa) is False:
+            id_cfop = 'NULL'
+        else:
+            # DADO NO BANCO
+            self.cur.execute(f"SELECT natureza_cfop FROM public.nf_saida WHERE chave_acesso = '{self.pesquisa}'")
+            resultado = self.cur.fetchall()
+            if bool(resultado):
+                for lista in resultado:
+                    for dado in lista:
+                        id_cfop = dado
+            else:
+                # DADO FORA DO BANCO
+                natureza = self.json['Natureza da OperaÃ§Ã£o']
+                cfop = self.json['CFOP']
+
+                self.cur.execute(
+                    "INSERT INTO public.natureza_cfop "
+                    "("
+                    "natureza, cfop"
+                    ")"
+                    "VALUES "
+                    "("
+                    "%s, %s"
+                    ")",
+                    (
+                        natureza, cfop
+                    )
+                )
+                self.conn.commit()
+
+                self.cur.execute(f"SELECT id FROM public.natureza_cfop WHERE natureza = '{natureza}'")
                 id_natureza = self.cur.fetchall()
                 for lista in id_natureza:
                     for dado in lista:
