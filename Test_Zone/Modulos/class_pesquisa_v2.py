@@ -8,6 +8,19 @@ class Pesquisa:
 
     def destinatario(self):
         destinatario = ''
+        classificacao = 'Cliente'
+        cnpjs = [
+            '00447484000111',
+            '05437734000156',
+            '31546914000186',
+            '00447484000200',
+            '05437734000318',
+            '05437734000407',
+            '05437734000580',
+            '00447484000626',
+            '05437734000660'
+            ]
+
         # DADO VAZIO
         if bool(self.pesquisa) is False:
             destinatario = 'NULL'
@@ -30,6 +43,9 @@ class Pesquisa:
                 municipio = self.json['MunicÃ\xadpio DestinatÃ¡rio']
                 uf = self.json['UF DestinatÃ¡rio']
 
+                if cnpj in cnpjs:
+                    classificacao = 'NTT'
+
                 self.cur.execute(
                     "INSERT INTO public.dados_juridicos "
                     "("
@@ -40,7 +56,7 @@ class Pesquisa:
                     "%s, %s, %s, %s, %s, %s, %s, %s, %s"
                     ")",
                     (
-                        'NTT', cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf
+                        classificacao, cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf
                     )
                 )
                 self.conn.commit()
@@ -50,6 +66,19 @@ class Pesquisa:
 
     def fornecedor(self):
         fornecedor = ''
+        classificacao = 'Fornecedor'
+        cnpjs = [
+            '00447484000111',
+            '05437734000156',
+            '31546914000186',
+            '00447484000200',
+            '05437734000318',
+            '05437734000407',
+            '05437734000580',
+            '00447484000626',
+            '05437734000660'
+        ]
+
         # DADO VAZIO
         if bool(self.pesquisa) is False:
             fornecedor = 'NULL'
@@ -72,6 +101,9 @@ class Pesquisa:
                 municipio = self.json['MunicÃ\xadpio Fornecedor']
                 uf = self.json['UF Fornecedor']
 
+                if cnpj in cnpjs:
+                    classificacao = 'NTT'
+
                 self.cur.execute(
                     "INSERT INTO public.dados_juridicos "
                     "("
@@ -82,7 +114,7 @@ class Pesquisa:
                     "%s, %s, %s, %s, %s, %s, %s, %s, %s"
                     ")",
                     (
-                        'Fornecedor', cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf
+                        classificacao, cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf
                     )
                 )
                 self.conn.commit()

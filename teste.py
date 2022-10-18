@@ -575,5 +575,11 @@ import traceback
 # if data.day <= 12:
 #     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
 #     print(data)
-data = '14/10/2022 16:52:31'
-print(str(parse(data)))
+# data = '14/10/2022 16:52:31'
+# print(str(parse(data)))
+try:
+    var = 1/0
+except:
+    print('Teste1')
+
+print('teste')

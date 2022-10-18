@@ -2,12 +2,13 @@ from turtle import st
 
 
 def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
-
     import openpyxl as xl
     import pandas as pd
     from openpyxl.styles import PatternFill, Font
     from datetime import datetime
-    #import xlwings
+    # import xlwings
+    import psycopg2
+    from dateutil.parser import parse
 
     tempo_popular = datetime.now()
 
@@ -15,26 +16,29 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
         Passar estes carregamento de planilhas para o 'main'.
         Talvez não funcione, pois quando tem alguma alteração, sem salvar, os novos dados não são visualizados.
     """
-    #v17 = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Teste - Gestão Estoque RFID - Estoque Consolidado V17 - 21.03.2022.xlsm", keep_vba=True)
-    #v17.active
+    # v17 = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Teste - Gestão Estoque RFID - Estoque Consolidado V17 - 21.03.2022.xlsm", keep_vba=True)
+    # v17.active
     v17_sheets = v17.sheetnames
     aba_v17 = v17[v17_sheets[2]]
 
-    #v17 = xlwings.Book("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Teste - Gestão Estoque RFID - Estoque Consolidado V17 - 21.03.2022.xlsm")
-    #aba_v17 = xlwings.sheets['ItensArmazenados']
+    # v17 = xlwings.Book("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Teste - Gestão Estoque RFID - Estoque Consolidado V17 - 21.03.2022.xlsm")
+    # aba_v17 = xlwings.sheets['ItensArmazenados']
 
-    tbl_rec = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm", keep_vba=True)
+    tbl_rec = xl.open(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm",
+        keep_vba=True)
     tbl_rec.active
     tbl_rec_sheets = tbl_rec.sheetnames
     aba_tblRec = tbl_rec[tbl_rec_sheets[0]]
 
-    tbl_exp = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm", keep_vba=True)
+    tbl_exp = xl.open(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm",
+        keep_vba=True)
     tbl_exp.active
     tbl_exp_sheets = tbl_exp.sheetnames
     aba_tblExp = tbl_exp[tbl_exp_sheets[1]]
 
-    #df_mastersaf = pd.read_excel("C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\INDICADORES\\Bases\\2022 - NFs Entrada Mastersaf.xlsx", sheet_name='NFsEntradaItens')
-
+    # df_mastersaf = pd.read_excel("C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\INDICADORES\\Bases\\2022 - NFs Entrada Mastersaf.xlsx", sheet_name='NFsEntradaItens')
 
     colunas_v17 = ['A', 'B', 'H', 'K', 'I', 'J', 'C', 'E', 'F', 'G', 'D']
     colunas_tblRec = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
@@ -51,7 +55,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
 
     ultima_linha_tblRec = len(aba_tblRec['A']) + 1
     ultima_linha_v17 = len(aba_v17['A']) + 1
-    #ultima_linha_V17 = aba_v17.range('A2').end('down').row + 1
+    # ultima_linha_V17 = aba_v17.range('A2').end('down').row + 1
     ultima_linha_tblExp = len(aba_tblExp['A']) + 1
     backup_ultima_linha_v17 = ultima_linha_v17
     backup_ultima_linha_tblRec = ultima_linha_tblRec
@@ -60,7 +64,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
     linha_exp = 2
     qtd_linhsExp = len(aba_tblExp['H'])
     qtd_linhasV17 = len(aba_v17['G'])
-    #qtd_linhaV17 = aba_v17.range('G2').end('down').end
+    # qtd_linhaV17 = aba_v17.range('G2').end('down').end
 
     coluna_v17 = 0
     coluna_v17_base = 0
@@ -97,26 +101,97 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 lista_dados_evid.append(aba[f'{col}{linha}'].value)
             for col in colunas_tblRec:
                 if col == "H":
-                    if type(lista_dados_evid[posicao]) == datetime: 
-                        aba_tblRec[f'{col}{ultima_linha_tblRec}'] = datetime.strftime(lista_dados_evid[posicao], '%d/%m/%Y')
+                    if type(lista_dados_evid[posicao]) == datetime:
+                        aba_tblRec[f'{col}{ultima_linha_tblRec}'] = datetime.strftime(lista_dados_evid[posicao],
+                                                                                      '%d/%m/%Y')
                     else:
                         aba_tblRec[f'{col}{ultima_linha_tblRec}'] = lista_dados_evid[posicao]
                 else:
                     aba_tblRec[f'{col}{ultima_linha_tblRec}'] = lista_dados_evid[posicao]
                 posicao += 1
-            linha += 1
+            # linha += 1
             posicao = 0
             ultima_linha_tblRec += 1
             lista_dados_evid.clear()
 
-        # for col in colunas_tblRec:
-        #     while linha != qtd_linhas + 1:
-        #         aba_tblRec[f'{col}{ultima_linha_tblRec}'] = aba[f'{col}{linha}'].value
-        #         linha += 1
-        #         ultima_linha_tblRec += 1
-        #     linha = 2
-        #     ultima_linha_tblRec = backup_ultima_linha_tblRec
-        # while linha != qtd_linhas + 1:
+            global chave_nf, rfid
+
+            try:
+                # Update connection string information
+                host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+                dbname = "logistic-control"
+                user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+                password = "EsjHSrS69295NzHu342ap6P!N"
+                sslmode = "require"
+                # Construct connection string
+                conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
+                                                                                             password,
+                                                                                             sslmode)
+                conn = psycopg2.connect(conn_string)
+                print("Connection established")
+                cursor = conn.cursor()
+
+                # VARIAVEIS BD
+                chave_nf = aba[f'A{linha}'].value
+                po = aba[f'B{linha}'].value
+                cx_master = aba[f'C{linha}'].value
+                part_number = aba[f'D{linha}'].value
+                rfid = aba[f'E{linha}'].value
+                serial_number = aba[f'F{linha}'].value
+                local = aba[f'G{linha}'].value
+                data = aba[f'H{linha}'].value
+                obs_recebimento = aba[f'J{linha}'].value
+                chave_relacionamento = aba[f'K{linha}'].value
+                lancamento_bd = aba[f'L{linha}'].value
+
+                cursor.execute(
+                    'INSERT INTO public.tbl_recebimento2 ('
+                    'chave_nf, po, cx_master, part_number, rfid, serial_number, local, data, obs_recebimento, '
+                    'chave_relacionamento, lancamento_bd'
+                    ')'
+                    'VALUES ('
+                    '%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s'
+                    ')',
+                    (
+                        chave_nf, po, cx_master, part_number, rfid, serial_number, local, parse(data), obs_recebimento,
+                        chave_relacionamento, parse(lancamento_bd)
+                    )
+                )
+                conn.commit()
+
+                cursor.close()
+                conn.close()
+
+            except:
+                '''
+                    ENVIO DE E-MAIL
+                '''
+                outlook = win32com.client.Dispatch("outlook.application")
+
+                mail = outlook.CreateItem(0)
+
+                mail.To = 'allan.mesquita@global.ntt'
+                mail.Subject = 'Erro-Log - main_v2.py - Banco de Dados'
+                mail.HTMLBody = '<h3>This is HTML Body</h3>'
+                mail.Body = f"""Houve um erro ao inserir o rfid:{rfid} da
+                    nota fiscal:{chave_nf} no banco de dados.
+
+                    Att.
+
+                    Python"""
+
+                mail.Send()
+
+            linha += 1
+
+            # for col in colunas_tblRec:
+            #     while linha != qtd_linhas + 1:
+            #         aba_tblRec[f'{col}{ultima_linha_tblRec}'] = aba[f'{col}{linha}'].value
+            #         linha += 1
+            #         ultima_linha_tblRec += 1
+            #     linha = 2
+            #     ultima_linha_tblRec = backup_ultima_linha_tblRec
+            # while linha != qtd_linhas + 1:
             # cell_range = aba[f'A{linha}':f'M{linha}']
             # for cell in cell_range:
             #     for data in cell:
@@ -125,13 +200,11 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
             coluna_tblRec = 0
             # linha += 1
             # ultima_linha_tblRec += 1
-        #print(f'Tempo de atualização da Tbl.Rec: {datetime.now() - tempo_tblrec}')
-        
+        # print(f'Tempo de atualização da Tbl.Rec: {datetime.now() - tempo_tblrec}')
+
         linha = 2
 
-        #print('Fim da atualização - Tbl.Recebimento')
-
-
+        # print('Fim da atualização - Tbl.Recebimento')
 
         ### INSERÇÃO DA EVIDÊNCIA NA PLANILHA ESTOQUE
 
@@ -150,7 +223,8 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 elif type(aba[f'H{linha}'].value) == str:
                     aba_to_date = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
                     if type(aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value) == str:
-                        tblExp_to_date = datetime.strptime(aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value, '%d/%m/%Y')
+                        tblExp_to_date = datetime.strptime(
+                            aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value, '%d/%m/%Y')
                         if tblExp_to_date >= aba_to_date:
                             linha += 1
                             continue
@@ -158,7 +232,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         if aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value >= aba_to_date:
                             linha += 1
                             continue
-                    
+
                 # if aba_tblExp[f'E{chaveRelac_dic[aba[f"K{linha}"].value]}'].value >= aba[f'H{linha}'].value:
                 #     linha += 1
                 #     continue
@@ -169,7 +243,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 if col == 'D':
                     aba_v17[f'{col}{ultima_linha_v17}'] = 'Recebimento'
                     aba_v17[f'{col}{ultima_linha_v17}'].font = font
-                    #aba_v17.range(f'{col}{ultima_linha_V17}').value = 'Recebimento'
+                    # aba_v17.range(f'{col}{ultima_linha_V17}').value = 'Recebimento'
                 # elif col == 'U':
                 #     aba_v17[f'{col}{ultima_linha_v17}'] = '=@IF(AND([@DtEntrada]="";[@DtEntradaRetorno]="";[@DataEvidencia]="");"";IFS([@DtEntradaRetorno]<>"";TODAY()-[@DtEntradaRetorno];[@DtEntrada]<>"";TODAY()-[@DtEntrada];[@DataEvidencia]<>"";TODAY()-[@DataEvidencia]))'
                 #     aba_v17[f'{col}{ultima_linha_v17}'].font = font
@@ -187,7 +261,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                     if colunas_evid[coluna_evid] == 'B':
                         aba_v17[f'{col}{ultima_linha_v17}'] = int(cell_range)
                         aba_v17[f'{col}{ultima_linha_v17}'].font = font
-                        #aba_v17.range(f'{col}{ultima_linha_V17}').value = int(cell_range)
+                        # aba_v17.range(f'{col}{ultima_linha_V17}').value = int(cell_range)
                     elif colunas_evid[coluna_evid] == 'H':
                         if type(cell_range) == datetime:
                             aba_v17[f'{col}{ultima_linha_v17}'] = datetime.strftime(cell_range, '%d/%m/%Y')
@@ -196,52 +270,52 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         aba_v17[f'{col}{ultima_linha_v17}'].font = font
                     else:
                         aba_v17[f'{col}{ultima_linha_v17}'] = cell_range
-                        #aba_v17.range(f'{col}{ultima_linha_V17}').value = cell_range
+                        # aba_v17.range(f'{col}{ultima_linha_V17}').value = cell_range
                         aba_v17[f'{col}{ultima_linha_v17}'].font = font
                     if colunas_evid[coluna_evid] == 'A':
                         chave = cell_range
                         find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
                         if find_chave.empty:
                             aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-                            #aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
+                            # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                         else:
                             find_org = find_chave['CNPJ/CPF do Destinatário']
                             if find_org.at[find_org.index[0]] == int('00447484000111'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 1
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 1
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 1
                             elif find_org.at[find_org.index[0]] == int('00447484000200'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 2
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 2
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 2
                             elif find_org.at[find_org.index[0]] == int('00447484000626'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 6
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 6
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 6
                             elif find_org.at[find_org.index[0]] == int('05437734000156'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 22
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 22
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 22
                             elif find_org.at[find_org.index[0]] == int('05437734000318'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 24
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 24
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 24
                             elif find_org.at[find_org.index[0]] == int('05437734000407'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 26
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 26
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 26
                             elif find_org.at[find_org.index[0]] == int('05437734000580'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 28
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 28
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 28
                             elif find_org.at[find_org.index[0]] == int('05437734000660'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 30
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 30
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 30
                             elif find_org.at[find_org.index[0]] == int('31546914000186'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 50
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
-                                #aba_v17.range(f'P{ultima_linha_V17}').value = 50
+                                # aba_v17.range(f'P{ultima_linha_V17}').value = 50
                     elif colunas_evid[coluna_evid] == 'D':
                         pn = cell_range
                         find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
@@ -250,30 +324,34 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         else:
                             find_pn = find_chave.loc[find_chave['Cód. Produto'] == pn]
                             if find_pn.empty:
-                                aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-                                #aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
+                                aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid',
+                                                                                       fgColor='FF0000')
+                                # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                             else:
                                 find_valor = find_pn['Valor Unitário Comercial']
-                                valor = find_valor.at[find_valor.index[0]]   #.replace(',', '.')
-                                aba_v17[f'AE{ultima_linha_v17}'] = valor     #float(valor)
-                                #aba_v17.range(f'AE{ultima_linha_V17}').value = float(valor)
+                                valor = find_valor.at[find_valor.index[0]]  # .replace(',', '.')
+                                aba_v17[f'AE{ultima_linha_v17}'] = valor  # float(valor)
+                                # aba_v17.range(f'AE{ultima_linha_V17}').value = float(valor)
                                 aba_v17[f'AE{ultima_linha_v17}'].font = font
                 coluna_evid += 1
             linha += 1
             ultima_linha_v17 += 1
             coluna_evid = 0
 
-        #print(f'Tempo para inserir na V17: {datetime.now() - temp}')
+        # print(f'Tempo para inserir na V17: {datetime.now() - temp}')
 
         ### AJUSTE DA TABELA
 
-        #aba_v17.tables['ItensArmazenados'].ref = f'A2:AT{len(aba_v17["A"])}'
+        # aba_v17.tables['ItensArmazenados'].ref = f'A2:AT{len(aba_v17["A"])}'
         v17.active = v17[v17_sheets[2]]
-        v17.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm")
-        #v17.save()
-        tbl_exp.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm")
-        tbl_rec.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm")
-        #print(f'Tempo popular: {datetime.now() - tempo_popular}')
+        v17.save(
+            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm")
+        # v17.save()
+        tbl_exp.save(
+            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm")
+        tbl_rec.save(
+            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaRecebimento.xlsm")
+        # print(f'Tempo popular: {datetime.now() - tempo_popular}')
 
     elif type_evid == 'Expedição':
 
@@ -292,8 +370,9 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 lista_dados_evid.append(aba[f'{col}{linha}'].value)
             for col in colunas_tblExp_inserir:
                 if col == "E":
-                    if type(lista_dados_evid[posicao]) == datetime: 
-                        aba_tblExp[f'{col}{ultima_linha_tblExp}'] = datetime.strftime(lista_dados_evid[posicao], '%d/%m/%Y')
+                    if type(lista_dados_evid[posicao]) == datetime:
+                        aba_tblExp[f'{col}{ultima_linha_tblExp}'] = datetime.strftime(lista_dados_evid[posicao],
+                                                                                      '%d/%m/%Y')
                     else:
                         aba_tblExp[f'{col}{ultima_linha_tblExp}'] = lista_dados_evid[posicao]
                 else:
@@ -304,24 +383,24 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
             ultima_linha_tblExp += 1
             lista_dados_evid.clear()
 
-        #print(f'Tempo para inserir na Tbl Expedição: {datetime.now() - tempo_inserir}')
-        #tbl_exp.save("C:\\Users\\Mesqu\\Documents\\Projects\\Projeto_Melhoria_Evidencias\\tblEvidenciaExpedicao.xlsm")
+        # print(f'Tempo para inserir na Tbl Expedição: {datetime.now() - tempo_inserir}')
+        # tbl_exp.save("C:\\Users\\Mesqu\\Documents\\Projects\\Projeto_Melhoria_Evidencias\\tblEvidenciaExpedicao.xlsm")
         """
         O delete_rows funciona no 'xl.open', então precisa somente abrir o arquivo apenas uma vez, no 'main' talvez.
         E após a exclusão necessita ajustar a tabale, pois quando se deleta a linha não deleta da tabela.
         """
-        #v17 = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\"
+        # v17 = xl.open("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\"
         #              "Teste - Gestão Estoque RFID - Estoque Consolidado V17 - 14.01.2022 - Copia (2).xlsm", keep_vba=True)
-        #v17.active
-        #v17_sheets = v17.sheetnames
-        #aba_v17 = v17[v17_sheets[2]]
+        # v17.active
+        # v17_sheets = v17.sheetnames
+        # aba_v17 = v17[v17_sheets[2]]
 
         ultima_linha_v17 = len(aba_v17["A"]) + 1
-        #ultima_linha_V17 = aba_v17.range('A2').end('down').row + 1
+        # ultima_linha_V17 = aba_v17.range('A2').end('down').row + 1
         linha = 2
         linha_v17 = 3
         qtd_linhsExp = len(aba_tblExp["A"]) + 1
-        #tblExp_to_date = ""
+        # tblExp_to_date = ""
 
         while linha_exp != qtd_linhsExp + 1:
             chaveRelac_dic[aba_tblExp[f'H{linha_exp}'].value] = linha_exp
@@ -335,8 +414,8 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
             while linha_v17 != ultima_linha_v17:
                 # print(f'Linha V17: {linha_v17}.')
                 if cell_range == aba_v17[f'G{linha_v17}'].value:
-                #if cell_range == aba_v17.range(f'G{linha_v17}').value:
-                    
+                    # if cell_range == aba_v17.range(f'G{linha_v17}').value:
+
                     ### VERIFICAÇÃO DO FORMATO DA DATA NA EVIDÊNCIA
                     if type(aba[f'E{linha}'].value) == datetime:
                         aba_to_date = aba[f'E{linha}'].value
@@ -345,10 +424,11 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
 
                     ### VERIFICAÇÃO DO FORMATO DA DATA NA TBL EXPEDIÇÃO
                     if type(aba_tblExp[f'E{chaveRelac_dic[cell_range]}'].value) == str:
-                        tblExp_to_date = datetime.strptime(aba_tblExp[f'E{chaveRelac_dic[cell_range]}'].value, '%d/%m/%Y')
+                        tblExp_to_date = datetime.strptime(aba_tblExp[f'E{chaveRelac_dic[cell_range]}'].value,
+                                                           '%d/%m/%Y')
                     elif type(aba_tblExp[f'E{chaveRelac_dic[cell_range]}'].value) == datetime:
                         tblExp_to_date = aba_tblExp[f'E{chaveRelac_dic[cell_range]}'].value
-                    
+
                     if tblExp_to_date >= aba_to_date:
                         for col in colunas_tblExp:
                             if col == 'AH':
@@ -356,7 +436,8 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                             elif col == 'AI':
                                 aba_tblExp[f'AI{chaveRelac_dic[cell_range]}'] = 'Automatizado'
                             else:
-                                aba_tblExp[f'{col}{chaveRelac_dic[cell_range]}'] = aba_v17[f'{colunas_v17_base[coluna_v17_base]}{linha_v17}'].value
+                                aba_tblExp[f'{col}{chaveRelac_dic[cell_range]}'] = aba_v17[
+                                    f'{colunas_v17_base[coluna_v17_base]}{linha_v17}'].value
                                 # aba_tblExp[f'{col}{chaveRelac_dic[cell_range]}'] = aba_v17.range(f'{colunas_v17_base[coluna_v17_base]}{linha_v17}').value
                             coluna_v17_base += 1
                         aba_v17.delete_rows(linha_v17, 1)
@@ -385,4 +466,3 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
         # v17.save()
         tbl_exp.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\"
                      "tblEvidenciaExpedicao.xlsm")
-        
