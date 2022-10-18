@@ -9,6 +9,8 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
     # import xlwings
     import psycopg2
     from dateutil.parser import parse
+    import traceback
+    import win32com.client
 
     tempo_popular = datetime.now()
 
@@ -116,6 +118,8 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
 
             global chave_nf, rfid
 
+            time_bd = datetime.now()
+
             try:
                 # Update connection string information
                 host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
@@ -162,7 +166,10 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 cursor.close()
                 conn.close()
 
+                print(f'Tempo inserir banco - {datetime.now() - time_bd}')
+
             except:
+                print(traceback.format_exc())
                 '''
                     ENVIO DE E-MAIL
                 '''
@@ -173,16 +180,20 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 mail.To = 'allan.mesquita@global.ntt'
                 mail.Subject = 'Erro-Log - main_v2.py - Banco de Dados'
                 mail.HTMLBody = '<h3>This is HTML Body</h3>'
-                mail.Body = f"""Houve um erro ao inserir o rfid:{rfid} da
-                    nota fiscal:{chave_nf} no banco de dados.
+                mail.Body = f"""Houve um erro ao inserir o rfid:{rfid} no banco de dados.
+                    {traceback.format_exc()}
 
-                    Att.
+                Att.
 
-                    Python"""
+                Python"""
 
                 mail.Send()
 
-            linha += 1
+                # cursor.close()
+                # conn.close()
+
+            finally:
+                linha += 1
 
             # for col in colunas_tblRec:
             #     while linha != qtd_linhas + 1:

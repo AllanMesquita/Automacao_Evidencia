@@ -577,9 +577,15 @@ import traceback
 #     print(data)
 # data = '14/10/2022 16:52:31'
 # print(str(parse(data)))
-try:
-    var = 1/0
-except:
-    print('Teste1')
+num = 1
+
+while num != 2 + 1:
+    try:
+        var = 1/0
+        num += 1
+    except:
+        print('Teste1')
+    finally:
+        num += 1
 
 print('teste')

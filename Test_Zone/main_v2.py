@@ -56,35 +56,35 @@ for value in range(1, qtd_linhas_tblPA + 1):
 # continue
 
 # Pesquisa 'EmProcessamento'
-con = psycopg2.connect(
-    host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-    dbname="logistic-control",
-    user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-    password="EsjHSrS69295NzHu342ap6P!N",
-    sslmode="require"
-)
-cur = con.cursor()
-cur.execute(f"SELECT status FROM material_management.mm_tbl_processamento_automacoes WHERE status = 'EmProcessamento'")
-retorno = cur.fetchall()
-if bool(retorno) is False:
-    cur.execute(f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,'
-                f'status) VALUES (%s, %s, %s, %s)',
-                (
-                    query_id,
-                    'UpdatePlanEstoque',
-                    datetime.now(),
-                    'EmProcessamento'
-                )
-                )
-    con.commit()
-    cur.execute(f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE id_tbl = '{query_id}'")
-    retorno = cur.fetchall()
-    for c in retorno:
-        id = c[0]
-    cur.close()
-    con.close()
-else:
-    verificar_status = True
+# con = psycopg2.connect(
+#     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+#     dbname="logistic-control",
+#     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+#     password="EsjHSrS69295NzHu342ap6P!N",
+#     sslmode="require"
+# )
+# cur = con.cursor()
+# cur.execute(f"SELECT status FROM material_management.mm_tbl_processamento_automacoes WHERE status = 'EmProcessamento'")
+# retorno = cur.fetchall()
+# if bool(retorno) is False:
+#     cur.execute(f'INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,'
+#                 f'status) VALUES (%s, %s, %s, %s)',
+#                 (
+#                     query_id,
+#                     'UpdatePlanEstoque',
+#                     datetime.now(),
+#                     'EmProcessamento'
+#                 )
+#                 )
+#     con.commit()
+#     cur.execute(f"SELECT id FROM material_management.mm_tbl_processamento_automacoes WHERE id_tbl = '{query_id}'")
+#     retorno = cur.fetchall()
+#     for c in retorno:
+#         id = c[0]
+#     cur.close()
+#     con.close()
+# else:
+#     verificar_status = True
 
 # print(verificar_status)	
 
@@ -299,23 +299,23 @@ if verificar_status is False:
                 "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\02 Tabela\\tblProcessamentoAutomacoes.xlsx")
 
             # STATUS FIM PROCESSO
-            con = psycopg2.connect(
-                host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-                dbname="logistic-control",
-                user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-                password="EsjHSrS69295NzHu342ap6P!N",
-                sslmode="require"
-            )
-            cur = con.cursor()
-            cur.execute(
-                        f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                        f"processamento_fim = '{datetime.now()}', "
-                        f"status = 'Sucesso' "
-                        f"WHERE id = '{id}'"
-            )
-            con.commit()
-            cur.close()
-            con.close()
+            # con = psycopg2.connect(
+            #     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            #     dbname="logistic-control",
+            #     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            #     password="EsjHSrS69295NzHu342ap6P!N",
+            #     sslmode="require"
+            # )
+            # cur = con.cursor()
+            # cur.execute(
+            #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+            #             f"processamento_fim = '{datetime.now()}', "
+            #             f"status = 'Sucesso' "
+            #             f"WHERE id = '{id}'"
+            # )
+            # con.commit()
+            # cur.close()
+            # con.close()
 
         else:
             resultado = "Sem arquivos na pasta '01 Processamento'."
@@ -325,22 +325,22 @@ if verificar_status is False:
             aba_tblPA[f'E{var_linha}'] = resultado
 
             # STATUS SEM ARQUIVO NA PASTA
-            con = psycopg2.connect(
-                host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-                dbname="logistic-control",
-                user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-                password="EsjHSrS69295NzHu342ap6P!N",
-                sslmode="require"
-            )
-            cur = con.cursor()
-            cur.execute(
-                        f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                        f"processamento_fim = '{datetime.now()}', "
-                        f"status = '{resultado}' "
-                        f"WHERE id = '{id}'")
-            con.commit()
-            cur.close()
-            con.close()
+            # con = psycopg2.connect(
+            #     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            #     dbname="logistic-control",
+            #     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            #     password="EsjHSrS69295NzHu342ap6P!N",
+            #     sslmode="require"
+            # )
+            # cur = con.cursor()
+            # cur.execute(
+            #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+            #             f"processamento_fim = '{datetime.now()}', "
+            #             f"status = '{resultado}' "
+            #             f"WHERE id = '{id}'")
+            # con.commit()
+            # cur.close()
+            # con.close()
 
         print(resultado)
         print(f'Tempo total: {datetime.now() - now}')
@@ -370,30 +370,30 @@ if verificar_status is False:
             "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\02 Tabela\\tblProcessamentoAutomacoes.xlsx")
 
         # STATUS ERROR-LOG
-        con = psycopg2.connect(
-            host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-            dbname="logistic-control",
-            user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-            password="EsjHSrS69295NzHu342ap6P!N",
-            sslmode="require"
-        )
-        cur = con.cursor()
-        '''Update query_id'''
-        cur.execute(
-                    f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                    f"processamento_fim = '{datetime.now()}',"
-                    f"status = 'Error-log' "
-                    f"WHERE id = '{id}'")
-        con.commit()
-        '''Update id_arquivo'''
-        cur.execute(
-                    f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
-                    f"processamento_fim = '{datetime.now()}',"
-                    f"status = 'Error-log' "
-                    f"WHERE status = 'EmProcessamento'")
-        con.commit()
-        cur.close()
-        con.close()
+        # con = psycopg2.connect(
+        #     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+        #     dbname="logistic-control",
+        #     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+        #     password="EsjHSrS69295NzHu342ap6P!N",
+        #     sslmode="require"
+        # )
+        # cur = con.cursor()
+        # '''Update query_id'''
+        # cur.execute(
+        #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+        #             f"processamento_fim = '{datetime.now()}',"
+        #             f"status = 'Error-log' "
+        #             f"WHERE id = '{id}'")
+        # con.commit()
+        # '''Update id_arquivo'''
+        # cur.execute(
+        #             f"UPDATE material_management.mm_tbl_processamento_automacoes SET "
+        #             f"processamento_fim = '{datetime.now()}',"
+        #             f"status = 'Error-log' "
+        #             f"WHERE status = 'EmProcessamento'")
+        # con.commit()
+        # cur.close()
+        # con.close()
 
 else:
     # aba_tblPA.Range(f'D{qtd_linhas_tblPA + 1}').Value = datetime.strftime(datetime.today(), '%d/%m/%Y %H:%M')
@@ -404,27 +404,27 @@ else:
     aba_tblPA[f'E{qtd_linhas_tblPA + 1}'] = 'Error - EmProcessamento'
     tblPA.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\02 Tabela\\tblProcessamentoAutomacoes.xlsx")
 
-    con = psycopg2.connect(
-        host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
-        dbname="logistic-control",
-        user="logisticpsqladmin@psql-itlatam-logisticcontrol",
-        password="EsjHSrS69295NzHu342ap6P!N",
-        sslmode="require"
-    )
-    cur = con.cursor()
-    cur.execute(f"INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,"
-                f" processamento_fim, status) VALUES(%s, %s, %s, %s, %s)",
-                (
-                    query_id,
-                    'UpdatePlanEstoque',
-                    datetime.now(),
-                    datetime.now(),
-                    'Error - EmProcessamento'
-                )
-                )
-    con.commit()
-    cur.close()
-    con.close()
+    # con = psycopg2.connect(
+    #     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+    #     dbname="logistic-control",
+    #     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+    #     password="EsjHSrS69295NzHu342ap6P!N",
+    #     sslmode="require"
+    # )
+    # cur = con.cursor()
+    # cur.execute(f"INSERT INTO material_management.mm_tbl_processamento_automacoes (id_tbl, query, processamento_inicio,"
+    #             f" processamento_fim, status) VALUES(%s, %s, %s, %s, %s)",
+    #             (
+    #                 query_id,
+    #                 'UpdatePlanEstoque',
+    #                 datetime.now(),
+    #                 datetime.now(),
+    #                 'Error - EmProcessamento'
+    #             )
+    #             )
+    # con.commit()
+    # cur.close()
+    # con.close()
 
     '''
         ENVIO DE E-MAIL
