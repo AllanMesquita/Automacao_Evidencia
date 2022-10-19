@@ -576,16 +576,25 @@ import traceback
 #     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
 #     print(data)
 # data = '14/10/2022 16:52:31'
-# print(str(parse(data)))
-num = 1
+# # print(str(parse(data)))
+# num = 1
+#
+# while num != 2 + 1:
+#     try:
+#         var = 1/0
+#         num += 1
+#     except:
+#         print('Teste1')
+#     finally:
+#         num += 1
+#
+# print('teste')
+df_nfEntrada = pd.read_excel(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx",
+        sheet_name='Dados dos Itens'
+    )
 
-while num != 2 + 1:
-    try:
-        var = 1/0
-        num += 1
-    except:
-        print('Teste1')
-    finally:
-        num += 1
+df = df_nfEntrada.loc[df_nfEntrada]
+df2 = df['Unnamed: 28']
 
-print('teste')
+print(df)
