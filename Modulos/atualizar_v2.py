@@ -8,6 +8,10 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
     from openpyxl.styles import PatternFill, Font
     from datetime import datetime
     #import xlwings
+    import psycopg2
+    from dateutil.parser import parse
+    import traceback
+    import win32com.client
 
     tempo_popular = datetime.now()
 
@@ -106,10 +110,77 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 else:
                     aba_tblRec[f'{col}{ultima_linha_tblRec}'] = lista_dados_evid[posicao]
                 posicao += 1
-            linha += 1
+            # linha += 1
             posicao = 0
             ultima_linha_tblRec += 1
             lista_dados_evid.clear()
+
+            # INSERIR NO BANCO DE DADOS
+            global chave_nf, rfid
+
+            try:
+                # Update connection string information
+                host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+                dbname = "logistic-control"
+                user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+                password = "EsjHSrS69295NzHu342ap6P!N"
+                sslmode = "require"
+                # Construct connection string
+                conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
+                                                                                             password,
+                                                                                             sslmode)
+                conn = psycopg2.connect(conn_string)
+                print("Connection established")
+                cursor = conn.cursor()
+
+                # VARIAVEIS BD
+                chave_nf = aba[f'A{linha}'].value
+                po = aba[f'B{linha}'].value
+                cx_master = aba[f'C{linha}'].value
+                part_number = aba[f'D{linha}'].value
+                rfid = aba[f'E{linha}'].value
+                serial_number = aba[f'F{linha}'].value
+                local = aba[f'G{linha}'].value
+                data = aba[f'H{linha}'].value
+                obs_recebimento = aba[f'J{linha}'].value
+                chave_relacionamento = aba[f'K{linha}'].value
+                lancamento_bd = aba[f'L{linha}'].value
+
+                cursor.execute(
+                    'INSERT INTO public.tbl_recebimento2 ('
+                    'chave_nf, po, cx_master, part_number, rfid, serial_number, local, data, obs_recebimento,'
+                    'chave_relacionamento, lancamento_bd'
+                    ')',
+                    (
+                        chave_nf, po, cx_master, part_number, rfid, serial_number, local, parse(data), obs_recebimento,
+                        chave_relacionamento, parse(lancamento_bd)
+                    )
+                )
+                conn.commit()
+
+                cursor.close()
+                conn.close()
+
+            except:
+                # ENVIO DE E-MAIL
+                outlook = win32com.client.Dispatch("outlook.application")
+                mail = outlook.CreateItem(0)
+
+                mail.To = 'allan.mesquita@global.ntt'
+                mail.Subject = 'Error-log - main_v2.py - Banco de Dados'
+                mail.HTMLBody = '<h3>This is HTML Body</h3>'
+                mail.Body = f"""Houve um erro ao inserir o rfid:{rfid} no banco de dados.
+{traceback.format_exc()}
+                
+                
+Att.
+
+Python"""
+
+                mail.Send()
+
+            finally:
+                linha += 1
 
         # for col in colunas_tblRec:
         #     while linha != qtd_linhas + 1:

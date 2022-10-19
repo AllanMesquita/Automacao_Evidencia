@@ -91,7 +91,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
         linha_exp += 1
 
     # print(f'Tempo de carregamento dos arquivos: {datetime.now() - tempo_popular}')
-    # print('Início da atualização - Tbl.Recebimento')
+    print('Início da atualização - Tbl.Recebimento')
     tempo_tblrec = datetime.now()
 
     if type_evid == 'Recebimento':

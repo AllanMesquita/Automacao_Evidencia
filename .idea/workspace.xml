@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/atualizar_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/atualizar_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/fuctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/fuctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/validacao.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/validacao.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test_Zone/main_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/main_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -395,7 +395,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666126306865</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Update">
+      <created>1666130120246</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1666130120246</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -437,22 +444,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Modulos/atualizar_v2.py</url>
-          <line>92</line>
+          <line>96</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Modulos/atualizar_v2.py</url>
-          <line>297</line>
+          <line>368</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Modulos/atualizar_v2.py</url>
-          <line>209</line>
+          <line>280</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Modulos/atualizar_v2.py</url>
-          <line>179</line>
+          <line>250</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -462,12 +469,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Modulos/atualizar_v2.py</url>
-          <line>142</line>
+          <line>213</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Modulos/atualizar_v2.py</url>
-          <line>148</line>
+          <line>219</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

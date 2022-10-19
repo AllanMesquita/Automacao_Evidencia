@@ -3,6 +3,7 @@
 """
 # from curses import qiflush
 import logging
+import traceback
 from datetime import datetime
 import win32com.client
 import openpyxl as xl
@@ -346,6 +347,7 @@ if verificar_status is False:
         print(f'Tempo total: {datetime.now() - now}')
 
     except Exception as error:
+        print(traceback.format_exc())
         logging.basicConfig(filename=name_log, filemode='w', format='%(asctime)s %(message)s')
         logging.critical(f'- {error}', exc_info=True)
 

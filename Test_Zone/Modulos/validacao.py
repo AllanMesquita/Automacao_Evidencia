@@ -47,7 +47,7 @@ def rec_validation(aba, qtd_linhas, file_name):
     dfSerial = dfV17['Unnamed: 9'].tolist()
     dfTblRec_ChaveRelacionamento = dfTblRec['ChaveRelacionamento'].tolist()
 
-    # print('Início da validação - Recebimento')
+    print('Início da validação - Recebimento')
 
     while linha != qtd_linhas + 1:
         # print(linha)
