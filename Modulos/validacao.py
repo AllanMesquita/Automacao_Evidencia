@@ -32,8 +32,11 @@ def rec_validation(aba, qtd_linhas, file_name):
 
     # tempo_recebimento = datetime.now()
 
+    global error_chave
+
     # linha_validada = 0
     linha = 2
+    dict_chaves = {}
 
     warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
     # print('carregamento V17')
@@ -48,7 +51,10 @@ def rec_validation(aba, qtd_linhas, file_name):
     dfRFID = dfV17['Unnamed: 8'].tolist()
     dfSerial = dfV17['Unnamed: 9'].tolist()
     dfTblRec_ChaveRelacionamento = dfTblRec['ChaveRelacionamento'].tolist()
-
+    df_nfEntrada = pd.read_excel(
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx",
+        sheet_name='Dados dos Itens'
+    )
     # print('Início da validação - Recebimento')
 
     retorno = ""
@@ -87,6 +93,10 @@ def rec_validation(aba, qtd_linhas, file_name):
             error_chave += 1
         elif len(cell_range) == 44:
             pass
+        if cell_range not in dict_chaves:
+            dict_chaves[cell_range] = 1
+        else:
+            dict_chaves[cell_range] += 1
 
         ### VALIDAÇÃO DO PEDIDO DE COMPRA (PO)
 
@@ -362,6 +372,38 @@ def rec_validation(aba, qtd_linhas, file_name):
 
     # print(f'Tempo validação recebimento: {datetime.now() - tempo_recebimento}')
     # print('Fim da validação')
+
+    for chave in dict_chaves:
+        itens_chave = []
+
+        temp_df = df_nfEntrada.loc[df_nfEntrada['Unnamed: 17'] == chave]
+        qtd_chave = temp_df['Unnamed: 28']
+
+        if temp_df.empty:
+            continue
+        else:
+            for itens in qtd_chave:
+                itens_chave.append(float(itens.replace('.', '').replace(',', '.')))
+
+            if sum(itens_chave) == dict_chaves[chave]:
+                pass
+            else:
+                linha = 2
+                while linha != qtd_linhas + 1:
+                    cell_range = aba[f'A{linha}'].value
+                    if cell_range == chave:
+                        aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
+                        aba[f'O{linha}'] = 'Quantidade do RFID diferente da Nota Fiscal'
+                        error_chave += 1
+                        erro = Error()
+                        erro.quantidade()
+                        save = SaveError(aba, linha, 'Recebimento', erro.dic_erros, file_name)
+                        save.connect()
+                    else:
+                        linha += 1
+                        continue
+                    linha += 1
+        itens_chave.clear()
 
     repeticao_RFID.clear()
     repeticao_SN.clear()
