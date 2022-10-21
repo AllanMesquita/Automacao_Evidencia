@@ -589,12 +589,35 @@ import traceback
 #         num += 1
 #
 # print('teste')
-df_nfEntrada = pd.read_excel(
-        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx",
-        sheet_name='Dados dos Itens'
-    )
+# df_nfEntrada = pd.read_excel(
+#         "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx",
+#         sheet_name='Dados dos Itens'
+#     )
+#
+# df = df_nfEntrada.loc[df_nfEntrada]
+# df2 = df['Unnamed: 28']
+#
+# print(df)
 
-df = df_nfEntrada.loc[df_nfEntrada]
-df2 = df['Unnamed: 28']
+# import logging
+#
+# name_log = str(
+#     'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Script\\Error_Log\\Error-log - BD\\Error_Log_' + datetime.strftime(
+#         datetime.today(), '%d-%m-%Y %H.%M') + '.txt')
+# try:
+#     print(1/0)
+# except:
+#     logging.basicConfig(filename=name_log, format='%(asctime)s %(message)s', filemode='w')
+#     logging.critical(f'{traceback.format_exc()}', exc_info=True)
+#
+# var = 'K12345'
+# try:
+#     var2 = int(var[1:])
+#
+#     print(var2)
+# except:
+#     print(traceback.format_exc())
+# print('Teste')
+var = '12/10/1989'
 
-print(df)
+print(parse(var))

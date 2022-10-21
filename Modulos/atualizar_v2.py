@@ -12,6 +12,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
     from dateutil.parser import parse
     import traceback
     import win32com.client
+    import logging
 
     tempo_popular = datetime.now()
 
@@ -141,15 +142,18 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 rfid = aba[f'E{linha}'].value
                 serial_number = aba[f'F{linha}'].value
                 local = aba[f'G{linha}'].value
-                data = aba[f'H{linha}'].value
+                data = str(aba[f'H{linha}'].value)
                 obs_recebimento = aba[f'J{linha}'].value
                 chave_relacionamento = aba[f'K{linha}'].value
-                lancamento_bd = aba[f'L{linha}'].value
+                lancamento_bd = str(aba[f'L{linha}'].value)
 
                 cursor.execute(
                     'INSERT INTO public.tbl_recebimento2 ('
                     'chave_nf, po, cx_master, part_number, rfid, serial_number, local, data, obs_recebimento,'
                     'chave_relacionamento, lancamento_bd'
+                    ') '
+                    'VALUES ('
+                    '%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s'
                     ')',
                     (
                         chave_nf, po, cx_master, part_number, rfid, serial_number, local, parse(data), obs_recebimento,
@@ -162,22 +166,29 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                 conn.close()
 
             except:
-                # ENVIO DE E-MAIL
-                outlook = win32com.client.Dispatch("outlook.application")
-                mail = outlook.CreateItem(0)
-
-                mail.To = 'allan.mesquita@global.ntt'
-                mail.Subject = 'Error-log - main_v2.py - Banco de Dados'
-                mail.HTMLBody = '<h3>This is HTML Body</h3>'
-                mail.Body = f"""Houve um erro ao inserir o rfid:{rfid} no banco de dados.
-{traceback.format_exc()}
-                
-                
-Att.
-
-Python"""
-
-                mail.Send()
+#                 # ENVIO DE E-MAIL
+#                 outlook = win32com.client.Dispatch("outlook.application")
+#                 mail = outlook.CreateItem(0)
+#
+#                 mail.To = 'allan.mesquita@global.ntt'
+#                 mail.Subject = 'Error-log - main_v2.py - Banco de Dados'
+#                 mail.HTMLBody = '<h3>This is HTML Body</h3>'
+#                 mail.Body = f"""Houve um erro ao inserir o rfid:{rfid} no banco de dados.
+# {traceback.format_exc()}
+#
+#
+# Att.
+#
+# Python"""
+#
+#                 mail.Send()
+                name_log = str(
+                        'C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Script\\'
+                        'Error_Log\\Error-log - BD\\Error_Log_' + datetime.strftime(
+                        datetime.today(), '%d-%m-%Y %H.%M') + '.txt'
+                )
+                logging.basicConfig(filename=name_log, format='%(asctime)s %(message)s', filemode='w')
+                logging.critical(f'{traceback.format_exc()}', exc_info=True)
 
             finally:
                 linha += 1
