@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test_Zone/QualidadeBD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/atualizar_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/QualidadeBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/QualidadeBD.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +51,7 @@
       <recent name="C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.teste">
+  <component name="RunManager" selected="Python.QualidadeBD">
     <configuration name="QualidadeBD" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Script" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -156,8 +154,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.teste" />
         <item itemvalue="Python.QualidadeBD" />
+        <item itemvalue="Python.teste" />
         <item itemvalue="Python tests.pytest in QualidadeBD.py" />
         <item itemvalue="Python.main_qualidade2" />
         <item itemvalue="Python.main_v2" />
@@ -418,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666235121907</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Update">
+      <created>1666386129360</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1666386129360</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
