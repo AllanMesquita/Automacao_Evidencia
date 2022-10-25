@@ -618,6 +618,24 @@ import traceback
 # except:
 #     print(traceback.format_exc())
 # print('Teste')
-var = '12/10/1989'
+# var = '12/10/1989'
+#
+# print(parse(var))
+# var = str(111111)
+#
+# print(var.count(str(1)))
+# print(str(2)*44)
+var = '3322042878710900013055001000002573177048042'
+peso = 2
+resul = 0
+print(str(var[:43]))
+for c in var[::-1]:
+    print(int(c) * peso)
+    mult = int(c) * peso
+    resul += mult
+    if peso == 9:
+        peso = 2
+    else:
+        peso += 1
 
-print(parse(var))
+print(resul/11, ' ', resul % 11, '-', 11-(resul % 11))

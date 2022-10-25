@@ -1,14 +1,8 @@
-import dateutil.parser
 
-# Dicionários
-repeticao_RFID = {}
-repeticao_SN = {}
-
-
-def rec_validation(lista, repeticao):
+def rec_validation(lista, repeticao_rfid, repeticao_serial):
     # Imports
     from datetime import datetime
-    from Modulos.class_erros import Error, SaveError
+    from Test_Zone.Modulos.class_errosBD import Error
     from dateutil.parser import parse
 
     global error_chave
@@ -17,17 +11,18 @@ def rec_validation(lista, repeticao):
 
     error = Error()
 
-    error_chave = 0
-    error_PO = 0
-    error_PN = 0
-    error_RFID = 0
-    error_SN = 0
-    error_Date = 0
-    error_ChaveRel = 0
-
     ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
 
     for item in lista:
+
+        error_chave = 0
+        error_PO = 0
+        error_PN = 0
+        error_RFID = 0
+        error_SN = 0
+        error_Date = 0
+        error_ChaveRel = 0
+        error_local = 0
 
         cell_range = item['ChaveNF_Entrada']
         if bool(cell_range) is False:
@@ -40,9 +35,16 @@ def rec_validation(lista, repeticao):
             error_chave += 1
         finally:
             pass
-        if len(cell_range) != 44:
+        if len(str(cell_range)) != 44:
             error.chave()
             error_chave += 1
+        for c in str(cell_range):
+            if str(cell_range).count(c) == 44:
+                error.chave()
+                error_chave += 1
+                break
+            else:
+                continue
 
         ### VALIDAÇÃO DO PEDIDO DE COMPRA (PO)
 
@@ -100,7 +102,7 @@ def rec_validation(lista, repeticao):
         elif "E" != cell_range[0]:
             error.rfid()
             error_RFID += 1
-        if repeticao.count(cell_range) > 1:
+        if repeticao_rfid.count(cell_range) > 1:
             error.rfid_repetido()
             error_RFID += 1
         else:
@@ -125,13 +127,20 @@ def rec_validation(lista, repeticao):
                 "/" in str(cell_range):
             error.serial_number()
             error_SN += 1
-        if repeticao.count(cell_range) > 1:
-            error.rfid_repetido()
+        if repeticao_serial.count(cell_range) > 1:
+            error.serial_number_repetido()
             error_RFID += 1
         else:
             pass
 
         ### VALIDAÇÃO LOCAL
+
+        cell_range = item['Local']
+        if cell_range == 'TERCA VIX' or cell_range == 'AGS RIO' or cell_range == 'NEXUS SAO':
+            pass
+        else:
+            error.local()
+            error_local += 1
 
         ### VALIDAÇÃO DA DATA
 
@@ -158,11 +167,8 @@ def rec_validation(lista, repeticao):
 
         # Select na tabela Recebimento com base na data
 
-        repeticao_RFID.clear()
-        repeticao_SN.clear()
-
         if error_chave > 0 or error_PO > 0 or error_PN > 0 \
                 or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
-            return 'Erro nos dados'
+            return print(error.retornar())
         else:
-            return 'Sucesso'
+            return print('Sucesso')

@@ -20,7 +20,8 @@ class Error:
                           'Data fora do padrão': 0,
                           'Data maior que a data atual': 0,
                           'Chave de Relacionamento consta na Tbl.Recebimento/Expedição': 0,
-                          'Quantidade do RFID diferente da Nota Fiscal': 0
+                          'Quantidade do RFID diferente da Nota Fiscal': 0,
+                          'Local fora do padrão': 0
                           }
 
     def empty(self):
@@ -137,6 +138,14 @@ class Error:
 
     def quantidade(self):
         erro = 'Quantidade do RFID diferente da Nota Fiscal'
+        self.dic_erros[erro] += 1
+        if erro in self.lista:
+            pass
+        else:
+            self.lista.append(erro)
+
+    def local(self):
+        erro = 'Local fora do padrão'
         self.dic_erros[erro] += 1
         if erro in self.lista:
             pass
