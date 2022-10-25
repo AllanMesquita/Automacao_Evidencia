@@ -2,10 +2,11 @@ import json
 import Modulos.validacaoBD
 
 repeticao_rfid = []
-repeticao_serial = ['E00000000000000000314981']
+repeticao_serial = []
 erros = []
 nfs = []
 validacao = []
+resultado = ''
 
 data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
 
@@ -32,8 +33,10 @@ for nf in nfs:
     for linha in validacao:
         print(linha)
     'Chama código validação'
-    Modulos.validacaoBD.rec_validation(validacao, repeticao_rfid, repeticao_serial)
+    resultado = Modulos.validacaoBD.rec_validation(validacao, repeticao_rfid, repeticao_serial)
     'processo se erro'
     validacao.clear()
 
+erros.append(resultado)
+print(erros)
 # print(repeticao)

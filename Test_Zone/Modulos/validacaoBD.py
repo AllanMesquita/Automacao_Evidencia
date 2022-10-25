@@ -1,4 +1,6 @@
 
+dict_error = {}
+
 def rec_validation(lista, repeticao_rfid, repeticao_serial):
     # Imports
     from datetime import datetime
@@ -9,11 +11,13 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
     print('Início da validação - Recebimento')
 
-    error = Error()
+
 
     ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
 
     for item in lista:
+
+        error = Error()
 
         error_chave = 0
         error_PO = 0
@@ -169,6 +173,9 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
         if error_chave > 0 or error_PO > 0 or error_PN > 0 \
                 or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
-            return print(error.retornar())
-        else:
-            return print('Sucesso')
+            if dict[item['RFID_Produto']] in dict_error:
+                dict_error[item['RFID_Produto']] += error.retornar()
+            else:
+                dict_error[item['RFID_Produto']] = error.retornar()
+
+    return dict_error

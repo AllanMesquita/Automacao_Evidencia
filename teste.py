@@ -625,17 +625,21 @@ import traceback
 #
 # print(var.count(str(1)))
 # print(str(2)*44)
-var = '3322042878710900013055001000002573177048042'
-peso = 2
-resul = 0
-print(str(var[:43]))
-for c in var[::-1]:
-    print(int(c) * peso)
-    mult = int(c) * peso
-    resul += mult
-    if peso == 9:
-        peso = 2
-    else:
-        peso += 1
+# var = '3322042878710900013055001000002573177048042'
+# peso = 2
+# resul = 0
+# print(str(var[:43]))
+# for c in var[::-1]:
+#     print(int(c) * peso)
+#     mult = int(c) * peso
+#     resul += mult
+#     if peso == 9:
+#         peso = 2
+#     else:
+#         peso += 1
+#
+# print(resul/11, ' ', resul % 11, '-', 11-(resul % 11))
 
-print(resul/11, ' ', resul % 11, '-', 11-(resul % 11))
+dict = {'Teste': 0}
+
+print(dict['Teste'])
