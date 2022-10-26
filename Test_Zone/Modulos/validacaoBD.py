@@ -1,5 +1,6 @@
 
-dict_error = {}
+dict_return = {}
+
 
 def rec_validation(lista, repeticao_rfid, repeticao_serial):
     # Imports
@@ -9,9 +10,9 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
     global error_chave
 
+    dict_error = {}
+
     print('Início da validação - Recebimento')
-
-
 
     ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
 
@@ -178,4 +179,7 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
             else:
                 dict_error[item['RFID_Produto']] = error.retornar()
 
-    return dict_error
+        dict_return[item['ChaveNF_Entrada']] = dict_error
+        # dict_error.clear()
+
+    return dict_return

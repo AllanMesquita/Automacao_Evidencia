@@ -7,7 +7,6 @@
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/QualidadeBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/QualidadeBD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -438,7 +437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666716823427</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Update">
+      <created>1666736129945</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1666736129945</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -580,12 +586,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py</url>
-          <line>173</line>
+          <line>174</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py</url>
-          <line>98</line>
+          <line>99</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
