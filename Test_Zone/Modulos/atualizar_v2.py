@@ -285,7 +285,22 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         aba_v17[f'{col}{ultima_linha_v17}'].font = font
                     if colunas_evid[coluna_evid] == 'A':
                         chave = cell_range
-                        find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
+                        # find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
+                        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+                        dbname = "logistic-control"
+                        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+                        password = "EsjHSrS69295NzHu342ap6P!N"
+                        sslmode = "require"
+                        # Construct connection string
+                        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
+                                                                                                     password,
+                                                                                                     sslmode)
+                        conn = psycopg2.connect(conn_string)
+                        print("Connection established")
+                        cursor = conn.cursor()
+
+                        cursor.execute()
+
                         if find_chave.empty:
                             aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                             # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'

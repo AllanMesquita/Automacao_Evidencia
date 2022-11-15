@@ -298,7 +298,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         find_chave = df_mastersaf.loc[df_mastersaf['Unnamed: 17'] == chave]
                         if find_chave.empty:
                             aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-                            #aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
+                            # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                         else:
                             # find_org = find_chave['CNPJ/CPF do Destinatário']
                             find_org = find_chave['Unnamed: 4']

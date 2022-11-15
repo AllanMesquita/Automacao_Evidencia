@@ -21,12 +21,12 @@ cursor = conn.cursor()
 #
 # req_body = json.load(data)
 
-wb = openpyxl.load_workbook("C:\\Users\\allan.mesquita\\Downloads\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx")
+wb = openpyxl.load_workbook("C:\\Users\\allan.mesquita\\Downloads\\2022 á 2027 - NFs Saída Mastersaf.xlsx")
 sheet = wb.sheetnames
 aba = wb[sheet[1]]
 linhas = len(aba['A'])
 
-linha = 5330
+linha = 19655
 
 dicionario = {}
 dicionario_bd = {}
@@ -35,7 +35,7 @@ error_bd = False
 
 while linha != linhas + 1:
     chave_acesso = aba[f'R{linha}'].value
-    quant_com = aba[f'AC{linha}'].value
+    quant_com = aba[f'AC{linha}'].value if bool(aba[f'AC{linha}'].value) else '00'
 
     if chave_acesso not in dicionario:
         dicionario[chave_acesso] = int(str(quant_com.split(',')[0]).replace(',', '').replace('.', ''))
@@ -52,7 +52,7 @@ for chave in dicionario.items():
     chave_acesso = chave[0]
 
     # PESQUISA NOTA NO BANCO
-    cursor.execute(f"SELECT quantidade_com FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '{chave_acesso}'")
+    cursor.execute(f"SELECT quantidade_com FROM material_management.master_saf_saida_itens WHERE chave_acesso = '{chave_acesso}'")
     resultado = cursor.fetchall()
     if bool(resultado):
         for dado in resultado:
@@ -68,7 +68,7 @@ for chave in dicionario.items():
 
 print(dicionario_bd)
 
-linha = 5330
+linha = 19655
 
 while linha != linhas + 1:
 
@@ -94,35 +94,35 @@ while linha != linhas + 1:
         cean_trib = aba[f'Z{linha}'].value
         unid_com = aba[f'AA{linha}'].value
         valor_unitario = aba[f'AB{linha}'].value
-        quantidade = aba[f'AC{linha}'].value
+        quantidade = aba[f'AC{linha}'].value if bool(aba[f'AC{linha}'].value) else '00'
         valor_total = aba[f'AD{linha}'].value
         origem = aba[f'AE{linha}'].value
         base_icms = aba[f'AF{linha}'].value
         cst_icms = aba[f'AG{linha}'].value if bool(aba[f'AG{linha}'].value) else '00'
-        aliq_icms = aba[f'AH{linha}'].value if bool(aba[f'AH{linha}'].value) else '00'
-        valor_icms = aba[f'AI{linha}'].value if bool(aba[f'AI{linha}'].value) else '00'
-        perc_icms = aba[f'AJ{linha}'].value if bool(aba[f'AJ{linha}'].value) else '00'
-        base_icms_st = aba[f'AK{linha}'].value if bool(aba[f'AK{linha}'].value) else '00'
-        valor_icms_st = aba[f'AL{linha}'].value if bool(aba[f'AL{linha}'].value) else '00'
-        aliq_icms_st = aba[f'AM{linha}'].value if bool(aba[f'AM{linha}'].value) else '00'
-        valor_pis = aba[f'AN{linha}'].value if bool(aba[f'AN{linha}'].value) else '00'
-        cst_pis = aba[f'AO{linha}'].value if bool(aba[f'AO{linha}'].value) else '00'
-        valor_cofins = aba[f'AP{linha}'].value if bool(aba[f'AP{linha}'].value) else '00'
-        cst_cofins = aba[f'AQ{linha}'].value if bool(aba[f'AQ{linha}'].value) else '00'
-        valor_ipi = aba[f'AR{linha}'].value if bool(aba[f'AR{linha}'].value) else '00'
-        cst_ipi = aba[f'AS{linha}'].value if bool(aba[f'AS{linha}'].value) else '00'
-        aliq_ipi = aba[f'AT{linha}'].value if bool(aba[f'AT{linha}'].value) else '00'
+        aliq_icms = aba[f'AH{linha}'].value
+        valor_icms = aba[f'AI{linha}'].value
+        perc_icms = aba[f'AJ{linha}'].value
+        base_icms_st = aba[f'AK{linha}'].value
+        valor_icms_st = aba[f'AL{linha}'].value
+        aliq_icms_st = aba[f'AM{linha}'].value
+        valor_pis = aba[f'AN{linha}'].value
+        cst_pis = aba[f'AO{linha}'].value
+        valor_cofins = aba[f'AP{linha}'].value
+        cst_cofins = aba[f'AQ{linha}'].value
+        valor_ipi = aba[f'AR{linha}'].value
+        cst_ipi = aba[f'AS{linha}'].value
+        aliq_ipi = aba[f'AT{linha}'].value
         ncm = aba[f'AU{linha}'].value
         cfop = aba[f'AV{linha}'].value
 
         # PESQUISAS
         # CFOP
         teste = pesquisa(cursor, conn, chave_acesso, aba, linha)
-        id_cfop = teste.cfop()
+        id_cfop = teste.cfop_saida()
         print(id_cfop)
 
         cursor.execute(
-            'INSERT INTO material_management.master_saf_entrada_itens ('
+            'INSERT INTO material_management.master_saf_saida_itens ('
             'chave_acesso, data_emissao, descricao_produto, cod_produto, numero_pedido, cean, cean_trib, unid_com, '
             'valor_unitario, quantidade_com, valor_total, origem, base_calculo_icms, cst_icms_csosn, aliq_icms, valor_icms,'
             'perc_margem_icms_st, base_calc_icms_st, valor_icms_st, aliq_icms_st, valor_pis, cst_pis, valor_cofins, '
@@ -134,7 +134,7 @@ while linha != linhas + 1:
             ')',
             (
                 chave_acesso, parse(str(data_emissao)), descricao_produto, cod_produto, numero_pedido, cean, cean_trib, unid_com,
-                valor_unitario.replace('.', '').replace(',', '.'), str(quantidade.split(',')[0]).replace('.', ''),
+                valor_unitario.replace('.', '').replace(',', '.'), quantidade.split(',')[0].replace('.', ''),
                 valor_total.replace('.', '').replace(',', '.'), origem, base_icms.replace('.', '').replace(',', '.'),
                 cst_icms.replace('.', '').replace(',', '.'), aliq_icms.replace('.', '').replace(',', '.'),
                 valor_icms.replace('.', '').replace(',', '.'), perc_icms.replace('.', '').replace(',', '.'),

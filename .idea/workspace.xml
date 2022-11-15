@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2_1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test_Zone/bd_nfentrada2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test_Zone/bd_ItensSaida2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test_Zone/bd_nfSaida2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/atualizar_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/atualizar_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test_Zone/bd_nfentrada2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/bd_nfentrada2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,24 +42,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "C:/Users/allan.mesquita/OneDrive - NTT/Documents/Projetos/Automacao_Evidencias/Script/Test_Zone/Modulos",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/allan.mesquita/OneDrive - NTT/Documents/Projetos/Automacao_Evidencias/Script/Test_Zone&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos" />
       <recent name="C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone" />
+      <recent name="C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone\Modulos" />
       <recent name="C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Azure\logisicsautomation\tblProcessamentoAutomacoes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\allan.mesquita\OneDrive - NTT\Documents\Projetos\Automacao_Evidencias\Script\Test_Zone" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.bd_nfentrada2">
-    <configuration name="QualidadeBD" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.teste">
+    <configuration name="bd_ItensSaida2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Script" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -65,7 +71,49 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/QualidadeBD.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/bd_ItensSaida2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bd_nfItens" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Script" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test_Zone" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bd_nfSaida2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Script" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test_Zone" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/bd_nfSaida2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -116,50 +164,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="validacaoBD" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Script" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test_Zone/Modulos" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest in QualidadeBD.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="Script" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test_Zone" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_parameters" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/Test_Zone/QualidadeBD.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.bd_nfentrada2" />
-        <item itemvalue="Python.QualidadeBD" />
-        <item itemvalue="Python.validacaoBD" />
         <item itemvalue="Python.teste" />
-        <item itemvalue="Python tests.pytest in QualidadeBD.py" />
+        <item itemvalue="Python.bd_ItensSaida2" />
+        <item itemvalue="Python.bd_nfSaida2" />
+        <item itemvalue="Python.bd_nfItens" />
+        <item itemvalue="Python.bd_nfentrada2" />
       </list>
     </recent_temporary>
   </component>
@@ -452,7 +463,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666821846690</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Update">
+      <created>1667945973106</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1667945973106</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -601,6 +619,11 @@
           <url>file://$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py</url>
           <line>99</line>
           <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2_1.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

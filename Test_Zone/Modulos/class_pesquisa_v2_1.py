@@ -27,7 +27,7 @@ class Pesquisa:
             destinatario = 'NULL'
         else:
             # DADO NO BANCO
-            self.cur.execute(f"SELECT cnpj FROM material_management.dados_juridicos WHERE cnpj = '{self.pesquisa}'")
+            self.cur.execute(f"SELECT cnpj FROM material_management.dados_juridicos WHERE cnpj = '{str(self.pesquisa)}'")
             resultado = self.cur.fetchall()
             if bool(resultado):
                 for lista in resultado:
@@ -206,14 +206,56 @@ class Pesquisa:
 
         return transportadora
 
+    def transportadora_saida(self):
+        transportadora = ''
+        # DADO VAZIO
+        if bool(self.pesquisa) is False:
+            transportadora = 'NULL'
+        else:
+            # DADO NO BANCO
+            self.cur.execute(f"SELECT cnpj FROM material_management.dados_juridicos WHERE cnpj = '{self.pesquisa}'")
+            resultado = self.cur.fetchall()
+            if bool(resultado):
+                for lista in resultado:
+                    for dado in lista:
+                        transportadora = dado
+            else:
+                # DADO FORA DO BANCO
+                cnpj = self.json[f'AG{self.linha}'].value
+                inscricao_estadual = ""
+                razao_social = self.json[f'AH{self.linha}'].value
+                endereco = self.json[f'AI{self.linha}'].value
+                bairro = ""
+                cep = ""
+                municipio = self.json[f'AJ{self.linha}'].value
+                uf = self.json[f'AK{self.linha}'].value
+
+                self.cur.execute(
+                    "INSERT INTO material_management.dados_juridicos "
+                    "("
+                    "classificacao, cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf"
+                    ")"
+                    "VALUES "
+                    "("
+                    "%s, %s, %s, %s, %s, %s, %s, %s, %s"
+                    ")",
+                    (
+                        'Transportadora', cnpj, inscricao_estadual, razao_social, endereco, bairro, cep, municipio, uf
+                    )
+                )
+                self.conn.commit()
+                transportadora = cnpj
+
+        return transportadora
+
     def cfop(self):
         id_cfop = ''
         # DADO VAZIO
         if bool(self.pesquisa) is False:
-            id_cfop = 'NULL'
+            id_cfop = 1
         else:
             # DADO NO BANCO
-            self.cur.execute(f"SELECT natureza_cfop FROM material_management.nf_entrada2 WHERE chave_acesso = '{self.pesquisa}'")
+            self.cur.execute(f"SELECT natureza_cfop FROM material_management.master_saf_entrada WHERE chave_acesso = '{self.pesquisa}'")
             resultado = self.cur.fetchall()
             if bool(resultado):
                 for lista in resultado:
@@ -221,8 +263,8 @@ class Pesquisa:
                         id_cfop = dado
             else:
                 # DADO FORA DO BANCO
-                natureza = self.json['Natureza da OperaÃ§Ã£o']
-                cfop = self.json['CFOP']
+                natureza = self.json[f'D{self.linha}'].value
+                cfop = self.json[f'AV{self.linha}'].value
 
                 self.cur.execute(
                     "INSERT INTO material_management.natureza_cfop "
@@ -252,10 +294,10 @@ class Pesquisa:
         id_cfop = ''
         # DADO VAZIO
         if bool(self.pesquisa) is False:
-            id_cfop = 'NULL'
+            id_cfop = 1
         else:
             # DADO NO BANCO
-            self.cur.execute(f"SELECT natureza_cfop FROM material_management.nf_saida WHERE chave_acesso = '{self.pesquisa}'")
+            self.cur.execute(f"SELECT natureza_cfop FROM material_management.master_saf_saida WHERE chave_acesso = '{self.pesquisa}'")
             resultado = self.cur.fetchall()
             if bool(resultado):
                 for lista in resultado:
@@ -263,8 +305,8 @@ class Pesquisa:
                         id_cfop = dado
             else:
                 # DADO FORA DO BANCO
-                natureza = self.json['Natureza da OperaÃ§Ã£o']
-                cfop = self.json['CFOP']
+                natureza = self.json[f'D{self.linha}'].value
+                cfop = self.json[f'AV{self.linha}'].value
 
                 self.cur.execute(
                     "INSERT INTO material_management.natureza_cfop "
