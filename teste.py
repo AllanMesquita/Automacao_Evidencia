@@ -686,24 +686,36 @@ import traceback
 #
 # cursor.close()
 # conn.close()
+#
+# var = [('LIC00593569B', '$5,838.64'), ('LIC00563557B', '$180,003.32')]
+# dic = {}
+# lista = []
+#
+# for item in var:
+#     print(item)
+#     dic[item[0]] = item[1]
+#     dic_copy = dic.copy()
+#     lista.append(dic_copy)
+#     dic.clear()
+#
+# print(lista)
+# print(dic)
+# for c in lista:
+#     for d in c.keys():
+#         if d == 'LIC00593569B':
+#             print(d)
+#             print(str(c['LIC00593569B'])[1:].replace(',', ''))
+#         else:
+#             continue
 
-var = [('LIC00593569B', '$5,838.64'), ('LIC00563557B', '$180,003.32')]
-dic = {}
-lista = []
-
-for item in var:
-    print(item)
-    dic[item[0]] = item[1]
-    dic_copy = dic.copy()
-    lista.append(dic_copy)
-    dic.clear()
-
-print(lista)
-print(dic)
-for c in lista:
-    for d in c.keys():
-        if d == 'LIC00593569B':
-            print(d)
-            print(str(c['LIC00593569B'])[1:].replace(',', ''))
-        else:
-            continue
+host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+dbname = "logistic-control"
+user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+password = "EsjHSrS69295NzHu342ap6P!N"
+sslmode = 'require'
+# Construct connection string
+conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
+                                                                             sslmode)
+conn = psycopg2.connect(conn_string)
+print("Connection established")
+cursor = conn.cursor()

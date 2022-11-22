@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/Test_Zone/bd_ItensSaida2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test_Zone/bd_nfSaida2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/atualizar_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/atualizar_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/class_pesquisa_v2_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/bd_nfItens.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/bd_nfentrada2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/bd_nfentrada2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modulos/class_erros.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/class_erros.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -470,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667945973106</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Update">
+      <created>1668472132949</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1668472132949</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
