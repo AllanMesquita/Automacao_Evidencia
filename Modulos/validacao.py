@@ -291,7 +291,7 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         ### CHAVE DE RELACIONAMENTO
 
-        aba[f'K{linha}'] = str(aba[f'E{linha}'].value) + str(aba[f'G{linha}'].value)
+        aba[f'K{linha}'] = str(aba[f'E{linha}'].value).strip() + str(aba[f'G{linha}'].value).strip()
 
         try:
             cell_range = str(aba[f'H{linha}'].value)
