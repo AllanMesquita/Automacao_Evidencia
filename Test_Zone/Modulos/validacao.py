@@ -129,7 +129,7 @@ def rec_validation(aba, qtd_linhas, file_name):
         ### VALIDAÇÃO DO PART-NUMBER
 
         # linha_validada += 1
-        cell_range = aba[f"D{linha}"].value
+        cell_range = str(aba[f"D{linha}"].value)
         if bool(cell_range) is False or cell_range is None:
             aba[f"D{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF7B00")
             # aba[f'N{linha}'] = Error(celula_error).empty()

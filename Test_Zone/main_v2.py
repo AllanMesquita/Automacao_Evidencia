@@ -133,7 +133,7 @@ if verificar_status is False:
 
             # v17 = xl.open("C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\GESTÃO DE ESTOQUE\\001 Estoque\\Gestão Estoque RFID - Estoque Consolidado V17.1.xlsm", keep_vba=True)
             v17 = xl.open(
-                "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm",
+                "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\07 Inventario\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 02.12.22.xlsm",
                 keep_vba=True)
             # v17.active
             # v17_sheets = v17.sheetnames
@@ -353,7 +353,7 @@ if verificar_status is False:
 
         # v17.save("C:\\Users\\allan.mesquita\\NTT\\@AM BR Services and Operations - Privado\\GESTÃO DE ESTOQUE\\001 Estoque\\Gestão Estoque RFID - Estoque Consolidado V17.1.xlsm")
         v17.save(
-            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm")
+            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\07 Inventario\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 02.12.22.xlsm")
 
         ### STATUS ERROR V17
         # aba_tblPA.Range(f'D{var_linha}').Value = datetime.strftime(datetime.now(), '%d/%m/%Y %H:%M')

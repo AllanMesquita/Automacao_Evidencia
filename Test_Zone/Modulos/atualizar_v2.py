@@ -1,6 +1,3 @@
-from turtle import st
-
-
 def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
     import openpyxl as xl
     import pandas as pd
@@ -220,6 +217,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
         ### INSERÇÃO DA EVIDÊNCIA NA PLANILHA ESTOQUE
 
         temp = datetime.now()
+        codValor = ''
         v17.active = v17[v17_sheets[2]]
         while linha != qtd_linhas + 1:
             """
@@ -285,7 +283,10 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         aba_v17[f'{col}{ultima_linha_v17}'].font = font
                     if colunas_evid[coluna_evid] == 'A':
                         chave = cell_range
+
+                        ### Substituição da pesquisa com PANDAS por SQL - 09.12.2022
                         # find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
+
                         host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
                         dbname = "logistic-control"
                         user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
@@ -299,64 +300,93 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         print("Connection established")
                         cursor = conn.cursor()
 
-                        cursor.execute()
+                        cursor.execute(f"SELECT destinatario FROM material_management.master_saf_entrada WHERE chave_acesso = '{chave}'")
+                        cabecalho = cursor.fetchall()
+                        cursor.execute(f"SELECT cod_produto, valor_unitario FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '{chave}'")
+                        codValor = cursor.fetchall()
 
-                        if find_chave.empty:
+                        cursor.close()
+                        conn.close()
+
+                        ### Ajustes das condições após pesquisa por SQL - 12.12.2022
+                        # if find_chave.empty:
+                        if bool(cabecalho) is False:
                             aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                             # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                         else:
-                            find_org = find_chave['CNPJ/CPF do Destinatário']
-                            if find_org.at[find_org.index[0]] == int('00447484000111'):
+                            # find_org = find_chave['CNPJ/CPF do Destinatário']
+                            # if find_org.at[find_org.index[0]] == int('00447484000111'):
+                            if cabecalho[0][0] == '00447484000111':
                                 aba_v17[f'P{ultima_linha_v17}'] = 1
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 1
-                            elif find_org.at[find_org.index[0]] == int('00447484000200'):
+                            # elif find_org.at[find_org.index[0]] == int('00447484000200'):
+                            elif cabecalho[0][0] == '00447484000200':
                                 aba_v17[f'P{ultima_linha_v17}'] = 2
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 2
-                            elif find_org.at[find_org.index[0]] == int('00447484000626'):
+                            # elif find_org.at[find_org.index[0]] == int('00447484000626'):
+                            elif cabecalho[0][0] == '00447484000626':
                                 aba_v17[f'P{ultima_linha_v17}'] = 6
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 6
-                            elif find_org.at[find_org.index[0]] == int('05437734000156'):
+                            # elif find_org.at[find_org.index[0]] == int('05437734000156'):
+                            elif cabecalho[0][0] == '05437734000156':
                                 aba_v17[f'P{ultima_linha_v17}'] = 22
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 22
-                            elif find_org.at[find_org.index[0]] == int('05437734000318'):
+                            # elif find_org.at[find_org.index[0]] == int('05437734000318'):
+                            elif cabecalho[0][0] == '05437734000318':
                                 aba_v17[f'P{ultima_linha_v17}'] = 24
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 24
-                            elif find_org.at[find_org.index[0]] == int('05437734000407'):
+                            # elif find_org.at[find_org.index[0]] == int('05437734000407'):
+                            elif cabecalho[0][0] == '05437734000407':
                                 aba_v17[f'P{ultima_linha_v17}'] = 26
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 26
-                            elif find_org.at[find_org.index[0]] == int('05437734000580'):
+                            # elif find_org.at[find_org.index[0]] == int('05437734000580'):
+                            elif cabecalho[0][0] == '05437734000580':
                                 aba_v17[f'P{ultima_linha_v17}'] = 28
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 28
-                            elif find_org.at[find_org.index[0]] == int('05437734000660'):
+                            # elif find_org.at[find_org.index[0]] == int('05437734000660'):
+                            elif cabecalho[0][0] == '05437734000660':
                                 aba_v17[f'P{ultima_linha_v17}'] = 30
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 30
-                            elif find_org.at[find_org.index[0]] == int('31546914000186'):
+                            # elif find_org.at[find_org.index[0]] == int('31546914000186'):
+                            elif cabecalho[0][0] == '31546914000186':
                                 aba_v17[f'P{ultima_linha_v17}'] = 50
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
                                 # aba_v17.range(f'P{ultima_linha_V17}').value = 50
                     elif colunas_evid[coluna_evid] == 'D':
                         pn = cell_range
-                        find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
-                        if find_chave.empty:
+                        # find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
+                        # if find_chave.empty:
+                        if bool(codValor) is False:
                             pass
                         else:
-                            find_pn = find_chave.loc[find_chave['Cód. Produto'] == pn]
-                            if find_pn.empty:
+                            # find_pn = find_chave.loc[find_chave['Cód. Produto'] == pn]
+                            marcador = ''
+                            pnValor = ''
+                            for item in codValor:
+                                if item[0] == pn:
+                                    marcador = 'OK'
+                                    pnValor = str(pn[1])[1:].replace(',', '').replace('.', ',')
+                                else:
+                                    marcador = 'N/A'
+
+                            # if find_pn.empty:
+                            if marcador == 'N/A':
                                 aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid',
                                                                                        fgColor='FF0000')
                                 # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                             else:
-                                find_valor = find_pn['Valor Unitário Comercial']
-                                valor = find_valor.at[find_valor.index[0]]  # .replace(',', '.')
-                                aba_v17[f'AE{ultima_linha_v17}'] = valor  # float(valor)
+                                # find_valor = find_pn['Valor Unitário Comercial']
+                                # valor = find_valor.at[find_valor.index[0]]  # .replace(',', '.')
+                                # aba_v17[f'AE{ultima_linha_v17}'] = valor  # float(valor)
+                                aba_v17[f'AE{ultima_linha_v17}'] = pnValor
                                 # aba_v17.range(f'AE{ultima_linha_V17}').value = float(valor)
                                 aba_v17[f'AE{ultima_linha_v17}'].font = font
                 coluna_evid += 1

@@ -719,3 +719,23 @@ conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(hos
 conn = psycopg2.connect(conn_string)
 print("Connection established")
 cursor = conn.cursor()
+
+cursor.execute("SELECT destinatario FROM material_management.master_saf_entrada WHERE chave_acesso = '42220105607657000801550160000586261296055267'")
+cabecalho = cursor.fetchall()
+print(cabecalho[0][0] == '31546914000186')
+print(bool(cabecalho))
+for dado in cabecalho:
+    print(dado)
+
+cursor.execute("SELECT cod_produto, valor_unitario FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '42220105607657000801550160000586261296055267'")
+valor = cursor.fetchall()
+for dado in valor:
+    print(str(dado[1])[1:].replace(',', '').replace('.', ','))
+# contador = 0
+#
+# for c in range(0, 11):
+#     print(contador)
+#     if contador == 2:
+#         break
+#     else:
+#         contador += 1
