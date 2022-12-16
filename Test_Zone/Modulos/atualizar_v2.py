@@ -1,4 +1,4 @@
-def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
+def popular_V17(aba, qtd_linhas, type_evid, v17):
     import openpyxl as xl
     import pandas as pd
     from openpyxl.styles import PatternFill, Font
@@ -369,11 +369,12 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         else:
                             # find_pn = find_chave.loc[find_chave['Cód. Produto'] == pn]
                             marcador = ''
-                            pnValor = ''
+                            pn_valor = ''
                             for item in codValor:
                                 if item[0] == pn:
                                     marcador = 'OK'
-                                    pnValor = str(pn[1])[1:].replace(',', '').replace('.', ',')
+                                    pn_valor = item[1]
+                                    break
                                 else:
                                     marcador = 'N/A'
 
@@ -386,7 +387,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                                 # find_valor = find_pn['Valor Unitário Comercial']
                                 # valor = find_valor.at[find_valor.index[0]]  # .replace(',', '.')
                                 # aba_v17[f'AE{ultima_linha_v17}'] = valor  # float(valor)
-                                aba_v17[f'AE{ultima_linha_v17}'] = pnValor
+                                aba_v17[f'AE{ultima_linha_v17}'] = pn_valor[1:].replace(',', '').replace('.', ',')
                                 # aba_v17.range(f'AE{ultima_linha_V17}').value = float(valor)
                                 aba_v17[f'AE{ultima_linha_v17}'].font = font
                 coluna_evid += 1
@@ -401,7 +402,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
         # aba_v17.tables['ItensArmazenados'].ref = f'A2:AT{len(aba_v17["A"])}'
         v17.active = v17[v17_sheets[2]]
         v17.save(
-            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm")
+            "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\07 Inventario\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 02.12.22.xlsm")
         # v17.save()
         tbl_exp.save(
             "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\tblEvidenciaExpedicao.xlsm")
@@ -517,8 +518,7 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
 
         # print(f'Tempo de verificação e exclusão da V17: {datetime.now() - tempo_exp}')
         v17.active = v17[v17_sheets[2]]
-        v17.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\"
-                 "Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm")
+        v17.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\07 Inventario\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 02.12.22.xlsm")
         # v17.save()
         tbl_exp.save("C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\"
                      "tblEvidenciaExpedicao.xlsm")

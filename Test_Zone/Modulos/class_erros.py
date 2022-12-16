@@ -20,7 +20,8 @@ class Error:
                           'Data fora do padrão': 0,
                           'Data maior que a data atual': 0,
                           'Chave de Relacionamento consta na Tbl.Recebimento/Expedição': 0,
-                          'Quantidade do RFID diferente da Nota Fiscal': 0
+                          'Quantidade do RFID diferente da Nota Fiscal': 0,
+                          'Chave de Nota Fiscal não consta em BD': 0
                           }
         # self.lista_erros = ['Célula sem dado',
         #                     'Chave de Nota Fiscal fora do padrão',
@@ -49,6 +50,14 @@ class Error:
 
     def chave(self):
         erro = 'Chave de Nota Fiscal fora do padrão'
+        self.dic_erros[erro] += 1
+        if erro in self.lista:
+            pass
+        else:
+            self.lista.append(erro)
+
+    def chave_bd(self):
+        erro = 'Chave de Nota Fiscal não consta em BD'
         self.dic_erros[erro] += 1
         if erro in self.lista:
             pass

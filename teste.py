@@ -708,29 +708,29 @@ import traceback
 #         else:
 #             continue
 
-host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
-dbname = "logistic-control"
-user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
-password = "EsjHSrS69295NzHu342ap6P!N"
-sslmode = 'require'
-# Construct connection string
-conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
-                                                                             sslmode)
-conn = psycopg2.connect(conn_string)
-print("Connection established")
-cursor = conn.cursor()
+# host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+# dbname = "logistic-control"
+# user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+# password = "EsjHSrS69295NzHu342ap6P!N"
+# sslmode = 'require'
+# # Construct connection string
+# conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
+#                                                                              sslmode)
+# conn = psycopg2.connect(conn_string)
+# print("Connection established")
+# cursor = conn.cursor()
 
-cursor.execute("SELECT destinatario FROM material_management.master_saf_entrada WHERE chave_acesso = '42220105607657000801550160000586261296055267'")
-cabecalho = cursor.fetchall()
-print(cabecalho[0][0] == '31546914000186')
-print(bool(cabecalho))
-for dado in cabecalho:
-    print(dado)
-
-cursor.execute("SELECT cod_produto, valor_unitario FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '42220105607657000801550160000586261296055267'")
-valor = cursor.fetchall()
-for dado in valor:
-    print(str(dado[1])[1:].replace(',', '').replace('.', ','))
+# cursor.execute("SELECT destinatario FROM material_management.master_saf_entrada WHERE chave_acesso = '42220105607657000801550160000586261296055267'")
+# cabecalho = cursor.fetchall()
+# print(cabecalho[0][0] == '31546914000186')
+# print(bool(cabecalho))
+# for dado in cabecalho:
+#     print(dado)
+#
+# cursor.execute("SELECT cod_produto, valor_unitario FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '42220105607657000801550160000586261296055267'")
+# valor = cursor.fetchall()
+# for dado in valor:
+#     print(str(dado[1])[1:].replace(',', '').replace('.', ','))
 # contador = 0
 #
 # for c in range(0, 11):
@@ -739,3 +739,19 @@ for dado in valor:
 #         break
 #     else:
 #         contador += 1
+# soma = 0
+# cursor.execute(f"SELECT data FROM public.tbl_recebimento2 WHERE chave_relacionamento = 'E00000000000000000400854TERCA VIX'")
+# resultado = cursor.fetchall()
+# print(resultado)
+# for dado in resultado:
+#     for item in dado:
+#         print(parse(str(item)))
+
+import json
+
+data = open("C:\\Users\\allan.mesquita\\Downloads\\teste_json_exp.json")
+
+obj = json.load(data)
+
+for item in obj:
+    print(item[1])

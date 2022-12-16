@@ -29,6 +29,7 @@ def rec_validation(aba, qtd_linhas, file_name):
     import warnings
     from Modulos.class_erros import Error, SaveError
     from dateutil.parser import parse
+    import psycopg2
 
     # tempo_recebimento = datetime.now()
 
@@ -41,7 +42,7 @@ def rec_validation(aba, qtd_linhas, file_name):
     warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
     # print('carregamento V17')
     dfV17 = pd.read_excel(
-        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Documents\\Projetos\\Automacao_Evidencias\\Backup V17\\Backup V17.1\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 05.05.2022.xlsm",
+        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\07 Inventario\\Gestão Estoque RFID - Estoque Consolidado V17.1 - 02.12.22.xlsm",
         sheet_name="ItensArmazenados")
     # print('Carregamento tbl recebimento')
     dfTblRec = pd.read_excel(
@@ -49,10 +50,10 @@ def rec_validation(aba, qtd_linhas, file_name):
     dfRFID = dfV17['Unnamed: 8'].tolist()
     dfSerial = dfV17['Unnamed: 9'].tolist()
     dfTblRec_ChaveRelacionamento = dfTblRec['ChaveRelacionamento'].tolist()
-    df_nfEntrada = pd.read_excel(
-        "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx",
-        sheet_name='Dados dos Itens'
-    )
+    # df_nfEntrada = pd.read_excel(
+    #     "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx",
+    #     sheet_name='Dados dos Itens'
+    # )
 
     print('Início da validação - Recebimento')
 
@@ -73,7 +74,34 @@ def rec_validation(aba, qtd_linhas, file_name):
         ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
 
         # linha_validada += 1
+
         cell_range = aba[f"A{linha}"].value
+
+        ### Pesquisa da nota em Banco de Dados
+        # Update connection string information
+        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+        dbname = "logistic-control"
+        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+        password = "EsjHSrS69295NzHu342ap6P!N"
+        sslmode = "require"
+        # Construct connection string
+        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
+                                                                                     password,
+                                                                                     sslmode)
+        conn = psycopg2.connect(conn_string)
+        print("Connection established")
+        cursor = conn.cursor()
+
+        cursor.execute(f"SELECT chave_acesso FROM material_management.master_saf_entrada WHERE chave_acesso = '{cell_range}'")
+        pesquisa = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        if bool(pesquisa) is False:
+            error.chave_bd()
+            error_chave += 1
+
         if bool(cell_range) is False:
             aba[f"A{linha}"].fill = PatternFill(fill_type="solid", fgColor="FF7B00")
             # aba[f'N{linha}'] = Error.empty()
@@ -367,18 +395,56 @@ def rec_validation(aba, qtd_linhas, file_name):
     # print('Fim da validação')
 
     for chave in dict_chaves:
-        itens_chave = []
 
-        temp_df = df_nfEntrada.loc[df_nfEntrada['Unnamed: 17'] == chave]
-        qtd_chave = temp_df['Unnamed: 28']
+        erro = Error()
 
-        if temp_df.empty:
+        ### Pesquisa substituida de Pandas por SQL - 14.12.20222
+        # itens_chave = []
+        #
+        # temp_df = df_nfEntrada.loc[df_nfEntrada['Unnamed: 17'] == chave]
+        # qtd_chave = temp_df['Unnamed: 28']
+        #
+        # if temp_df.empty:
+        #     continue
+        # else:
+        #     for itens in qtd_chave:
+        #         itens_chave.append(float(itens.replace('.', '').replace(',', '.')))
+
+        # Update connection string information
+        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+        dbname = "logistic-control"
+        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+        password = "EsjHSrS69295NzHu342ap6P!N"
+        sslmode = "require"
+        # Construct connection string
+        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
+                                                                                     password,
+                                                                                     sslmode)
+        conn = psycopg2.connect(conn_string)
+        print("Connection established")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            f"SELECT quantidade_com FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '{chave}'")
+        pesquisa = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        soma_bd = 0
+
+        if bool(pesquisa) is False:
+            aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
+            aba[f'O{linha}'] = 'Chave de Nota Fiscal não consta em Banco Dados'
+            error_chave += 1
             continue
         else:
-            for itens in qtd_chave:
-                itens_chave.append(float(itens.replace('.', '').replace(',', '.')))
+            for dado in pesquisa:
+                for item in dado:
+                    soma_bd += item
 
-            if sum(itens_chave) == dict_chaves[chave]:
+            # if sum(itens_chave) == dict_chaves[chave]:
+            if soma_bd == dict_chaves[chave]:
                 pass
             else:
                 linha = 2
@@ -388,7 +454,6 @@ def rec_validation(aba, qtd_linhas, file_name):
                         aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
                         aba[f'O{linha}'] = 'Quantidade do RFID diferente da Nota Fiscal'
                         error_chave += 1
-                        erro = Error()
                         erro.quantidade()
                         save = SaveError(aba, linha, 'Recebimento', erro.dic_erros, file_name)
                         save.connect()
@@ -396,7 +461,7 @@ def rec_validation(aba, qtd_linhas, file_name):
                         linha += 1
                         continue
                     linha += 1
-        itens_chave.clear()
+        # itens_chave.clear()
 
     repeticao_RFID.clear()
     repeticao_SN.clear()

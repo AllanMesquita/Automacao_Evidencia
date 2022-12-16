@@ -7,7 +7,7 @@ import traceback
 from datetime import datetime
 import win32com.client
 import openpyxl as xl
-import psycopg2
+# import psycopg2
 
 import Modulos.fuctions
 
@@ -105,7 +105,7 @@ if verificar_status is False:
         # import tkinter
         # from tkinter import filedialog
         import os
-        import pandas as pd
+        # import pandas as pd
         from Modulos import validacao, atualizar_v2, fuctions
 
         # root = tkinter.Tk()
@@ -139,9 +139,10 @@ if verificar_status is False:
             # v17_sheets = v17.sheetnames
             # aba_v17 = v17[v17_sheets[2]]
 
-            df_mastersaf = pd.read_excel(
-                "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 - NFs Entrada Mastersaf.xlsx",
-                sheet_name='NFsEntradaItens')
+            ### Leitura com Pandas desabilitado para leitura por SQL - 13.12.2022
+            # df_mastersaf = pd.read_excel(
+            #     "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\INDICADORES\\Bases\\2022 - NFs Entrada Mastersaf.xlsx",
+            #     sheet_name='NFsEntradaItens')
 
             # win32 = win32com.client.Dispatch('Excel.Application')
             # win32.Visible = False
@@ -172,11 +173,11 @@ if verificar_status is False:
 
             if len(lista_recebimento) > 0:
                 for file_name in lista_recebimento:
-                    resultado = Modulos.fuctions.atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17)
+                    resultado = Modulos.fuctions.atualizar(tblPA, aba_tblPA, path, file_name, v17)
 
             if len(lista_expedicao) > 0:
                 for file_name in lista_expedicao:
-                    resultado = fuctions.atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17)
+                    resultado = fuctions.atualizar(tblPA, aba_tblPA, path, file_name, v17)
 
                 '''
                     Seguência abaixo alocada na função 'Modulos.fuctions.atualizar()'.

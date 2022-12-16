@@ -1,4 +1,4 @@
-def atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17):
+def atualizar(tblPA, aba_tblPA, path, file_name, v17):
 
     ### IMPORTS
     from Modulos import validacao, atualizar_v2
@@ -120,7 +120,7 @@ def atualizar(tblPA, aba_tblPA, path, file_name, df_mastersaf, v17):
                     # Verificar o caso se haver o mesmo arquivo no destino
 
     elif resultado == 'Sucesso':
-        atualizar_v2.popular_V17(aba, qtd_linhas, type_evidencia, df_mastersaf, v17)
+        atualizar_v2.popular_V17(aba, qtd_linhas, type_evidencia, v17)
         os.replace(path + file_name,
                    "C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\"
                    "003 Evidencias\\06 Lixeira\\Testes\\04 Fluig\\" + file_name)

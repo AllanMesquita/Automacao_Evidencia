@@ -5,10 +5,11 @@ dict_return = {}
 def rec_validation(lista, repeticao_rfid, repeticao_serial):
     # Imports
     from datetime import datetime
-    from Test_Zone.Modulos.class_errosBD import Error
+    from Modulos.class_errosBD import Error
     from dateutil.parser import parse
+    import psycopg2
 
-    global error_chave
+    global error_chave, data
 
     dict_error = {}
 
@@ -140,7 +141,7 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
         ### VALIDAÇÃO LOCAL
 
-        cell_range = item['Local']
+        cell_range = str(item['Local']).strip()
         if cell_range == 'TERCA VIX' or cell_range == 'AGS RIO' or cell_range == 'NEXUS SAO':
             pass
         else:
@@ -171,6 +172,34 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
         ### CHAVE DE RELACIONAMENTO
 
         # Select na tabela Recebimento com base na data
+        chave_relacionamento = item['RFID_Produto'] + item['Local']
+
+        # Update connection string information
+        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+        dbname = "logistic-control"
+        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+        password = "EsjHSrS69295NzHu342ap6P!N"
+        sslmode = "require"
+        # Construct connection string
+        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
+                                                                                     sslmode)
+        conn = psycopg2.connect(conn_string)
+        print("Connection established")
+        cursor = conn.cursor()
+
+        cursor.execute(f"SELECT data FROM public.tbl_recebimento2 WHERE chave_relacionamento = '{chave_relacionamento}'")
+        pesquisa = cursor.fetchall()
+
+        # data = datetime.date(data)
+
+        if bool(pesquisa) is False:
+            pass
+        else:
+            for dado in pesquisa:
+                for date_dado in dado:
+                    if parse(str(date_dado)) >= data:
+                        error.chave_relacionamento()
+                        error_ChaveRel += 1
 
         if error_chave > 0 or error_PO > 0 or error_PN > 0 \
                 or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
@@ -180,6 +209,149 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
                 dict_error[item['RFID_Produto']] = error.retornar()
 
         dict_return[item['ChaveNF_Entrada']] = dict_error
+        # dict_error.clear()
+
+    return dict_return
+
+
+def exp_validation(lista, repeticao_rfid):
+    # Imports
+    from datetime import datetime
+    from Modulos.class_errosBD import Error
+    from dateutil.parser import parse
+    import psycopg2
+
+    global error_chave, data
+
+    dict_error = {}
+
+    print('Início da validação - Expedição')
+
+    for item in lista:
+
+        error = Error()
+
+        error_chave = 0
+        error_PO = 0
+        error_PN = 0
+        error_RFID = 0
+        error_SN = 0
+        error_Date = 0
+        error_ChaveRel = 0
+        error_local = 0
+
+        ### VALIDAÇÃO RFID DO PRODUTO
+
+        cell_range = item['RFID_Produto']
+        if bool(cell_range) is False:
+            error.empty()
+            error_RFID += 1
+        elif len(cell_range) != 24:
+            error.rfid()
+            error_RFID += 1
+        elif "E" != cell_range[0]:
+            error.rfid()
+            error_RFID += 1
+        if repeticao_rfid.count(cell_range) > 1:
+            error.rfid_repetido()
+            error_RFID += 1
+        else:
+            pass
+
+        ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
+        cell_range = item['ChaveNF_Saida']
+        if bool(cell_range) is False:
+            error.empty()
+            error_chave += 1
+        try:
+            cell_range = int(cell_range)
+        except:
+            error.chave()
+            error_chave += 1
+        finally:
+            pass
+        if len(str(cell_range)) != 44:
+            error.chave()
+            error_chave += 1
+        for c in str(cell_range):
+            if str(cell_range).count(c) == 44:
+                error.chave()
+                error_chave += 1
+                break
+            else:
+                continue
+
+        ### VALIDAÇÃO LOCAL
+
+        cell_range = str(item['Local']).strip()
+        if cell_range == 'TERCA VIX' or cell_range == 'AGS RIO' or cell_range == 'NEXUS SAO':
+            pass
+        else:
+            error.local()
+            error_local += 1
+
+        ### VALIDAÇÃO DA DATA
+
+        cell_range = item['DataEvidencia']
+
+        try:
+            parse(cell_range)
+            data = parse(cell_range)
+            if data.day <= 12:
+                data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+            if data > datetime.today():
+                error.data_maior()
+                error_Date += 1
+            else:
+                pass
+        except Exception as erros:
+            print(erros)
+            error.data()
+            error_Date += 1
+        finally:
+            pass
+
+        ### CHAVE DE RELACIONAMENTO
+
+        # Select na tabela Recebimento com base na data
+        chave_relacionamento = item['RFID_Produto'] + item['Local']
+
+        # Update connection string information
+        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+        dbname = "logistic-control"
+        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+        password = "EsjHSrS69295NzHu342ap6P!N"
+        sslmode = "require"
+        # Construct connection string
+        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
+                                                                                     sslmode)
+        conn = psycopg2.connect(conn_string)
+        print("Connection established")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            f"SELECT data FROM public.tbl_recebimento2 WHERE chave_relacionamento = '{chave_relacionamento}'")
+        pesquisa = cursor.fetchall()
+
+        # data = datetime.date(data)
+
+        if bool(pesquisa) is False:
+            pass
+        else:
+            for dado in pesquisa:
+                for date_dado in dado:
+                    if parse(str(date_dado)) >= data:
+                        error.chave_relacionamento()
+                        error_ChaveRel += 1
+
+        if error_chave > 0 or error_PO > 0 or error_PN > 0 \
+                or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
+            if dict[item['RFID_Produto']] in dict_error:
+                dict_error[item['RFID_Produto']] += error.retornar()
+            else:
+                dict_error[item['RFID_Produto']] = error.retornar()
+
+        dict_return[item['ChaveNF_Saida']] = dict_error
         # dict_error.clear()
 
     return dict_return
