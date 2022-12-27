@@ -9,7 +9,7 @@ nfs = []
 validacao = []
 resultado = ''
 
-data = open("C:\\Users\\allan.mesquita\\Downloads\\teste_json_exp.json")
+data = open("C:\\Users\\allan.mesquita\\Downloads\\teste.json")
 
 obj = json.load(data)
 

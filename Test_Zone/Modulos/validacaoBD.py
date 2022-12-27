@@ -65,10 +65,11 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
             error_PO += 1
         finally:
             pass
-        if 'K' in cell_range or 'k' in cell_range:
+        if 'K' in cell_range[0] or 'k' in cell_range[0]:
             if len(cell_range[1:]) > 5 or len(cell_range[1:]) < 5:
                 error_PO += 1
                 error.po()
+            item['PedidoCompra'] = cell_range[1:]
         elif len(str(cell_range)) > 5 or len(str(cell_range)) < 5:
             error_PO += 1
             error.po()
@@ -208,10 +209,14 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
             else:
                 dict_error[item['RFID_Produto']] = error.retornar()
 
-        dict_return[item['ChaveNF_Entrada']] = dict_error
+            dict_return[item['ChaveNF_Entrada']] = dict_error
         # dict_error.clear()
 
-    return dict_return
+    if bool(dict_return) is False:
+        Insert(lista).rec_insert()
+        return dict_return
+    else:
+        return dict_return
 
 
 def exp_validation(lista, repeticao_rfid):
@@ -355,3 +360,64 @@ def exp_validation(lista, repeticao_rfid):
         # dict_error.clear()
 
     return dict_return
+
+
+class Insert:
+
+    def __init__(self, lista):
+        self.lista = lista
+
+    def exp_insert(self):
+        pass
+
+    def rec_insert(self):
+
+        import psycopg2
+
+        print(self.lista)
+
+        con = psycopg2.connect(
+            host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            dbname="logistic-control",
+            user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            password="EsjHSrS69295NzHu342ap6P!N",
+            sslmode="require"
+        )
+
+        cur = con.cursor()
+
+        for item in self.lista:
+            cur.execute(f"INSERT INTO public.recb_test ("
+                                                        f"chave_nf,"
+                                                        f"po,"
+                                                        f"cx_master,"
+                                                        f"part_number,"
+                                                        f"rfid,"
+                                                        f"serial,"
+                                                        f"local,"
+                                                        f"data,"
+                                                        f"usuario,"
+                                                        f"obs"
+                                                        f") "
+                        f"VALUES ("
+                                 f"%s, %s, %s, %s, %s, %s, %s, %s, %s, %s"
+                        f")",
+                        (
+                            item['ChaveNF_Entrada'],
+                            item['PedidoCompra'],
+                            item['RFID_CxMaster/TagAtivo'],
+                            item['PartNumber'],
+                            item['RFID_Produto'],
+                            item['SerialNumber'],
+                            item['Local'],
+                            item['DataEvidencia'],
+                            item['Usuario(email)'],
+                            item['ObsRecebimento']
+                        )
+                        )
+            con.commit()
+
+        cur.close()
+        con.close()
+
+        print(self.lista)

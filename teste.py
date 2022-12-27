@@ -746,12 +746,39 @@ import traceback
 # for dado in resultado:
 #     for item in dado:
 #         print(parse(str(item)))
+#
+# import json
+#
+# data = open("C:\\Users\\allan.mesquita\\Downloads\\teste_json_exp.json")
+#
+# obj = json.load(data)
+#
+# for item in obj:
+#     print(item[1])
 
-import json
+dict = [
+    {'@odata.etag': '', 'ItemInternalId': 'd7f07b49-ac4a-4d16-b3ac-cbb020571600', 'ChaveNF_Entrada': '31220326893742000187550010000179191620800380', 'PedidoCompra': 'K71167', 'RFID_CxMaster/TagAtivo': '', 'PartNumber': '000000000000846283', 'RFID_Produto': 'E00000000000000000314997', 'SerialNumber': 'E00000000000000000314997', 'Local': 'TERCA VIX', 'DataEvidencia': '06/04/2022', 'Usuario(email)': '', 'ObsRecebimento': ''},
+    {'@odata.etag': '', 'ItemInternalId': 'd856cf98-e22a-4851-b356-b2990e4b971c', 'ChaveNF_Entrada': '31220326893742000187550010000179191620800380', 'PedidoCompra': 'K71167', 'RFID_CxMaster/TagAtivo': '', 'PartNumber': '000000000000846283', 'RFID_Produto': 'E00000000000000000314997', 'SerialNumber': 'E00000000000000000314998', 'Local': 'TERCA VIX', 'DataEvidencia': '06/04/2022', 'Usuario(email)': '', 'ObsRecebimento': ''}
+]
 
-data = open("C:\\Users\\allan.mesquita\\Downloads\\teste_json_exp.json")
-
-obj = json.load(data)
-
-for item in obj:
-    print(item[1])
+# print(dict)
+#
+# class Teste:
+#     def __init__(self, lista):
+#         self.lista = lista
+#
+#     def printar(self):
+#         print(self.lista)
+#
+#
+# Teste(dict).printar()
+#
+# print(dict)
+#
+# for item in dict:
+#     item['ChaveNF_Entrada'] = 'TESTE'
+#     print(item['ChaveNF_Entrada'])
+#
+# print(dict)
+int = 'K71167'
+print(int[1:])
