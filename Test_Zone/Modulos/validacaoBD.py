@@ -15,8 +15,6 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
     print('Início da validação - Recebimento')
 
-    ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
-
     for item in lista:
 
         error = Error()
@@ -30,27 +28,47 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
         error_ChaveRel = 0
         error_local = 0
 
+        ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
+
         cell_range = item['ChaveNF_Entrada']
+
+        con = psycopg2.connect(
+            host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            dbname="logistic-control",
+            user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            password="EsjHSrS69295NzHu342ap6P!N",
+            sslmode="require"
+        )
+
+        cur = con.cursor()
+
         if bool(cell_range) is False:
             error.empty()
             error_chave += 1
-        try:
-            cell_range = int(cell_range)
-        except:
-            error.chave()
-            error_chave += 1
-        finally:
-            pass
-        if len(str(cell_range)) != 44:
-            error.chave()
-            error_chave += 1
-        for c in str(cell_range):
-            if str(cell_range).count(c) == 44:
-                error.chave()
+        else:
+            cur.execute(f"SELECT chave_acesso FROM material_management.master_saf_entrada WHERE chave_acesso = '{cell_range}'")
+            pesquisa = cur.fetchall()
+            if bool(pesquisa) is False:
+                error.chave_bd()
                 error_chave += 1
-                break
             else:
-                continue
+                try:
+                    cell_range = int(cell_range)
+                except:
+                    error.chave()
+                    error_chave += 1
+                finally:
+                    pass
+                if len(str(cell_range)) != 44:
+                    error.chave()
+                    error_chave += 1
+                for c in str(cell_range):
+                    if str(cell_range).count(c) == 44:
+                        error.chave()
+                        error_chave += 1
+                        break
+                    else:
+                        continue
 
         ### VALIDAÇÃO DO PEDIDO DE COMPRA (PO)
 
@@ -173,7 +191,7 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
         ### CHAVE DE RELACIONAMENTO
 
         # Select na tabela Recebimento com base na data
-        chave_relacionamento = item['RFID_Produto'] + item['Local']
+        item['ChaveRelacionamento'] = str(item['RFID_Produto']).strip() + str(item['Local']).strip()
 
         # Update connection string information
         host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
@@ -188,7 +206,7 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
         print("Connection established")
         cursor = conn.cursor()
 
-        cursor.execute(f"SELECT data FROM public.tbl_recebimento2 WHERE chave_relacionamento = '{chave_relacionamento}'")
+        cursor.execute(f"SELECT data FROM public.recb_test WHERE chave_relacionamento = '{item['ChaveRelacionamento']}'")
         pesquisa = cursor.fetchall()
 
         # data = datetime.date(data)
@@ -319,7 +337,7 @@ def exp_validation(lista, repeticao_rfid):
         ### CHAVE DE RELACIONAMENTO
 
         # Select na tabela Recebimento com base na data
-        chave_relacionamento = item['RFID_Produto'] + item['Local']
+        item['ChaveRelacionamento'] = str(item['RFID_Produto']).strip() + str(item['Local']).strip()
 
         # Update connection string information
         host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
@@ -335,7 +353,7 @@ def exp_validation(lista, repeticao_rfid):
         cursor = conn.cursor()
 
         cursor.execute(
-            f"SELECT data FROM public.tbl_recebimento2 WHERE chave_relacionamento = '{chave_relacionamento}'")
+            f"SELECT data FROM public.exp_test WHERE chave_relacionamento = '{item['ChaveRelacionamento']}'")
         pesquisa = cursor.fetchall()
 
         # data = datetime.date(data)
@@ -356,10 +374,14 @@ def exp_validation(lista, repeticao_rfid):
             else:
                 dict_error[item['RFID_Produto']] = error.retornar()
 
-        dict_return[item['ChaveNF_Saida']] = dict_error
+            dict_return[item['ChaveNF_Saida']] = dict_error
         # dict_error.clear()
 
-    return dict_return
+    if bool(dict_return) is False:
+        Insert(lista).exp_insert()
+        return dict_return
+    else:
+        return dict_return
 
 
 class Insert:
@@ -368,11 +390,61 @@ class Insert:
         self.lista = lista
 
     def exp_insert(self):
-        pass
+        import psycopg2
+        from datetime import datetime
+        from dateutil.parser import parse
+
+        print(self.lista)
+
+        con = psycopg2.connect(
+            host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            dbname="logistic-control",
+            user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            password="EsjHSrS69295NzHu342ap6P!N",
+            sslmode="require"
+        )
+
+        cur = con.cursor()
+
+        for item in self.lista:
+            data = parse(item['DataEvidencia'])
+            cur.execute(f"INSERT INTO public.exp_test ("
+                        f"rfid,"
+                        f"chave_nf,"
+                        f"ov,"
+                        f"local,"
+                        f"data,"
+                        f"usuario,"
+                        f"obs,"
+                        f"chave_relacionamento,"
+                        f"data_lancamento"
+                        f") "
+                        f"VALUES ("
+                        f"%s, %s, %s, %s, %s, %s, %s, %s, %s"
+                        f")",
+                        (
+                            item['RFID_Produto'],
+                            item['ChaveNF_Saida'],
+                            item['OrdemVenda'],
+                            item['Local'],
+                            parse(item['DataEvidencia']),
+                            item['Usuario(email)'],
+                            item['ObsExpedicao'],
+                            item['ChaveRelacionamento'],
+                            datetime.today()
+                        )
+                        )
+            con.commit()
+
+        cur.close()
+        con.close()
+
+        print(self.lista)
 
     def rec_insert(self):
 
         import psycopg2
+        from datetime import datetime
 
         print(self.lista)
 
@@ -397,10 +469,12 @@ class Insert:
                                                         f"local,"
                                                         f"data,"
                                                         f"usuario,"
-                                                        f"obs"
+                                                        f"obs,"
+                                                        f"chave_relacionamento,"
+                                                        f"data_lancamento"
                                                         f") "
                         f"VALUES ("
-                                 f"%s, %s, %s, %s, %s, %s, %s, %s, %s, %s"
+                                 f"%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s"
                         f")",
                         (
                             item['ChaveNF_Entrada'],
@@ -412,7 +486,9 @@ class Insert:
                             item['Local'],
                             item['DataEvidencia'],
                             item['Usuario(email)'],
-                            item['ObsRecebimento']
+                            item['ObsRecebimento'],
+                            item['ChaveRelacionamento'],
+                            datetime.today()
                         )
                         )
             con.commit()

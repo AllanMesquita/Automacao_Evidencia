@@ -625,7 +625,7 @@ import traceback
 #
 # print(var.count(str(1)))
 # print(str(2)*44)
-# var = '3322042878710900013055001000002573177048042'
+# var = '31220326893742000187550010000179191620800380'
 # peso = 2
 # resul = 0
 # print(str(var[:43]))
@@ -757,7 +757,7 @@ import traceback
 #     print(item[1])
 
 dict = [
-    {'@odata.etag': '', 'ItemInternalId': 'd7f07b49-ac4a-4d16-b3ac-cbb020571600', 'ChaveNF_Entrada': '31220326893742000187550010000179191620800380', 'PedidoCompra': 'K71167', 'RFID_CxMaster/TagAtivo': '', 'PartNumber': '000000000000846283', 'RFID_Produto': 'E00000000000000000314997', 'SerialNumber': 'E00000000000000000314997', 'Local': 'TERCA VIX', 'DataEvidencia': '06/04/2022', 'Usuario(email)': '', 'ObsRecebimento': ''},
+    {'@odata.etag': '', 'ItemInternalId': 'd7f07b49-ac4a-4d16-b3ac-cbb020571600', 'ChaveNF_Entrada': '31220326893742000187550010000179191620800380', 'PedidoCompra': 'K71167', 'RFID_CxMaster/TagAtivo': '', 'PartNumber': '000000000000846283', 'RFID_Produto': 'E00000000000000000314997', 'SerialNumber': 'E00000000000000000314997', 'Local': 'TERCA VIX ', 'DataEvidencia': '06/04/2022', 'Usuario(email)': '', 'ObsRecebimento': ''},
     {'@odata.etag': '', 'ItemInternalId': 'd856cf98-e22a-4851-b356-b2990e4b971c', 'ChaveNF_Entrada': '31220326893742000187550010000179191620800380', 'PedidoCompra': 'K71167', 'RFID_CxMaster/TagAtivo': '', 'PartNumber': '000000000000846283', 'RFID_Produto': 'E00000000000000000314997', 'SerialNumber': 'E00000000000000000314998', 'Local': 'TERCA VIX', 'DataEvidencia': '06/04/2022', 'Usuario(email)': '', 'ObsRecebimento': ''}
 ]
 
@@ -774,11 +774,27 @@ dict = [
 # Teste(dict).printar()
 #
 # print(dict)
-#
+# #
 # for item in dict:
-#     item['ChaveNF_Entrada'] = 'TESTE'
-#     print(item['ChaveNF_Entrada'])
+#     item['ChaveRelacionamento'] = item['RFID_Produto'].strip() + item['Local'].strip()
 #
 # print(dict)
-int = 'K71167'
-print(int[1:])
+# int = 'K71167'
+# print()
+# print(datetime.today())
+var = '33220111158812000267550010000002151176909501'
+var43 = var[:43]
+somatoria = 0
+print(var[:43])
+multiplicador = 2
+for c in var43[::-1]:
+    print(c, end=' ')
+    somatoria = (int(c) * multiplicador) + somatoria
+    if multiplicador == 9:
+        multiplicador = 2
+    else:
+        multiplicador += 1
+
+print('\n', somatoria)
+print(somatoria % 11)
+print(11 - (somatoria % 11))
