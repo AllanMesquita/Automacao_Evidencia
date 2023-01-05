@@ -11,6 +11,7 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
     global error_chave, data
 
+    dict_return_rec = {}
     dict_error = {}
 
     print('Início da validação - Recebimento')
@@ -69,6 +70,24 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
                         break
                     else:
                         continue
+                if len(str(cell_range)) == 44:
+                    var = str(cell_range)[:43]
+                    multiplicador = 2
+                    somatoria = 0
+                    for c in var[::-1]:
+                        somatoria = (int(c) * multiplicador) + somatoria
+                        if multiplicador == 9:
+                            multiplicador = 2
+                        else:
+                            multiplicador += 1
+                    if (somatoria % 11) == 1 or (somatoria % 11) == 0:
+                        if str(cell_range)[-1] != '0':
+                            error.chave_validador()
+                            error_chave += 1
+                    else:
+                        if str(cell_range)[-1] != str(11 - (somatoria % 11)):
+                            error.chave_validador()
+                            error_chave += 1
 
         ### VALIDAÇÃO DO PEDIDO DE COMPRA (PO)
 
@@ -191,34 +210,34 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
         ### CHAVE DE RELACIONAMENTO
 
         # Select na tabela Recebimento com base na data
-        item['ChaveRelacionamento'] = str(item['RFID_Produto']).strip() + str(item['Local']).strip()
-
-        # Update connection string information
-        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
-        dbname = "logistic-control"
-        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
-        password = "EsjHSrS69295NzHu342ap6P!N"
-        sslmode = "require"
-        # Construct connection string
-        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
-                                                                                     sslmode)
-        conn = psycopg2.connect(conn_string)
-        print("Connection established")
-        cursor = conn.cursor()
-
-        cursor.execute(f"SELECT data FROM public.recb_test WHERE chave_relacionamento = '{item['ChaveRelacionamento']}'")
-        pesquisa = cursor.fetchall()
-
-        # data = datetime.date(data)
-
-        if bool(pesquisa) is False:
-            pass
-        else:
-            for dado in pesquisa:
-                for date_dado in dado:
-                    if parse(str(date_dado)) >= data:
-                        error.chave_relacionamento()
-                        error_ChaveRel += 1
+        # item['ChaveRelacionamento'] = str(item['RFID_Produto']).strip() + str(item['Local']).strip()
+        #
+        # # Update connection string information
+        # host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+        # dbname = "logistic-control"
+        # user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+        # password = "EsjHSrS69295NzHu342ap6P!N"
+        # sslmode = "require"
+        # # Construct connection string
+        # conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password,
+        #                                                                              sslmode)
+        # conn = psycopg2.connect(conn_string)
+        # print("Connection established")
+        # cursor = conn.cursor()
+        #
+        # cursor.execute(f"SELECT data FROM public.recb_test WHERE chave_relacionamento = '{item['ChaveRelacionamento']}'")
+        # pesquisa = cursor.fetchall()
+        #
+        # # data = datetime.date(data)
+        #
+        # if bool(pesquisa) is False:
+        #     pass
+        # else:
+        #     for dado in pesquisa:
+        #         for date_dado in dado:
+        #             if parse(str(date_dado)) >= data:
+        #                 error.chave_relacionamento()
+        #                 error_ChaveRel += 1
 
         if error_chave > 0 or error_PO > 0 or error_PN > 0 \
                 or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
@@ -227,14 +246,14 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
             else:
                 dict_error[item['RFID_Produto']] = error.retornar()
 
-            dict_return[item['ChaveNF_Entrada']] = dict_error
+            dict_return_rec[item['ChaveNF_Entrada']] = dict_error
         # dict_error.clear()
 
-    if bool(dict_return) is False:
-        Insert(lista).rec_insert()
-        return dict_return
-    else:
-        return dict_return
+    # if bool(dict_return) is False:
+    #     Insert(lista).rec_insert()
+    #     return dict_return
+    # else:
+    return dict_return_rec
 
 
 def exp_validation(lista, repeticao_rfid):
@@ -283,26 +302,63 @@ def exp_validation(lista, repeticao_rfid):
 
         ### VALIDAÇÃO DA CHAVE DE NOTA FISCAL
         cell_range = item['ChaveNF_Saida']
+
+        con = psycopg2.connect(
+            host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+            dbname="logistic-control",
+            user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+            password="EsjHSrS69295NzHu342ap6P!N",
+            sslmode="require"
+        )
+
+        cur = con.cursor()
+
         if bool(cell_range) is False:
             error.empty()
             error_chave += 1
-        try:
-            cell_range = int(cell_range)
-        except:
-            error.chave()
-            error_chave += 1
-        finally:
-            pass
-        if len(str(cell_range)) != 44:
-            error.chave()
-            error_chave += 1
-        for c in str(cell_range):
-            if str(cell_range).count(c) == 44:
-                error.chave()
+        else:
+            cur.execute(
+                f"SELECT chave_acesso FROM material_management.master_saf_saida WHERE chave_acesso = '{cell_range}'")
+            pesquisa = cur.fetchall()
+            if bool(pesquisa) is False:
+                error.chave_bd()
                 error_chave += 1
-                break
             else:
-                continue
+                try:
+                    cell_range = int(cell_range)
+                except:
+                    error.chave()
+                    error_chave += 1
+                finally:
+                    pass
+                if len(str(cell_range)) != 44:
+                    error.chave()
+                    error_chave += 1
+                for c in str(cell_range):
+                    if str(cell_range).count(c) == 44:
+                        error.chave()
+                        error_chave += 1
+                        break
+                    else:
+                        continue
+                if len(str(cell_range)) == 44:
+                    var = str(cell_range)[:43]
+                    multiplicador = 2
+                    somatoria = 0
+                    for c in var[::-1]:
+                        somatoria = (int(c) * multiplicador) + somatoria
+                        if multiplicador == 9:
+                            multiplicador = 2
+                        else:
+                            multiplicador += 1
+                    if (somatoria % 11) == 1 or (somatoria % 11) == 0:
+                        if str(cell_range)[-1] != '0':
+                            error.chave_validador()
+                            error_chave += 1
+                    else:
+                        if str(cell_range)[-1] != str(11 - (somatoria % 11)):
+                            error.chave_validador()
+                            error_chave += 1
 
         ### VALIDAÇÃO LOCAL
 

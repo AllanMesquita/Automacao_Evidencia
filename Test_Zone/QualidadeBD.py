@@ -43,7 +43,11 @@ if tipo_evidencia == 'Recebimento':
         'Chama código validação'
         resultado = Modulos.validacaoBD.rec_validation(validacao, repeticao_rfid, repeticao_serial)
         'processo se erro'
+        print(bool(resultado))
+        if bool(resultado) is True:
+            erros.append(resultado)
         validacao.clear()
+    # resultado = Modulos.validacaoBD.rec_validation(obj, repeticao_rfid, repeticao_serial)
 
 if tipo_evidencia == 'Expedição':
     for item in obj:
@@ -62,6 +66,6 @@ if tipo_evidencia == 'Expedição':
         resultado = Modulos.validacaoBD.exp_validation(validacao, repeticao_rfid)
         validacao.clear()
 
-erros.append(resultado)
+# erros.append(resultado)
 print(erros)
 # print(repeticao)

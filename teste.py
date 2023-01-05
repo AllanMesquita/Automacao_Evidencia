@@ -782,19 +782,128 @@ dict = [
 # int = 'K71167'
 # print()
 # print(datetime.today())
-var = '33220111158812000267550010000002151176909501'
-var43 = var[:43]
-somatoria = 0
-print(var[:43])
-multiplicador = 2
-for c in var43[::-1]:
-    print(c, end=' ')
-    somatoria = (int(c) * multiplicador) + somatoria
-    if multiplicador == 9:
-        multiplicador = 2
-    else:
-        multiplicador += 1
+# var = '33220111158812000267550010000002151176909501'
+# var43 = var[:43]
+# somatoria = 0
+# print(var[:43])
+# multiplicador = 2
+# for c in var43[::-1]:
+#     print(c, end=' ')
+#     somatoria = (int(c) * multiplicador) + somatoria
+#     if multiplicador == 9:
+#         multiplicador = 2
+#     else:
+#         multiplicador += 1
+#
+# print('\n', somatoria)
+# print(somatoria % 11)
+# print(11 - (somatoria % 11))
+# print(var[-1])
+import json
 
-print('\n', somatoria)
-print(somatoria % 11)
-print(11 - (somatoria % 11))
+with open("C:\\Users\\allan.mesquita\\Downloads\\itens_v17.json", encoding="utf8") as data:
+    reader = json.load(data)
+    # print(reader)
+# obj = json.load(data)
+#
+# for item in obj:
+#     print(item)
+#     for item in reader:
+#         print(item)
+# print(reader)
+# import psycopg2
+# from datetime import datetime
+# from dateutil.parser import parse
+# # print(self.l?ista)
+#
+# contagem = 2
+#
+# con = psycopg2.connect(
+#     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
+#     dbname="logistic-control",
+#     user="logisticpsqladmin@psql-itlatam-logisticcontrol",
+#     password="EsjHSrS69295NzHu342ap6P!N",
+#     sslmode="require"
+# )
+#
+# cur = con.cursor()
+# for item in reader:
+#     cell_range = item['DataEvidencia']
+#     parse(cell_range)
+#     data = parse(cell_range)
+#     if data.day <= 12:
+#         data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+#     cur.execute(f"INSERT INTO public.recb_test (chave_nf, "
+#                                             f"po,"
+#                                             f"cx_master,"
+#                                             f"part_number,"
+#                                             f"rfid,"
+#                                             f"serial,"
+#                                             f"local,"
+#                                             f"data,"
+#                                             f"obs,"
+#                                             f"chave_relacionamento,"
+#                                             f"data_lancamento"
+#                                             f")"
+#                 f"VALUES ("
+#                 f"%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s"
+#                 f")",
+#                 (
+#                     item['ChaveNF_Entrada'],
+#                     item['PedidoCompra'],
+#                     item['RFID_CxMaster'],
+#                     item['PartNumber'],
+#                     item['RFID_Produto'],
+#                     item['SerialNumber'],
+#                     item['Local'],
+#                     data,
+#                     item['Observação'],
+#                     str(item['ChaveRelacionamento']).strip(),
+#                     datetime.today()
+#                 )
+#                 )
+#     con.commit()
+#     print(contagem)
+#     contagem += 1
+# cur.close()
+# con.close()
+# dici = {"E00000000000000000438836": "Serial Number com caractere especial"}
+#
+# if "E00000000000000000438836" in dici:
+#     print('teste')
+wb = openpyxl.load_workbook('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\50435, 50451, 50429, 50434.xlsx')
+wb.iso_dates = True
+sheet = wb.sheetnames
+aba = wb[sheet[0]]
+
+cell_range = aba[f'H2'].value
+#
+#
+# if type(cell_range) == datetime:
+#     print(cell_range > datetime.today())
+# else:
+#     parse(cell_range)
+#     data = parse(cell_range)
+#     if data.day <= 12:
+#         data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+#     if data > datetime.today():
+#         print('Maior')
+#     else:
+#         pass
+
+# data = str(datetime.today().strftime('%d/%m/%Y'))
+# print(datetime.today())
+# print(type(data))
+# print(parse(data).month > datetime.today().month)
+# print(parse(data).strptime(data, '%d/%m/%Y'))
+print(cell_range)
+print(type(cell_range))
+
+if type(cell_range) == datetime:
+    data = cell_range
+    print(data)
+else:
+    data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+    print(data)
+
+print(data > datetime.today())

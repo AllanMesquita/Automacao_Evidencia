@@ -22,7 +22,8 @@ class Error:
                           'Chave de Relacionamento consta na Tbl.Recebimento/Expedição': 0,
                           'Quantidade do RFID diferente da Nota Fiscal': 0,
                           'Local fora do padrão': 0,
-                          'Chave de Nota Fiscal não consta em BD': 0
+                          'Chave de Nota Fiscal não consta em BD': 0,
+                          'Chave de Nota Fiscal não existente': 0
                           }
 
     def empty(self):
@@ -43,6 +44,14 @@ class Error:
 
     def chave_bd(self):
         erro = 'Chave de Nota Fiscal não consta em BD'
+        self.dic_erros[erro] += 1
+        if erro in self.lista:
+            pass
+        else:
+            self.lista.append(erro)
+
+    def chave_validador(self):
+        erro = 'Chave de Nota Fiscal não existente'
         self.dic_erros[erro] += 1
         if erro in self.lista:
             pass

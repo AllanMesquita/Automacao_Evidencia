@@ -270,24 +270,40 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         cell_range = aba[f'H{linha}'].value
 
-        try:
-            parse(cell_range)
-            data = parse(cell_range)
-            if data.day <= 12:
-                data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
-            # else:
-            #     data = data
-            if data > datetime.today():
+        # try:
+            # parse(cell_range)
+
+        if type(cell_range) == datetime:
+            if cell_range > datetime.today():
                 aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                 error.data_maior()
                 error_Date += 1
             else:
                 pass
-        except Exception as erros:
-            print(erros)
-            aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            error.data()
-            error_Date += 1
+        else:
+            try:
+                data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+                if data > datetime.today():
+                    aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                    error.data_maior()
+                    error_Date += 1
+                else:
+                    pass
+        # if data.day <= 12:
+        #     data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+        # # else:
+        # #     data = data
+        # if data > datetime.today():
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     error.data_maior()
+        #     error_Date += 1
+        # else:
+        #     pass
+            except Exception as erros:
+                print(erros)
+                aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                error.data()
+                error_Date += 1
 
         # if bool(aba[f'H{linha}'].value) is False or cell_range is None:
         #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
@@ -318,9 +334,9 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         try:
             cell_range = aba[f'H{linha}'].value
-            data = parse(cell_range)
+            data = parse(str(cell_range))
             if data.day <= 12:
-                data = datetime.strptime(datetime.strftime(parse(aba[f'H{linha}'].value), "%m/%d/%Y"), "%d/%m/%Y")
+                data = datetime.strptime(datetime.strftime(parse(str(aba[f'H{linha}'].value)), "%m/%d/%Y"), "%d/%m/%Y")
 
             # if bool(aba[f'H{linha}'].value) is True:
             #     if type(aba[f'H{linha}'].value) == datetime:
@@ -362,8 +378,8 @@ def rec_validation(aba, qtd_linhas, file_name):
                 or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
             aba[f'N{linha}'] = error.retornar()
             # print(error.dic_erros)
-            save = SaveError(aba, linha, 'Recebimento', error.dic_erros, file_name)
-            print(save.connect())
+            # save = SaveError(aba, linha, 'Recebimento', error.dic_erros, file_name)
+            # print(save.connect())
             linha += 1
         else:
             linha += 1
@@ -393,10 +409,10 @@ def rec_validation(aba, qtd_linhas, file_name):
 
     # print(f'Tempo validação recebimento: {datetime.now() - tempo_recebimento}')
     # print('Fim da validação')
-
-    for chave in dict_chaves:
-
-        erro = Error()
+    #
+    # for chave in dict_chaves:
+    #
+    #     erro = Error()
 
         ### Pesquisa substituida de Pandas por SQL - 14.12.20222
         # itens_chave = []
@@ -410,61 +426,61 @@ def rec_validation(aba, qtd_linhas, file_name):
         #     for itens in qtd_chave:
         #         itens_chave.append(float(itens.replace('.', '').replace(',', '.')))
 
-        # Update connection string information
-        host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
-        dbname = "logistic-control"
-        user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
-        password = "EsjHSrS69295NzHu342ap6P!N"
-        sslmode = "require"
-        # Construct connection string
-        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
-                                                                                     password,
-                                                                                     sslmode)
-        conn = psycopg2.connect(conn_string)
-        print("Connection established")
-        cursor = conn.cursor()
-
-        cursor.execute(
-            f"SELECT quantidade_com FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '{chave}'")
-        pesquisa = cursor.fetchall()
-
-        cursor.close()
-        conn.close()
-
-        soma_bd = 0
-
-        if bool(pesquisa) is False:
-            aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
-            aba[f'O{linha}'] = 'Chave de Nota Fiscal não consta em Banco Dados'
-            error_chave += 1
-            continue
-        else:
-            for dado in pesquisa:
-                for item in dado:
-                    soma_bd += item
-
-            # if sum(itens_chave) == dict_chaves[chave]:
-            if soma_bd == dict_chaves[chave]:
-                pass
-            else:
-                linha = 2
-                while linha != qtd_linhas + 1:
-                    cell_range = aba[f'A{linha}'].value
-                    if cell_range == chave:
-                        aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
-                        aba[f'O{linha}'] = 'Quantidade do RFID diferente da Nota Fiscal'
-                        error_chave += 1
-                        erro.quantidade()
-                        save = SaveError(aba, linha, 'Recebimento', erro.dic_erros, file_name)
-                        save.connect()
-                    else:
-                        linha += 1
-                        continue
-                    linha += 1
-        # itens_chave.clear()
-
-    repeticao_RFID.clear()
-    repeticao_SN.clear()
+    #     # Update connection string information
+    #     host = "psql-itlatam-logisticcontrol.postgres.database.azure.com"
+    #     dbname = "logistic-control"
+    #     user = "logisticpsqladmin@psql-itlatam-logisticcontrol"
+    #     password = "EsjHSrS69295NzHu342ap6P!N"
+    #     sslmode = "require"
+    #     # Construct connection string
+    #     conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname,
+    #                                                                                  password,
+    #                                                                                  sslmode)
+    #     conn = psycopg2.connect(conn_string)
+    #     print("Connection established")
+    #     cursor = conn.cursor()
+    #
+    #     cursor.execute(
+    #         f"SELECT quantidade_com FROM material_management.master_saf_entrada_itens WHERE chave_acesso = '{chave}'")
+    #     pesquisa = cursor.fetchall()
+    #
+    #     cursor.close()
+    #     conn.close()
+    #
+    #     soma_bd = 0
+    #
+    #     if bool(pesquisa) is False:
+    #         aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
+    #         aba[f'O{linha}'] = 'Chave de Nota Fiscal não consta em Banco Dados'
+    #         error_chave += 1
+    #         continue
+    #     else:
+    #         for dado in pesquisa:
+    #             for item in dado:
+    #                 soma_bd += item
+    #
+    #         # if sum(itens_chave) == dict_chaves[chave]:
+    #         if soma_bd == dict_chaves[chave]:
+    #             pass
+    #         else:
+    #             linha = 2
+    #             while linha != qtd_linhas + 1:
+    #                 cell_range = aba[f'A{linha}'].value
+    #                 if cell_range == chave:
+    #                     aba[f'A{linha}'].fill = PatternFill(fill_type='solid', fgColor='33CC33')
+    #                     aba[f'O{linha}'] = 'Quantidade do RFID diferente da Nota Fiscal'
+    #                     error_chave += 1
+    #                     erro.quantidade()
+    #                     save = SaveError(aba, linha, 'Recebimento', erro.dic_erros, file_name)
+    #                     save.connect()
+    #                 else:
+    #                     linha += 1
+    #                     continue
+    #                 linha += 1
+    #     # itens_chave.clear()
+    #
+    # repeticao_RFID.clear()
+    # repeticao_SN.clear()
 
     if error_chave > 0 or error_PO > 0 or error_PN > 0 \
             or error_RFID > 0 or error_SN > 0 or error_Date > 0 or error_ChaveRel:
