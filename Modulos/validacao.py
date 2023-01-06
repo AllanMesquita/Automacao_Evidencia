@@ -248,23 +248,45 @@ def rec_validation(aba, qtd_linhas, file_name):
         ### Formatar a data, para ser copiada para as tabelas e estoque ###
 
         # linha_validada += 1
-        cell_range = str(aba[f'H{linha}'].value)
+        cell_range = aba[f'H{linha}'].value
 
-        try:
-            parse(cell_range)
-            data = parse(cell_range)
-            if data.day <= 12:
-                data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
-            if data > datetime.today():
+        if type(cell_range) == datetime:
+            if cell_range > datetime.today():
                 aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                 error.data_maior()
                 error_Date += 1
             else:
                 pass
-        except dateutil.parser.ParserError:
-            aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            error.data()
-            error_Date += 1
+        else:
+            try:
+                data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+                if data > datetime.today():
+                    aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                    error.data_maior()
+                    error_Date += 1
+                else:
+                    pass
+            except Exception as erros:
+                aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                error.data()
+                error_Date += 1
+
+        ### Mudança da lógica da verificação da data - 06.01.2023
+        # try:
+        #     parse(cell_range)
+        #     data = parse(cell_range)
+        #     if data.day <= 12:
+        #         data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+        #     if data > datetime.today():
+        #         aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #         error.data_maior()
+        #         error_Date += 1
+        #     else:
+        #         pass
+        # except dateutil.parser.ParserError:
+        #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        #     error.data()
+        #     error_Date += 1
 
         # if bool(aba[f'H{linha}'].value) is False or cell_range is None:
         #     aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
@@ -293,40 +315,55 @@ def rec_validation(aba, qtd_linhas, file_name):
 
         aba[f'K{linha}'] = str(aba[f'E{linha}'].value).strip() + str(aba[f'G{linha}'].value).strip()
 
-        try:
-            cell_range = str(aba[f'H{linha}'].value)
-            parse(cell_range)
-            data = parse(cell_range)
-            if data.day <= 12:
-                cell_range = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+        cell_range = aba[f'H{linha}'].value
+
+        if type(cell_range) == datetime:
+            if cell_range > datetime.today():
+                data =cell_range
             else:
-                cell_range = data
+                pass
+        else:
+            try:
+                data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+                if data > datetime.today():
+                    aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                else:
+                    pass
+        ### Mudança da logíca da verificação da data - 06.01.2023
+        # try:
+        #     cell_range = str(aba[f'H{linha}'].value)
+        #     parse(cell_range)
+        #     data = parse(cell_range)
+        #     if data.day <= 12:
+        #         cell_range = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+        #     else:
+        #         cell_range = data
         # if bool(aba[f'H{linha}'].value) is True:
         #     if type(aba[f'H{linha}'].value) == datetime:
         #         cell_range = aba[f'H{linha}'].value
         #     else:
         #         cell_range = datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y')
 
-            if aba[f'K{linha}'].value in dfTblRec_ChaveRelacionamento:
-                tem_df = dfTblRec.loc[dfTblRec['ChaveRelacionamento'] == aba[f'K{linha}'].value]
-                for i, row in tem_df.iterrows():
-                    # print(row['DataEvidencia'], '-', datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y'))
-                    if type(row['DataEvidencia']) == datetime:
-                        data_verif = row['DataEvidencia']
-                    else:
-                        data_verif = datetime.strptime(row['DataEvidencia'], '%d/%m/%Y')
-                    if data_verif >= cell_range:
-                        aba[f'K{linha}'].fill = PatternFill(fill_type='solid', fgColor='E7E200')
-                        # aba[f'N{linha}'] = 'Chave de Relacionamento consta na Tbl.Recebimento.'
-                        error.chave_relacionamento()
-                        error_ChaveRel += 1
-                    else:
-                        pass
-            else:
-                pass
+                if aba[f'K{linha}'].value in dfTblRec_ChaveRelacionamento:
+                    tem_df = dfTblRec.loc[dfTblRec['ChaveRelacionamento'] == aba[f'K{linha}'].value]
+                    for i, row in tem_df.iterrows():
+                        # print(row['DataEvidencia'], '-', datetime.strptime(aba[f'H{linha}'].value, '%d/%m/%Y'))
+                        if type(row['DataEvidencia']) == datetime:
+                            data_verif = row['DataEvidencia']
+                        else:
+                            data_verif = datetime.strptime(row['DataEvidencia'], '%d/%m/%Y')
+                        if data_verif >= data:
+                            aba[f'K{linha}'].fill = PatternFill(fill_type='solid', fgColor='E7E200')
+                            # aba[f'N{linha}'] = 'Chave de Relacionamento consta na Tbl.Recebimento.'
+                            error.chave_relacionamento()
+                            error_ChaveRel += 1
+                        else:
+                            pass
+                else:
+                    pass
         # else:
-        except dateutil.parser.ParserError:
-            error_ChaveRel += 1
+            except dateutil.parser.ParserError:
+                error_ChaveRel += 1
 
         ### LANÇAMENTO BANCO DE DADOS - DATA
 
