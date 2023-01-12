@@ -192,9 +192,9 @@ def rec_validation(lista, repeticao_rfid, repeticao_serial):
 
         try:
             parse(cell_range)
-            data = parse(cell_range)
-            if data.day <= 12:
-                data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+            data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+            # if data.day <= 12:
+            #     data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
             if data > datetime.today():
                 error.data_maior()
                 error_Date += 1
@@ -375,9 +375,9 @@ def exp_validation(lista, repeticao_rfid):
 
         try:
             parse(cell_range)
-            data = parse(cell_range)
-            if data.day <= 12:
-                data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+            data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+            # if data.day <= 12:
+            #     data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
             if data > datetime.today():
                 error.data_maior()
                 error_Date += 1

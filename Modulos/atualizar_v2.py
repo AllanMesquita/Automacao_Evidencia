@@ -294,14 +294,14 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                         aba_v17[f'{col}{ultima_linha_v17}'].font = font
                     if colunas_evid[coluna_evid] == 'A':
                         chave = cell_range
-                        # find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
-                        find_chave = df_mastersaf.loc[df_mastersaf['Unnamed: 17'] == chave]
+                        find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
+                        # find_chave = df_mastersaf.loc[df_mastersaf['Unnamed: 17'] == chave]
                         if find_chave.empty:
                             aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                             # aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                         else:
-                            # find_org = find_chave['CNPJ/CPF do Destinatário']
-                            find_org = find_chave['Unnamed: 4']
+                            find_org = find_chave['CNPJ/CPF do Destinatário']
+                            # find_org = find_chave['Unnamed: 4']
                             if find_org.at[find_org.index[0]] == int('00447484000111'):
                                 aba_v17[f'P{ultima_linha_v17}'] = 1
                                 aba_v17[f'P{ultima_linha_v17}'].font = font
@@ -340,19 +340,19 @@ def popular_V17(aba, qtd_linhas, type_evid, df_mastersaf, v17):
                                 #aba_v17.range(f'P{ultima_linha_V17}').value = 50
                     elif colunas_evid[coluna_evid] == 'D':
                         pn = cell_range
-                        # find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
-                        find_chave = df_mastersaf.loc[df_mastersaf['Unnamed: 17'] == chave]
+                        find_chave = df_mastersaf.loc[df_mastersaf['Chave de Acesso'] == chave]
+                        # find_chave = df_mastersaf.loc[df_mastersaf['Unnamed: 17'] == chave]
                         if find_chave.empty:
                             pass
                         else:
-                            # find_pn = find_chave.loc[find_chave['Cód. Produto'] == pn]
-                            find_pn = find_chave.loc[find_chave['Unnamed: 22'] == pn]
+                            find_pn = find_chave.loc[find_chave['Cód. Produto'] == pn]
+                            # find_pn = find_chave.loc[find_chave['Unnamed: 22'] == pn]
                             if find_pn.empty:
                                 aba_v17[f'{col}{ultima_linha_v17}'].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                                 #aba_v17.range(f'{col}{ultima_linha_V17}').color = '#FF0000'
                             else:
-                                # find_valor = find_pn['Valor Unitário Comercial']
-                                find_valor = find_pn['Unnamed: 27']
+                                find_valor = find_pn['Valor Unitário Comercial']
+                                # find_valor = find_pn['Unnamed: 27']
                                 valor = find_valor.at[find_valor.index[0]]   #.replace(',', '.')
                                 aba_v17[f'AE{ultima_linha_v17}'] = valor     #float(valor)
                                 #aba_v17.range(f'AE{ultima_linha_V17}').value = float(valor)

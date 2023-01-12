@@ -413,8 +413,8 @@ def rec_validation(aba, qtd_linhas, file_name):
     for chave in dict_chaves:
         itens_chave = []
 
-        temp_df = df_nfEntrada.loc[df_nfEntrada['Unnamed: 17'] == chave]
-        qtd_chave = temp_df['Unnamed: 28']
+        temp_df = df_nfEntrada.loc[df_nfEntrada['Chave de Acesso'] == chave]
+        qtd_chave = temp_df['Qtde. Com.']
 
         if temp_df.empty:
             continue
@@ -545,23 +545,31 @@ def exp_validacao(aba, qtd_linhas, file_name):
         ### VALIDAÇÃO DA DATA
 
         # linha_validada += 1
-        cell_range = str(aba[f"E{linha}"].value)
-
-        try:
-            parse(cell_range)
-            data = parse(cell_range)
-            if data.day <= 12:
-                data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
-            if data > datetime.today():
+        cell_range = aba[f"E{linha}"].value
+        ### Modificação da verificação da data - 12.01.2023
+        if type(cell_range) is datetime:
+            if cell_range > datetime.today():
                 aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                 error.data_maior()
                 error_Date += 1
             else:
                 pass
-        except dateutil.parser.ParserError:
-            aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-            error.data()
-            error_Date += 1
+        else:
+            try:
+                parse(cell_range)
+                data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+                # if data.day <= 12:
+                #     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+                if data > datetime.today():
+                    aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                    error.data_maior()
+                    error_Date += 1
+                else:
+                    pass
+            except dateutil.parser.ParserError:
+                aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+                error.data()
+                error_Date += 1
         # if bool(cell_range) is False:
         #     aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
         #     error.empty()

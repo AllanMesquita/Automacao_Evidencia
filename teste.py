@@ -801,8 +801,8 @@ dict = [
 # print(var[-1])
 import json
 
-with open("C:\\Users\\allan.mesquita\\Downloads\\itens_v17.json", encoding="utf8") as data:
-    reader = json.load(data)
+# with open("C:\\Users\\allan.mesquita\\Downloads\\Untitled-12.json", encoding="utf8") as data:
+#     reader = json.load(data)
     # print(reader)
 # obj = json.load(data)
 #
@@ -817,7 +817,7 @@ with open("C:\\Users\\allan.mesquita\\Downloads\\itens_v17.json", encoding="utf8
 # # print(self.l?ista)
 #
 # contagem = 2
-#
+# #
 # con = psycopg2.connect(
 #     host="psql-itlatam-logisticcontrol.postgres.database.azure.com",
 #     dbname="logistic-control",
@@ -830,9 +830,9 @@ with open("C:\\Users\\allan.mesquita\\Downloads\\itens_v17.json", encoding="utf8
 # for item in reader:
 #     cell_range = item['DataEvidencia']
 #     parse(cell_range)
-#     data = parse(cell_range)
-#     if data.day <= 12:
-#         data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
+#     data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+#     # if data.day <= 12:
+#     #     data = datetime.strptime(datetime.strftime(parse(cell_range), "%m/%d/%Y"), "%d/%m/%Y")
 #     cur.execute(f"INSERT INTO public.recb_test (chave_nf, "
 #                                             f"po,"
 #                                             f"cx_master,"
@@ -853,11 +853,11 @@ with open("C:\\Users\\allan.mesquita\\Downloads\\itens_v17.json", encoding="utf8
 #                     item['PedidoCompra'],
 #                     item['RFID_CxMaster'],
 #                     item['PartNumber'],
-#                     item['RFID_Produto'],
+#                     item['RFIDPRODUTO'],
 #                     item['SerialNumber'],
 #                     item['Local'],
 #                     data,
-#                     item['Observação'],
+#                     item['ObsRecebimento'],
 #                     str(item['ChaveRelacionamento']).strip(),
 #                     datetime.today()
 #                 )
@@ -871,12 +871,12 @@ with open("C:\\Users\\allan.mesquita\\Downloads\\itens_v17.json", encoding="utf8
 #
 # if "E00000000000000000438836" in dici:
 #     print('teste')
-wb = openpyxl.load_workbook('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\50435, 50451, 50429, 50434.xlsx')
-wb.iso_dates = True
-sheet = wb.sheetnames
-aba = wb[sheet[0]]
-
-cell_range = aba[f'H2'].value
+# wb = openpyxl.load_workbook('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\50435, 50451, 50429, 50434.xlsx')
+# wb.iso_dates = True
+# sheet = wb.sheetnames
+# aba = wb[sheet[0]]
+#
+# cell_range = aba[f'H2'].value
 #
 #
 # if type(cell_range) == datetime:
@@ -896,14 +896,24 @@ cell_range = aba[f'H2'].value
 # print(type(data))
 # print(parse(data).month > datetime.today().month)
 # print(parse(data).strptime(data, '%d/%m/%Y'))
-print(cell_range)
-print(type(cell_range))
+# print(cell_range)
+# print(type(cell_range))
+#
+# if type(cell_range) == datetime:
+#     data = cell_range
+#     print(data)
+# else:
+#     data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+#     print(data)
+#
+# print(data > datetime.today())
+# var = 'e'
+#
+# print(datetime.strftime(datetime.today(), '%d/%m/%Y'))
+# print(datetime.today())
 
-if type(cell_range) == datetime:
-    data = cell_range
-    print(data)
-else:
-    data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
-    print(data)
-
-print(data > datetime.today())
+with open("C:\\Users\\allan.mesquita\\Downloads\\nf_entrada.json", encoding="utf8") as data:
+    reader = json.load(data)
+#
+for item in reader:
+    print(item["Total da NF-e"].replace(".", "").replace(",", "."))
