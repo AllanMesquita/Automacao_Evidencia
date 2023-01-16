@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41d9f28-3371-465b-ba98-9b32c739c484" name="Changes" comment="Update">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test_Zone/correcao_datas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modulos/atualizar_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/atualizar_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modulos/validacao.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/validacao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test_Zone/Modulos/validacaoBD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +116,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="bd_nfentrada2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="correcao_datas" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Script" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -131,7 +128,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/bd_nfentrada2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Zone/correcao_datas.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -164,10 +161,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.teste" />
+        <item itemvalue="Python.correcao_datas" />
         <item itemvalue="Python.bd_ItensSaida2" />
         <item itemvalue="Python.bd_nfSaida2" />
         <item itemvalue="Python.bd_nfItens" />
-        <item itemvalue="Python.bd_nfentrada2" />
       </list>
     </recent_temporary>
   </component>
@@ -488,7 +485,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669899131628</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Update">
+      <created>1673524191366</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1673524191366</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

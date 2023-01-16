@@ -912,8 +912,35 @@ import json
 # print(datetime.strftime(datetime.today(), '%d/%m/%Y'))
 # print(datetime.today())
 
-with open("C:\\Users\\allan.mesquita\\Downloads\\nf_entrada.json", encoding="utf8") as data:
+import xlrd
+
+with open("C:\\Users\\allan.mesquita\\Downloads\\teste.json", encoding="utf8") as data:
     reader = json.load(data)
-#
+
 for item in reader:
-    print(item["Total da NF-e"].replace(".", "").replace(",", "."))
+    data = item['DataEvidencia']
+
+if len(data) < 10:
+    print(data)
+    data = xlrd.xldate_as_datetime(int(data), 0).strftime('%m/%d/%Y')
+    print(parse(data))
+else:
+    print('è data normal')
+import pandas
+#
+# df = pandas.read_excel("C:\\Users\\allan.mesquita\\Downloads\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx", sheet_name='Listagem de NF-e Recebidas')
+#
+# # chave_acesso = df['Chave de Acesso'].tolist()
+# item = df.loc[df['Chave de Acesso'] == '35221208205713000101550010000018191440262512']
+# data = item['Data e Hora da Emissão']
+# print(data, '\n')
+# print(parse(str(data.at[item.index[0]])))
+# print("")
+# print(parse("08/11/2022 09:20:43").strptime("08/11/2022 09:20:43", "%d/%m/%Y %H:%M:%S"))
+import xlrd
+
+# datetime_date = xlrd.xldate_as_datetime(44942, 0)
+# date_object = datetime_date.date()
+# string_date = date_object.isoformat()
+# string_date = parse(string_date)
+# print(string_date)
