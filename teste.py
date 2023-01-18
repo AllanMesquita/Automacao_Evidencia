@@ -914,18 +914,18 @@ import json
 
 import xlrd
 
-with open("C:\\Users\\allan.mesquita\\Downloads\\teste.json", encoding="utf8") as data:
-    reader = json.load(data)
-
-for item in reader:
-    data = item['DataEvidencia']
-
-if len(data) < 10:
-    print(data)
-    data = xlrd.xldate_as_datetime(int(data), 0).strftime('%m/%d/%Y')
-    print(parse(data))
-else:
-    print('è data normal')
+# with open("C:\\Users\\allan.mesquita\\Downloads\\teste.json", encoding="utf8") as data:
+#     reader = json.load(data)
+#
+# for item in reader:
+#     data = item['DataEvidencia']
+#
+# if len(data) < 10:
+#     print(data)
+#     data = xlrd.xldate_as_datetime(int(data), 0).strftime('%m/%d/%Y')
+#     print(parse(data))
+# else:
+#     print('è data normal')
 import pandas
 #
 # df = pandas.read_excel("C:\\Users\\allan.mesquita\\Downloads\\2022 á 2027 - Nfs Entrada Mastersaf.xlsx", sheet_name='Listagem de NF-e Recebidas')
@@ -939,8 +939,38 @@ import pandas
 # print(parse("08/11/2022 09:20:43").strptime("08/11/2022 09:20:43", "%d/%m/%Y %H:%M:%S"))
 import xlrd
 
-# datetime_date = xlrd.xldate_as_datetime(44942, 0)
-# date_object = datetime_date.date()
-# string_date = date_object.isoformat()
-# string_date = parse(string_date)
-# print(string_date)
+# datetime_date = xlrd.xldate_as_datetime(44942, 0).strftime('%d/%m/%Y')
+# # date_object = datetime_date.date()
+# # string_date = date_object.isoformat()
+# # string_date = parse(string_date)
+# print(parse(datetime_date))
+
+# from datetime import date
+#
+# data = datetime.today()
+# print(data)
+wb = openpyxl.load_workbook('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\01 Processamento\\AGS RIO_202301171439 33230105437734000580550010000032521100004388_Expedição.xlsx')
+# wb.iso_dates = True
+sheet = wb.sheetnames
+aba = wb[sheet[0]]
+cell_range = aba['E15'].value
+try:
+    parse(cell_range)
+    data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+    # if data.day <= 12:
+    #     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+    if data > datetime.today():
+        print(cell_range)
+        # aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+        # error.data_maior()
+        # error_Date += 1
+    else:
+        pass
+except:
+    print('erro')
+    # aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+    # error.data()
+    # error_Date += 1
+finally:
+    pass
+print('Terminou')

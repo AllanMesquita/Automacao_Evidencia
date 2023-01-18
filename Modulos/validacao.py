@@ -266,10 +266,12 @@ def rec_validation(aba, qtd_linhas, file_name):
                     error_Date += 1
                 else:
                     pass
-            except Exception as erros:
+            except:
                 aba[f"H{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                 error.data()
                 error_Date += 1
+            finally:
+                pass
 
         ### Mudança da lógica da verificação da data - 06.01.2023
         # try:
@@ -566,10 +568,12 @@ def exp_validacao(aba, qtd_linhas, file_name):
                     error_Date += 1
                 else:
                     pass
-            except dateutil.parser.ParserError:
+            except:
                 aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
                 error.data()
                 error_Date += 1
+            finally:
+                pass
         # if bool(cell_range) is False:
         #     aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF7B00')
         #     error.empty()
