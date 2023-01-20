@@ -949,28 +949,34 @@ import xlrd
 #
 # data = datetime.today()
 # print(data)
-wb = openpyxl.load_workbook('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\01 Processamento\\AGS RIO_202301171439 33230105437734000580550010000032521100004388_Expedição.xlsx')
-# wb.iso_dates = True
-sheet = wb.sheetnames
-aba = wb[sheet[0]]
-cell_range = aba['E15'].value
-try:
-    parse(cell_range)
-    data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
-    # if data.day <= 12:
-    #     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
-    if data > datetime.today():
-        print(cell_range)
-        # aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-        # error.data_maior()
-        # error_Date += 1
-    else:
-        pass
-except:
-    print('erro')
-    # aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
-    # error.data()
-    # error_Date += 1
-finally:
-    pass
-print('Terminou')
+# wb = openpyxl.load_workbook('C:\\Users\\allan.mesquita\\OneDrive - NTT\\Privado\\GESTÃO DE ESTOQUE\\100 BcoDados\\003 Evidencias\\06 Lixeira\\Testes\\01 Processamento\\AGS RIO_202301171439 33230105437734000580550010000032521100004388_Expedição.xlsx')
+# # wb.iso_dates = True
+# sheet = wb.sheetnames
+# aba = wb[sheet[0]]
+# cell_range = aba['E15'].value
+# try:
+#     parse(cell_range)
+#     data = parse(cell_range).strptime(cell_range, '%d/%m/%Y')
+#     # if data.day <= 12:
+#     #     data = datetime.strptime(datetime.strftime(data, "%m/%d/%Y"), "%d/%m/%Y")
+#     if data > datetime.today():
+#         print(cell_range)
+#         # aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+#         # error.data_maior()
+#         # error_Date += 1
+#     else:
+#         pass
+# except:
+#     print('erro')
+#     # aba[f"E{linha}"].fill = PatternFill(fill_type='solid', fgColor='FF0000')
+#     # error.data()
+#     # error_Date += 1
+# finally:
+#     pass
+# print('Terminou')
+
+with open("C:\\Users\\allan.mesquita\\Downloads\\eventos.json", encoding="utf8") as data:
+    reader = json.load(data)
+
+for item in reader:
+    print(item['Chave de Acesso'])
